@@ -1,0 +1,41 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { themeSpacing } from '../theme/tokens-adapter';
+import { CopyToken } from './components/CopyToken';
+import { DocAccordion } from './components/DocAccordion';
+
+<Meta title="Tokens/Spacing" />
+
+# Spacing Tokens
+
+export const spacingEntries = Object.entries(themeSpacing)
+  .filter(([key]) => !key.startsWith('--'))
+  .sort(([a], [b]) => Number(a) - Number(b));
+
+<div style={{ marginTop: '24px' }}>
+  <DocAccordion label="Spacing" subtitle="Margens, paddings e gaps" defaultOpen={true}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+      {spacingEntries.map(([key, value]) => (
+        <div key={key} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '4px 0' }}>
+          <CopyToken text={`--ds-spacing-${key}`}>
+            <span style={{ fontFamily: 'monospace', fontSize: '13px', color: '#363843', width: '175px', display: 'inline-block' }}>
+              --ds-spacing-{key}
+            </span>
+          </CopyToken>
+          <CopyToken text={value}>
+            <span style={{ fontFamily: 'monospace', fontSize: '13px', color: '#7C8096', width: '44px', display: 'inline-block' }}>
+              {value}
+            </span>
+          </CopyToken>
+          <div style={{
+            width: value,
+            height: '20px',
+            borderRadius: '4px',
+            backgroundColor: '#0B109F',
+            minWidth: value === '0px' ? '2px' : undefined,
+            opacity: value === '0px' ? 0.2 : 1,
+          }} />
+        </div>
+      ))}
+    </div>
+  </DocAccordion>
+</div>

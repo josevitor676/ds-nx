@@ -1,0 +1,15 @@
+{
+  "name": "design-system-mcp-server",
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "dependencies": {
+    "@storybook/mcp": "^0.4.1",
+    "srvx": "latest"
+  }
+}

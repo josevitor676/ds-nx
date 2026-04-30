@@ -1,0 +1,65 @@
+import { Meta, Canvas, Controls, ArgTypes } from '@storybook/addon-docs/blocks';
+import * as PaginationStories from './Pagination.stories';
+import { Tag } from '../../Atoms/Tag/Tag';
+
+<Meta of={PaginationStories} />
+
+<div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '4px' }}>
+  <h1 style={{ margin: 0, fontSize: '28px', fontWeight: 700, color: '#202125' }}>Pagination</h1>
+  <Tag label="Molecule" variant="soft" color="purple" size="small" />
+  <Tag label="Estável" variant="soft" color="green" size="small" />
+</div>
+
+<p style={{ fontSize: '16px', color: '#4B5060', marginTop: '8px', marginBottom: '32px', lineHeight: '1.6' }}>
+  Componente para navegação paginada em listas e tabelas. Fornece navegação por página, reticências automáticas e variante mobile com input numérico.
+</p>
+
+---
+
+## Playground
+
+<Canvas of={PaginationStories.Default} />
+<Controls of={PaginationStories.Default} />
+
+---
+
+## Variantes
+
+### Reticências à direita
+
+<Canvas of={PaginationStories.MoreRight} />
+
+### Reticências à esquerda
+
+<Canvas of={PaginationStories.MoreLeft} />
+
+### Reticências dos dois lados
+
+<Canvas of={PaginationStories.BothSideMore} />
+
+### Editable (mobile)
+
+<Canvas of={PaginationStories.Editable} />
+
+### Sem setas
+
+<Canvas of={PaginationStories.WithoutArrows} />
+
+---
+
+## Exemplo real
+
+<Canvas of={PaginationStories.Example} />
+
+---
+
+## Props
+
+<ArgTypes of={PaginationStories} />
+
+---
+
+## Acessibilidade
+
+- ⌨️ Navegável por teclado; botões usam elementos `<button>` nativos.
+- 🔊 Botões indicam `aria-current="page"` para a página ativa.

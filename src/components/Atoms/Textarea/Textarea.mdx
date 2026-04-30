@@ -1,0 +1,154 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks"
+import * as TextareaStories from "./Textarea.stories"
+import { Tag } from "../Tag/Tag"
+
+<Meta of={TextareaStories} />
+
+{/* ─── Header ─────────────────────────────────────────────────── */}
+
+<div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "4px" }}>
+  <h1
+    style={{ margin: 0, fontSize: "28px", fontWeight: 700, color: "var(--ds-color-neutral-900)" }}
+  >
+    Text Area
+  </h1>
+  <Tag label="Atom" variant="soft" color="blue" size="small" />
+  <Tag label="Estável" variant="soft" color="green" size="small" />
+</div>
+
+<p
+  style={{
+    fontSize: "16px",
+    color: "var(--ds-color-neutral-700)",
+    marginTop: "8px",
+    marginBottom: "32px",
+    lineHeight: "1.6",
+  }}
+>
+  O Text Area permite que os usuários insiram e editem textos longos, como descrições, observações
+  ou comentários. Ele possui uma altura mínima fixa, mas suporta redimensionamento vertical pelo
+  usuário.
+</p>
+
+---
+
+## Como usar?
+
+- **Comentários e Feedbacks:** Onde o usuário precisa expressar opiniões detalhadas.
+- **Descrições de Items:** Cadastro de produtos ou perfis que exigem um resumo biográfico.
+- **Mensagens de Suporte:** Para descrever problemas em tickets de atendimento.
+
+## Como não usar?
+
+- **Dados Curtos:** Para nomes, e-mails, senhas ou endereços curtos, utilize o Input de texto simples.
+- **Busca:** Campos de pesquisa devem ser sempre de linha única.
+- **Formatos Rígidos:** Se o texto precisar de negrito, itálico ou listas, use um editor Rich Text em vez do Text Area comum.
+
+---
+
+{/* ─── Playground ──────────────────────────────────────────────── */}
+
+## Playground
+
+Explore todas as combinações de props interativamente no painel abaixo.
+
+<Canvas of={TextareaStories.Default} />
+<Controls of={TextareaStories.Default} />
+
+---
+
+{/* ─── Variantes ───────────────────────────────────────────────── */}
+
+## Variantes
+
+### `state="default"`
+
+Estado inicial do campo, pronto para receber input.
+
+<Canvas of={TextareaStories.Default} />
+
+### `mandatory`
+
+Exibe um asterisco ao lado do label para indicar preenchimento obrigatório.
+
+<Canvas of={TextareaStories.Mandatory} />
+
+### `helperText`
+
+Texto auxiliar exibido abaixo do campo para orientações complementares.
+
+<Canvas of={TextareaStories.WithHelperText} />
+
+### `state="filled"`
+
+Aplicado quando o campo contém conteúdo. O visual é idêntico ao `hover` por design.
+
+<Canvas of={TextareaStories.Filled} />
+
+### `state="error"`
+
+Borda e `helperText` assumem a cor de erro para sinalizar o problema ao usuário.
+
+<Canvas of={TextareaStories.Error} />
+
+---
+
+{/* ─── Estados ─────────────────────────────────────────────────── */}
+
+## Estados
+
+### `disabled`
+
+Desabilita interação, aplica fundo neutro e opacidade reduzida no label.
+
+<Canvas of={TextareaStories.Disabled} />
+
+### Visão geral
+
+<Canvas of={TextareaStories.AllStates} />
+
+---
+
+{/* ─── Exemplo real ─────────────────────────────────────────────── */}
+
+## Exemplo real
+
+Formulário controlado com validação, contador de caracteres e transição de estados.
+
+<Canvas of={TextareaStories.FeedbackFormStory} />
+
+---
+
+{/* ─── Props ───────────────────────────────────────────────────── */}
+
+## Props
+
+<ArgTypes of={TextareaStories} />
+
+---
+
+{/* ─── Boas práticas ───────────────────────────────────────────── */}
+
+## Boas práticas
+
+### ✅ Quando usar
+
+- **Comentários e feedbacks** — onde o usuário precisa expressar opiniões detalhadas.
+- **Descrições de itens** — cadastro de produtos ou perfis que exigem um resumo biográfico.
+- **Mensagens de suporte** — para descrever problemas em tickets de atendimento.
+
+### ❌ Quando não usar
+
+- **Dados curtos** — para nomes, e-mails, senhas ou endereços, use o **Input** de texto simples.
+- **Busca** — campos de pesquisa devem ser sempre de linha única.
+- **Formatos ricos** — se o texto precisar de negrito, itálico ou listas, use um componente de **Rich Text Editor**.
+
+---
+
+{/* ─── Acessibilidade ─────────────────────────────────────────── */}
+
+## Acessibilidade
+
+- ⌨️ Totalmente navegável por teclado; o elemento nativo `<textarea>` é focável por Tab.
+- 🔊 Use `aria-describedby` apontando para o `helperText` quando ele comunicar um erro ou instrução crítica.
+- 🔒 O atributo `disabled` bloqueia a interação e é comunicado a tecnologias assistivas nativamente.

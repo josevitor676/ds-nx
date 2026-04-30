@@ -1,0 +1,116 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { defaultTheme } from "../theme";
+import { CopyToken } from "./components/CopyToken";
+import { DocAccordion } from "./components/DocAccordion";
+
+<Meta title="Tokens/Colors" />
+
+# Cores do Sistema
+
+Essas são as cores definidas nos tokens do Figma.
+
+export const groups = [
+  { key: "primary", label: "Primary", subtitle: "Escala de Azuis" },
+  { key: "success", label: "Success", subtitle: "Escala de Verdes" },
+  { key: "warning", label: "Warning", subtitle: "Escala de Laranjas" },
+  { key: "error", label: "Error", subtitle: "Escala de Vermelhos" },
+  { key: "neutral", label: "Neutral", subtitle: "Escala de Cinzas" },
+];
+
+<div
+  style={{
+    display: "flex",
+    flexDirection: "column",
+    gap: "8px",
+    marginTop: "24px",
+  }}
+>
+  {groups.map(({ key, label, subtitle }) => {
+    const shades = Object.entries(defaultTheme.tokens.colors[key]);
+    const preview = (
+      <div style={{ display: "flex", gap: "4px" }}>
+        {shades.slice(0, 5).map(([shade, hex]) => (
+          <div
+            key={shade}
+            style={{
+              width: "20px",
+              height: "20px",
+              borderRadius: "4px",
+              backgroundColor: hex,
+              border: "1px solid rgba(0,0,0,0.08)",
+            }}
+          />
+        ))}
+      </div>
+    );
+    return (
+      <DocAccordion
+        key={key}
+        label={label}
+        subtitle={subtitle}
+        preview={preview}
+        defaultOpen={key === "primary"}
+      >
+        <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+          {shades.map(([shade, hex]) => (
+            <div
+              key={shade}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "12px",
+                padding: "4px 0",
+              }}
+            >
+              <div
+                style={{
+                  width: "36px",
+                  height: "36px",
+                  borderRadius: "6px",
+                  backgroundColor: hex,
+                  border: "1px solid rgba(0,0,0,0.08)",
+                  flexShrink: 0,
+                }}
+              />
+              <CopyToken text={`--ds-color-${key}-${shade}`}>
+                <span
+                  style={{
+                    fontFamily: "monospace",
+                    fontSize: "13px",
+                    color: "#363843",
+                    width: "210px",
+                    display: "inline-block",
+                  }}
+                >
+                  --ds-color-{key}-{shade}
+                </span>
+              </CopyToken>
+              <CopyToken text={hex}>
+                <span
+                  style={{
+                    fontFamily: "monospace",
+                    fontSize: "13px",
+                    color: "#7C8096",
+                    width: "70px",
+                    display: "inline-block",
+                  }}
+                >
+                  {hex}
+                </span>
+              </CopyToken>
+              <div
+                style={{
+                  flex: 1,
+                  height: "8px",
+                  borderRadius: "4px",
+                  backgroundColor: hex,
+                  border: "1px solid rgba(0,0,0,0.06)",
+                }}
+              />
+            </div>
+          ))}
+        </div>
+      </DocAccordion>
+    );
+  })}
+</div>

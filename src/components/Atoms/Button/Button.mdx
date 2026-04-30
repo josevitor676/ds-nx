@@ -1,0 +1,95 @@
+import { Meta, Canvas, Controls, ArgTypes } from '@storybook/addon-docs/blocks';
+import * as ButtonStories from './Button.stories';
+import { Tag } from '../Tag/Tag';
+
+<Meta of={ButtonStories} />
+
+{/* ─── Header ─────────────────────────────────────────────────── */}
+
+<div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '4px' }}>
+  <h1 style={{ margin: 0, fontSize: '28px', fontWeight: 700, color: '#202125' }}>Button</h1>
+  <Tag label="Atom" variant="soft" color="blue" size="small" />
+  <Tag label="Estável" variant="soft" color="green" size="small" />
+</div>
+
+<p style={{ fontSize: '16px', color: '#4B5060', marginTop: '8px', marginBottom: '32px', lineHeight: '1.6' }}>
+  Componente de ação primária da interface. Dispara eventos como envio de formulário, confirmação de ações e navegação. Suporta variantes visuais, tamanhos, estados e composição com ícones via <code>children</code>.
+</p>
+
+---
+
+{/* ─── Playground ──────────────────────────────────────────────── */}
+
+## Playground
+
+Explore todas as combinações de props interativamente no painel abaixo.
+
+<Canvas of={ButtonStories.Default} />
+<Controls of={ButtonStories.Default} />
+
+---
+
+{/* ─── Variants ────────────────────────────────────────────────── */}
+
+## Variantes
+
+O Button possui três variantes visuais (`filled`, `outlined`, `clear`) combinadas com três cores semânticas (`primary`, `error`, `neutral`).
+
+<Canvas of={ButtonStories.Variants} />
+
+---
+
+{/* ─── Sizes ───────────────────────────────────────────────────── */}
+
+## Tamanhos
+
+<Canvas of={ButtonStories.Sizes} />
+
+---
+
+{/* ─── States ──────────────────────────────────────────────────── */}
+
+## Estados
+
+- **`loading`** — desabilita o botão e exibe spinner. Use durante chamadas assíncronas.
+- **`disabled`** — atributo HTML nativo. Bloqueia interação em todas as variantes.
+
+<Canvas of={ButtonStories.States} />
+
+---
+
+{/* ─── Ícones ──────────────────────────────────────────────────── */}
+
+## Composição com ícones
+
+Use `iconStart` e `iconEnd` para posicionar ícones. Ajuste `iconStroke` (padrão `1.5`) e `iconSize` (derivado de `size`) conforme necessário.
+
+<Canvas of={ButtonStories.WithIcons} />
+
+---
+
+{/* ─── Props ───────────────────────────────────────────────────── */}
+
+## Props
+
+<ArgTypes of={ButtonStories} />
+
+---
+
+{/* ─── Boas práticas ───────────────────────────────────────────── */}
+
+## Boas práticas
+
+<Canvas of={ButtonStories.BestPractices} />
+
+---
+
+{/* ─── Acessibilidade ──────────────────────────────────────────── */}
+
+## Acessibilidade
+
+- ⌨️ Totalmente navegável por teclado (Tab para foco, Enter/Space para ativar).
+- 🔊 Usa elemento `<button>` nativo — leitores de tela anunciam corretamente o papel e o estado.
+- 🔒 O atributo `disabled` bloqueia interação e é comunicado ao AT (Assistive Technology) nativamente.
+- ⏳ Durante `loading`, o botão é desabilitado automaticamente para evitar duplo envio.
+- 🎨 Todas as combinações de variant + color atendem ao contraste mínimo WCAG AA (4.5:1).

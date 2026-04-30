@@ -1,0 +1,69 @@
+import { Meta, Canvas, Controls, ArgTypes } from '@storybook/addon-docs/blocks';
+import * as TagStories from './Tag.stories';
+import { Tag } from '../Tag/Tag';
+
+<Meta of={TagStories} />
+
+<div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '4px' }}>
+  <h1 style={{ margin: 0, fontSize: '28px', fontWeight: 700, color: '#202125' }}>Tag</h1>
+  <Tag label="Atom" variant="soft" color="blue" size="small" />
+  <Tag label="Estável" variant="soft" color="green" size="small" />
+</div>
+
+<p style={{ fontSize: '16px', color: '#4B5060', marginTop: '8px', marginBottom: '32px', lineHeight: '1.6' }}>
+  As Tags são pequenos elementos visuais que ajudam o usuário a identificar rapidamente propriedades de um item, como o status de um pedido ou a categoria de um produto.
+</p>
+
+---
+
+## Playground
+
+Explore as props do componente no painel abaixo.
+
+<Canvas of={TagStories.Default} />
+<Controls of={TagStories.Default} />
+
+---
+
+## Variantes
+
+O componente possui duas variantes visuais principais controladas por `variant`: `soft` e `strong`.
+
+### Grade de combinações
+
+<Canvas of={TagStories.VariantsGrid} />
+
+---
+
+## Tamanhos
+
+O Figma atual considera os tamanhos `small` e `medium` para uso corrente.
+
+<Canvas of={TagStories.Sizes} />
+
+---
+
+## Estados
+
+### `disabled`
+
+<Canvas of={TagStories.Disabled} />
+
+### Removível
+
+<Canvas of={TagStories.Panel} />
+
+---
+
+## Props
+
+<ArgTypes of={TagStories} />
+
+---
+
+## Acessibilidade
+
+- O rótulo é renderizado como texto legível e o controle de remoção recebe `role="button"` com suporte a teclado.
+- `Enter` e `Space` acionam a remoção quando a tag é removível.
+- Quando `disabled`, a ação de remoção deixa de ser interativa e recebe `aria-disabled`.
+- Use tags para rotular, categorizar ou indicar status; evite usá-las como CTA principal.

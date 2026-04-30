@@ -1,0 +1,268 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks';
+import * as IconStories from './Icon.stories';
+import { Button } from '../Button/Button';
+import { Icon } from './Icon';
+import { IconExternalLink } from '@tabler/icons-react';
+
+<Meta of={IconStories} />
+
+{/* ─── Header ─────────────────────────────────────────────────── */}
+
+<div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '4px' }}>
+  <h1 style={{ margin: 0, fontSize: '28px', fontWeight: 700, color: '#202125' }}>Icon</h1>
+  <span style={{ fontSize: '12px', fontWeight: 600, color: '#0B5CFF', backgroundColor: '#EEF2FF', padding: '2px 10px', borderRadius: '20px', letterSpacing: '0.3px' }}>
+    Atom
+  </span>
+  <span style={{ fontSize: '12px', fontWeight: 600, color: '#16a34a', backgroundColor: '#f0fdf4', padding: '2px 10px', borderRadius: '20px', letterSpacing: '0.3px' }}>
+    Estável
+  </span>
+</div>
+
+<p style={{ fontSize: '16px', color: '#4B5060', marginTop: '8px', marginBottom: '32px', lineHeight: '1.6' }}>
+  Wrapper semântico para ícones do <a href="https://tabler.io/icons" target="_blank" rel="noopener noreferrer">Tabler Icons</a>. Padroniza tamanhos, acessibilidade e garante consistência visual em toda a interface. O DS utiliza o pacote <code>@tabler/icons-react</code> como peer dependency — você instala no seu projeto e importa apenas os ícones que precisa.
+</p>
+
+---
+
+{/* ─── Instalação ─────────────────────────────────────────────── */}
+
+## Instalação
+
+O componente `Icon` já vem com o DS, mas os ícones em si são uma **peer dependency**. Isso garante tree-shaking — só os ícones que você importar entram no bundle.
+
+```bash
+# npm
+npm install @tabler/icons-react
+
+# yarn
+yarn add @tabler/icons-react
+
+# pnpm
+pnpm add @tabler/icons-react
+```
+
+> O DS é compatível com `@tabler/icons-react` na versão **^3.0.0**.
+
+---
+
+{/* ─── Quick Start ────────────────────────────────────────────── */}
+
+## Quick start
+
+```tsx
+import { Icon } from '@gazin/design-system';
+import { IconMail } from '@tabler/icons-react';
+
+function Example() {
+  return <Icon icon={IconMail} size="md" />;
+}
+```
+
+O fluxo é sempre o mesmo:
+
+1. Importe o componente `Icon` do DS
+2. Importe o ícone desejado de `@tabler/icons-react`
+3. Passe o ícone via prop `icon`
+
+---
+
+{/* ─── Playground ─────────────────────────────────────────────── */}
+
+## Playground
+
+<Canvas of={IconStories.Default} />
+
+---
+
+{/* ─── Sizes ──────────────────────────────────────────────────── */}
+
+## Tamanhos
+
+O componente expõe três tamanhos semânticos via prop `size`. Use-os de forma consistente com os demais componentes do DS.
+
+| Token | Pixels | Uso recomendado |
+|-------|--------|-----------------|
+| `sm`  | 16px   | Dentro de botões, inputs, badges |
+| `md`  | 20px   | Uso geral, navegação, listas |
+| `lg`  | 24px   | Headers, empty states, destaque |
+
+<Canvas of={IconStories.Sizes} />
+
+---
+
+{/* ─── Stroke ─────────────────────────────────────────────────── */}
+
+## Espessura do traço
+
+A prop `stroke` controla a espessura do traço do ícone. O padrão do Tabler é `2`, mas o DS adota `1.5` como padrão nos componentes (ex: `Button`) para um visual mais leve e alinhado ao sistema. Use `stroke` diretamente no `Icon` quando precisar de um valor diferente.
+
+<Canvas of={IconStories.Strokes} />
+
+```tsx
+<Icon icon={IconHome} size="lg" stroke={1.5} />
+```
+
+---
+
+{/* ─── Composição ─────────────────────────────────────────────── */}
+
+## Composição com outros componentes
+
+### Button
+
+O `Button` aceita ícones Tabler diretamente via `iconStart` e `iconEnd` — passe a **referência do componente**, não o elemento instanciado.
+
+```tsx
+import { Button } from '@gazin/design-system';
+import { IconMail, IconArrowRight, IconPlus } from '@tabler/icons-react';
+
+// ✅ correto — referência do componente
+<Button iconStart={IconMail}>E-mail</Button>
+<Button iconEnd={IconArrowRight}>Próximo</Button>
+
+// ❌ errado — não passe o elemento instanciado
+<Button iconStart={<IconMail />}>E-mail</Button>
+```
+
+O tamanho do ícone é derivado automaticamente do `size` do botão (`sm`/`md` → 16px, `lg` → 20px). Quando necessário, use as props de override:
+
+| Prop | Padrão | Descrição |
+|------|--------|-----------|
+| `iconStroke` | `1.5` | Espessura do traço dos ícones |
+| `iconSize` | derivado de `size` | Sobrescreve o tamanho automático |
+
+```tsx
+// stroke personalizado
+<Button iconStart={IconMail} iconStroke={2}>E-mail</Button>
+
+// tamanho fixo independente do size do botão
+<Button size="sm" iconStart={IconMail} iconSize="lg">E-mail</Button>
+```
+
+<Canvas of={IconStories.WithButton} />
+
+---
+
+{/* ─── Tipagem ────────────────────────────────────────────────── */}
+
+## Tipagem
+
+O DS re-exporta o tipo `TablerIcon` para que você possa tipar props que recebem ícones sem importar diretamente do pacote Tabler.
+
+```tsx
+import { Icon, type TablerIcon } from '@gazin/design-system';
+
+// Use em interfaces de componentes que aceitam ícones
+interface NavItemProps {
+  icon: TablerIcon;
+  label: string;
+  href: string;
+}
+
+function NavItem({ icon, label, href }: NavItemProps) {
+  return (
+    <a href={href}>
+      <Icon icon={icon} size="sm" />
+      {label}
+    </a>
+  );
+}
+```
+
+---
+
+{/* ─── Cor ─────────────────────────────────────────────────────── */}
+
+## Cor
+
+Os ícones Tabler herdam `currentColor` por padrão. Para mudar a cor, basta aplicar `color` via CSS no elemento pai ou diretamente no componente.
+
+```tsx
+{/* Herda a cor do pai */}
+<span style={{ color: 'var(--ds-color-error-500)' }}>
+  <Icon icon={IconAlertCircle} size="md" />
+</span>
+
+{/* Ou via prop color diretamente */}
+<Icon icon={IconCheck} size="md" color="var(--ds-color-success-500)" />
+```
+
+---
+
+{/* ─── Props ──────────────────────────────────────────────────── */}
+
+## Props
+
+<ArgTypes of={IconStories} />
+
+> O componente aceita todas as props nativas de um SVG além das listadas acima (stroke, color, className, etc.).
+
+---
+
+{/* ─── Catálogo ────────────────────────────────────────────────── */}
+
+## Catálogo de ícones
+
+O DS utiliza a biblioteca **Tabler Icons** (+5.000 ícones, outline e filled). Para encontrar o ícone que precisa, consulte o catálogo oficial e use o nome convertido para PascalCase com prefixo `Icon`.
+
+<div style={{ display: 'flex', alignItems: 'stretch', gap: '16px', margin: '20px 0 24px', padding: '16px', border: '1px solid #E5E7EB', borderRadius: '8px', background: '#FAFAFA' }}>
+  <div style={{ flex: 1 }}>
+    <p style={{ margin: '0 0 4px', fontSize: '13px', fontWeight: 600, color: '#202125' }}>1. Encontre o ícone</p>
+    <p style={{ margin: '0 0 12px', fontSize: '13px', color: '#4B5060', lineHeight: '1.5' }}>
+      Busque pelo nome no catálogo do Tabler (ex: <code>arrow-right</code>).
+    </p>
+    <a href="https://tabler.io/icons" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+      <Button variant="outlined" color="primary" size="sm" iconEnd={IconExternalLink}>
+        tabler.io/icons
+      </Button>
+    </a>
+  </div>
+  <div style={{ width: '1px', background: '#E5E7EB' }} />
+  <div style={{ flex: 1 }}>
+    <p style={{ margin: '0 0 4px', fontSize: '13px', fontWeight: 600, color: '#202125' }}>2. Converta o nome</p>
+    <div style={{ fontSize: '12px', lineHeight: '2', color: '#4B5060', fontFamily: 'monospace' }}>
+      <div><code>mail</code> → <code>IconMail</code></div>
+      <div><code>arrow-right</code> → <code>IconArrowRight</code></div>
+      <div><code>user-plus</code> → <code>IconUserPlus</code></div>
+      <div><code>brand-github</code> → <code>IconBrandGithub</code></div>
+    </div>
+  </div>
+  <div style={{ width: '1px', background: '#E5E7EB' }} />
+  <div style={{ flex: 1 }}>
+    <p style={{ margin: '0 0 4px', fontSize: '13px', fontWeight: 600, color: '#202125' }}>3. Importe e use</p>
+    <div style={{ fontSize: '12px', lineHeight: '1.8', color: '#4B5060', fontFamily: 'monospace' }}>
+      <div style={{ color: '#6B7280' }}>{'// import'}</div>
+      <div>{'{ IconArrowRight }'}</div>
+      <div style={{ color: '#6B7280' }}>{'// uso'}</div>
+      <div>{'<Icon icon={IconArrowRight} />'}</div>
+    </div>
+  </div>
+</div>
+
+---
+
+{/* ─── Acessibilidade ─────────────────────────────────────────── */}
+
+## Acessibilidade
+
+- O componente aplica `aria-hidden="true"` por padrão — ícones decorativos não devem ser anunciados por leitores de tela.
+- Quando o ícone for o **único conteúdo** de um botão (ex: `IconButton`), garanta que o elemento pai tenha `aria-label` descritivo.
+- Nunca use ícones como única forma de comunicar informação — sempre acompanhe com texto ou tooltip.
+
+---
+
+{/* ─── FAQ ─────────────────────────────────────────────────────── */}
+
+## FAQ
+
+**Por que `@tabler/icons-react` é peer dependency e não vem embutido no DS?**
+
+Para garantir tree-shaking. O pacote tem +5.000 ícones — se fosse bundlado no DS, todos iriam para o seu bundle final. Como peer dependency, o bundler do seu projeto (Vite, webpack, etc.) inclui apenas os ícones que você efetivamente importa.
+
+**Posso usar ícones Tabler sem o componente `Icon`?**
+
+Sim. Os componentes Tabler funcionam standalone. O wrapper `Icon` existe para padronizar tamanhos semânticos (`sm`, `md`, `lg`) e garantir `aria-hidden` automático — mas não é obrigatório.
+
+**Como encontro o nome de um ícone específico?**
+
+Acesse [tabler.io/icons](https://tabler.io/icons), busque pelo nome e converta para PascalCase com prefixo `Icon` (ex: `arrow-right` → `IconArrowRight`).

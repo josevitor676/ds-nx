@@ -1,0 +1,116 @@
+import { Meta, Canvas, ArgTypes } from "@storybook/addon-docs/blocks"
+import * as DropdownStories from "./Dropdown.stories"
+import { Tag } from "../Tag/Tag"
+
+<Meta of={DropdownStories} />
+
+{/* ─── Header ─────────────────────────────────────────────────── */}
+
+<div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "4px" }}>
+  <h1 style={{ margin: 0, fontSize: "28px", fontWeight: 700, color: "#202125" }}>Dropdown</h1>
+  <Tag label="Atom" variant="soft" color="primary" size="small" />
+  <Tag label="Estável" variant="soft" color="success" size="small" />
+</div>
+
+<p
+  style={{
+    fontSize: "16px",
+    color: "#4B5060",
+    marginTop: "8px",
+    marginBottom: "32px",
+    lineHeight: "1.6",
+  }}
+>
+  Painel de menu suspenso composto por itens clicáveis com suporte a ícone, estado selecionado e
+  estado desabilitado. Use em conjunto com um elemento de gatilho (ex: <code>Button</code> ou{" "}
+  <code>Popover</code>) para exibir listas de ações contextuais.
+</p>
+
+---
+
+{/* ─── Playground ──────────────────────────────────────────────── */}
+
+## Playground
+
+<Canvas of={DropdownStories.Default} />
+
+---
+
+{/* ─── Variantes ───────────────────────────────────────────────── */}
+
+## Variantes
+
+### Com ícones
+
+<Canvas of={DropdownStories.WithCustomIcons} />
+
+### Sem ícones
+
+<Canvas of={DropdownStories.WithoutIcons} />
+
+---
+
+{/* ─── Estados ─────────────────────────────────────────────────── */}
+
+## Estados
+
+- **`default`** — fundo transparente, texto `neutral-600`.
+- **`hover`** — fundo `neutral-50` ao passar o cursor.
+- **`selected`** — fundo `primary-25`, texto e ícone `primary-500`.
+- **`disabled`** — opacidade reduzida, cursor `not-allowed`, sem hover.
+
+<Canvas of={DropdownStories.ItemStates} />
+
+---
+
+{/* ─── Button + Dropdown ─────────────────────────────────────── */}
+
+## Uso com Button e Popover
+
+<Canvas of={DropdownStories.WithButtonTrigger} />
+
+```tsx
+import * as RadixPopover from "@radix-ui/react-popover"
+import { Button, Dropdown, DropdownItem } from "@your-org/design-system"
+import { IconEdit, IconShare2, IconTrash } from "@tabler/icons-react"
+
+export function Example() {
+  return (
+    <RadixPopover.Root>
+      <RadixPopover.Trigger asChild>
+        <Button size="sm" variant="outlined">Abrir menu</Button>
+      </RadixPopover.Trigger>
+
+      <RadixPopover.Portal>
+        <RadixPopover.Content side="bottom" align="start" sideOffset={8}>
+          <Dropdown>
+            <DropdownItem icon={IconShare2} label="Compartilhar" />
+            <DropdownItem icon={IconEdit} label="Editar" />
+            <DropdownItem icon={IconTrash} label="Excluir" />
+          </Dropdown>
+        </RadixPopover.Content>
+      </RadixPopover.Portal>
+    </RadixPopover.Root>
+  )
+}
+```
+
+---
+
+{/* ─── Props ───────────────────────────────────────────────────── */}
+
+## Props
+
+<ArgTypes of={DropdownStories} />
+
+---
+
+{/* ─── Acessibilidade ──────────────────────────────────────────── */}
+
+## Acessibilidade
+
+- O container `Dropdown` possui `role="menu"` para leitores de tela.
+- Cada `DropdownItem` possui `role="menuitem"` para identificação correta.
+- O estado desabilitado usa o atributo `disabled` nativo do HTML, garantindo bloqueio por teclado e mouse.
+- O estado selecionado é declarado visualmente via classes de cor; para uso em menus acessíveis, considere adicionar `aria-selected` ou `aria-current` conforme o contexto de navegação.
+- Certifique-se de encapsular o `Dropdown` em um componente com `aria-expanded` quando usado como menu flutuante.

@@ -1,0 +1,90 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks"
+import * as PieChartStories from "./PieChart.stories"
+import { Tag } from "../../../Atoms/Tag/Tag"
+
+<Meta of={PieChartStories} />
+
+{/* ─── Header ─────────────────────────────────────────────────── */}
+
+<div className="ds-flex ds-items-center ds-gap-3 ds-mb-1">
+  <h1 className="ds-m-0 ds-text-2xl ds-font-bold ds-text-neutral-900">PieChart</h1>
+  <Tag label="Molecule" variant="soft" color="purple" size="small" />
+  <Tag label="Estável" variant="soft" color="green" size="small" />
+</div>
+
+<p className="ds-mt-2 ds-mb-8 ds-text-base ds-text-neutral-700 ds-leading-relaxed">
+  Componente de gráfico de pizza responsivo, construído com SVG nativo. Suporta gráfico de pizza
+  simples e de rosca (donut) com tooltip, legenda e paleta de cores baseada nos tokens do Design
+  System.
+</p>
+
+---
+
+{/* ─── Playground ──────────────────────────────────────────────── */}
+
+## Playground
+
+Explore todas as combinações de props interativamente no painel abaixo.
+
+<Canvas of={PieChartStories.Default} />
+<Controls of={PieChartStories.Default} />
+
+---
+
+{/* ─── Variantes ───────────────────────────────────────────────── */}
+
+## Variantes
+
+### Pizza simples
+
+<Canvas of={PieChartStories.Default} />
+
+### Com legenda
+
+Ative `showLegend` para exibir a identificação de cada fatia.
+
+<Canvas of={PieChartStories.WithLegend} />
+
+### Rosca (Donut)
+
+Use `innerRadius` para criar o estilo de rosca. Um valor entre `40` e `80` costuma funcionar bem.
+
+<Canvas of={PieChartStories.Donut} />
+
+### Rosca com legenda
+
+<Canvas of={PieChartStories.DonutWithLegend} />
+
+### Cores customizadas
+
+Passe `color` em cada item de `data` com tokens do DS (`var(--ds-color-*)`).
+
+<Canvas of={PieChartStories.CustomColors} />
+
+---
+
+{/* ─── Tamanhos ────────────────────────────────────────────────── */}
+
+## Tamanhos
+
+<Canvas of={PieChartStories.Small} />
+<Canvas of={PieChartStories.Large} />
+
+---
+
+{/* ─── Props ───────────────────────────────────────────────────── */}
+
+## Props
+
+<ArgTypes of={PieChartStories} />
+
+---
+
+{/* ─── Acessibilidade ──────────────────────────────────────────── */}
+
+## Acessibilidade
+
+- O container do gráfico é um `<div>` neutro — adicione `aria-label` para descrever o conteúdo (ex: `aria-label="Distribuição de categorias"`).
+- O tooltip gerado pelo SVG nativo é acessível via teclado na maioria dos navegadores modernos.
+- Para leitores de tela, forneça sempre uma alternativa textual ou tabela com os mesmos dados.
+- Ao usar `CustomColors`, certifique-se de que cada cor possui contraste mínimo de 3:1 com o fundo.

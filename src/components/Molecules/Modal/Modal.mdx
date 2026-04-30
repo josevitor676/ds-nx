@@ -1,0 +1,93 @@
+import { Meta, Canvas, Controls, ArgTypes } from '@storybook/addon-docs/blocks';
+import * as ModalStories from './Modal.stories';
+import { Tag } from '../../Atoms/Tag/Tag';
+
+<Meta of={ModalStories} />
+
+{/* ─── Header ─────────────────────────────────────────────────── */}
+
+<div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '4px' }}>
+  <h1 style={{ margin: 0, fontSize: '28px', fontWeight: 700, color: '#202125' }}>Modal</h1>
+  <Tag label="Molecule" variant="soft" color="blue" size="small" />
+  <Tag label="Estável" variant="soft" color="green" size="small" />
+</div>
+
+<p style={{ fontSize: '16px', color: '#4B5060', marginTop: '8px', marginBottom: '32px', lineHeight: '1.6' }}>
+  O <strong>Modal</strong> é uma janela de interface que aparece à frente de todo o conteúdo para apresentar informações críticas ou solicitar uma ação imediata do usuário. Ele exige uma interação para ser fechado, garantindo que a atenção não seja dispersada. Use-o para confirmações de impacto (ações destrutivas ou permanentes) e entradas de dados focadas (pequenos formulários). Evite modais para conteúdo extenso, informações rápidas (prefira <code>Toast</code>) ou navegação simples.
+</p>
+
+---
+
+{/* ─── Playground ──────────────────────────────────────────────── */}
+
+## Playground
+
+<Canvas of={ModalStories.Default} />
+<Controls of={ModalStories.Default} />
+
+---
+
+{/* ─── Variantes ───────────────────────────────────────────────── */}
+
+## Variantes
+
+### Com conteúdo (`children`)
+Utilize a prop `children` para inserir qualquer conteúdo na área central do modal — formulários, listas ou texto descritivo.
+
+<Canvas of={ModalStories.WithContent} />
+
+### Sem subtítulo
+Use quando o título já é suficientemente descritivo e não é necessário texto de suporte.
+
+<Canvas of={ModalStories.WithoutSubtitle} />
+
+### Sem rodapé
+Use quando o modal é apenas informativo e não requer ações do usuário (ex: detalhe de visualização).
+
+<Canvas of={ModalStories.WithoutFooter} />
+
+### Sem botão fechar
+Use quando o modal deve ser encerrado obrigatoriamente pelos botões do rodapé (impede fechar via ESC ou clique no overlay também é recomendado para fluxos críticos).
+
+<Canvas of={ModalStories.WithoutCloseButton} />
+
+
+---
+
+{/* ─── Tamanhos ─────────────────────────────────────────────────── */}
+
+## Tamanhos
+
+O Modal possui três tamanhos controlados pela prop `size`. Utilize o tamanho adequado ao volume de conteúdo.
+
+| Tamanho | Largura |
+|---------|---------|
+| `sm`    | 480px   |
+| `md`    | 589px (padrão) |
+| `lg`    | 720px   |
+
+<Canvas of={ModalStories.SizeSm} />
+<Canvas of={ModalStories.SizeMd} />
+<Canvas of={ModalStories.SizeLg} />
+
+---
+
+{/* ─── Props ───────────────────────────────────────────────────── */}
+
+## Props
+
+<ArgTypes of={ModalStories} />
+
+---
+
+{/* ─── Acessibilidade ──────────────────────────────────────────── */}
+
+## Acessibilidade
+
+- **Papel semântico**: O modal usa `role="dialog"` e `aria-modal="true"` automaticamente via Radix UI Dialog.
+- **Título acessível**: A prop `title` é vinculada via `aria-labelledby` ao `Dialog.Title`, tornando o conteúdo anunciável por leitores de tela.
+- **Descrição acessível**: A prop `subtitle` é vinculada via `aria-describedby` ao `Dialog.Description`.
+- **Teclado**: Pressionar `Escape` fecha o modal. O foco é aprisionado dentro do painel enquanto aberto (focus trap via Radix).
+- **Botão fechar**: O `IconButton` do cabeçalho possui `aria-label="Fechar modal"` para leitores de tela.
+- **Retorno do foco**: Ao fechar, o foco retorna automaticamente ao elemento que abriu o modal.
+- **Contraste**: Texto do título usa `neutral-800` (#363843) e o subtítulo usa `neutral-600` (#646981), ambos com contraste suficiente sobre fundo branco.

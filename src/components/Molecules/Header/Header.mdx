@@ -1,0 +1,165 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks"
+import * as HeaderStories from "./Header.stories"
+import { Tag } from "../../Atoms/Tag/Tag"
+
+<Meta of={HeaderStories} />
+
+{/* ─── Header ─────────────────────────────────────────────────── */}
+
+<div
+  style={{
+    display: "flex",
+    alignItems: "center",
+    gap: "var(--ds-spacing-12)",
+    marginBottom: "var(--ds-spacing-4)",
+  }}
+>
+  <h1
+    style={{
+      margin: 0,
+      fontSize: "var(--ds-font-size-24)",
+      fontWeight: "var(--ds-font-weight-bold)",
+      color: "var(--ds-color-neutral-900)",
+    }}
+  >
+    Header
+  </h1>
+  <Tag label="Molecule" variant="soft" color="primary" size="small" />
+  <Tag label="Estável" variant="soft" color="success" size="small" />
+</div>
+
+<p
+  style={{
+    fontSize: "var(--ds-font-size-16)",
+    color: "var(--ds-color-neutral-700)",
+    marginTop: "var(--ds-spacing-2)",
+    marginBottom: "var(--ds-spacing-8)",
+    lineHeight: "var(--ds-line-height-26)",
+  }}
+>
+  Cabeçalho principal fixo no topo da interface. Serve como ponto central para ações globais —
+  busca, notificações, configurações e acesso ao perfil — e para identificação visual do sistema via
+  logotipo e nome da aplicação. Use em todas as páginas internas do sistema.
+</p>
+
+---
+
+{/* ─── Playground ──────────────────────────────────────────────── */}
+
+## Playground
+
+Explore todas as combinações de props interativamente no painel abaixo.
+
+<Canvas of={HeaderStories.Padrao} />
+<Controls of={HeaderStories.Padrao} />
+
+---
+
+{/* ─── Slot de ações ───────────────────────────────────────────── */}
+
+## Slot de ações
+
+O Header expõe a prop `actions` como um slot livre onde o desenvolvedor compõe os botões que desejar. Use `IconButton` e `HeaderProfile` para manter consistência visual.
+
+```tsx
+import { Header, HeaderProfile, IconButton } from "@gazin/design-system"
+import { Icon } from "@gazin/design-system"
+import { IconBell, IconSettings } from "@tabler/icons-react"
+;<Header
+  appName="Minha App"
+  actions={
+    <>
+      <IconButton
+        icon={<Icon icon={IconBell} size="md" />}
+        aria-label="Notificações"
+        variant="clear"
+        colorVariant="primary"
+        className="ds-rounded-sm ds-text-white hover:ds-bg-primary-700"
+        onClick={handleBell}
+      />
+      <IconButton
+        icon={<Icon icon={IconSettings} size="md" />}
+        aria-label="Configurações"
+        variant="clear"
+        colorVariant="primary"
+        className="ds-rounded-sm ds-text-white hover:ds-bg-primary-700"
+        onClick={handleSettings}
+      />
+      <HeaderProfile userName="Tiago Sanches" userRole="Desenvolvedor" onLogout={handleLogout} />
+    </>
+  }
+/>
+```
+
+### Com todas as ações
+
+<Canvas of={HeaderStories.ComAcoes} />
+
+### Somente perfil
+
+Útil em contextos onde notificações e configurações não se aplicam.
+
+<Canvas of={HeaderStories.SomentePerfil} />
+
+### Sem ações
+
+Basta não passar a prop `actions`. Ideal para telas de onboarding ou painéis embarcados.
+
+<Canvas of={HeaderStories.Padrao} />
+
+### Com itens de menu personalizados no perfil
+
+<Canvas of={HeaderStories.ComItensDeMenuPerfil} />
+
+---
+
+{/* ─── Estados ─────────────────────────────────────────────────── */}
+
+## Estados
+
+### Com busca preenchida
+
+<Canvas of={HeaderStories.ComBuscaPreenchida} />
+
+---
+
+{/* ─── Interativo ──────────────────────────────────────────────── */}
+
+## Demonstração interativa
+
+Exemplo funcional com toggle do menu lateral e campo de busca controlado.
+
+<Canvas of={HeaderStories.Interativo} />
+
+---
+
+{/* ─── Com SideMenu ────────────────────────────────────────────── */}
+
+## Header + SideMenu
+
+Layout completo com `Header` fixo no topo e `SideMenu` lateral. O botão de hambúrguer
+no Header controla o colapso/expansão do SideMenu. Clique nos itens do menu para
+alternar a página ativa.
+
+<Canvas of={HeaderStories.ComMenuLateral} />
+
+---
+
+{/* ─── Props ───────────────────────────────────────────────────── */}
+
+## Props
+
+<ArgTypes of={HeaderStories} />
+
+---
+
+{/* ─── Acessibilidade ──────────────────────────────────────────── */}
+
+## Acessibilidade
+
+- ⌨️ O botão de sidebar possui `aria-label="Alternar menu lateral"`.
+- 🔊 O campo de busca tem `aria-label` igual ao `searchPlaceholder`, garantindo anúncio correto em AT.
+- 🖼️ Quando `logoSrc` é fornecido, o elemento `<img>` recebe `alt` com o nome da aplicação. O logo padrão SVG é marcado com `aria-hidden="true"`.
+- 👤 O `HeaderProfile` usa `aria-label="Perfil do usuário"` e o dropdown é gerenciado pelo `@radix-ui/react-popover` (inclui `aria-expanded`, `aria-haspopup` e fechamento via `Escape`).
+- ♿ Botões passados via `actions` devem ter `aria-label` descritivo — responsabilidade do consumidor.
+- 📱 Em viewports menores que `sm` (640 px), o nome da aplicação é ocultado para economizar espaço.

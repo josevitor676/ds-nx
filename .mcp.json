@@ -1,0 +1,35 @@
+{
+  "inputs": [
+    {
+      "id": "figma-token",
+      "type": "promptString",
+      "description": "Figma Personal Access Token (figd_...)",
+      "password": true
+    }
+  ],
+  "servers": {
+    "figma-developer": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "figma-developer-mcp",
+        "--figma-api-key",
+        "${input:figma-token}"
+      ]
+    },
+    "design-system": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["scripts/mcp-agent.mjs"]
+    },
+    "storybook": {
+      "type": "http",
+      "url": "http://localhost:6006/mcp"
+    },
+    "storybook-remote": {
+      "type": "http",
+      "url": "https://design-system.gazin.com.br/mcp"
+    }
+  }
+}

@@ -1,0 +1,94 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks"
+import * as ExibitionGridStories from "./ExibitionGrid.stories"
+import { Tag } from "../../Atoms/Tag/Tag"
+
+<Meta of={ExibitionGridStories} />
+
+{/* ─── Header ─────────────────────────────────────────────────── */}
+
+<div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "4px" }}>
+  <h1 style={{ margin: 0, fontSize: "28px", fontWeight: 700, color: "#202125" }}>ExibitionGrid</h1>
+  <Tag label="Molecule" variant="soft" color="purple" size="small" />
+  <Tag label="Estável" variant="soft" color="green" size="small" />
+</div>
+
+<p
+  style={{
+    fontSize: "16px",
+    color: "#4B5060",
+    marginTop: "8px",
+    marginBottom: "32px",
+    lineHeight: "1.6",
+  }}
+>
+  Componente de status utilizado no rodapé de tabelas para fornecer visibilidade sobre o total de
+  registros e o intervalo de linhas atualmente renderizadas na tela. Use em conjunto com o
+  componente de paginação para indicar a quantidade de itens por página.
+</p>
+
+---
+
+{/* ─── Playground ──────────────────────────────────────────────── */}
+
+## Playground
+
+Explore todas as combinações de props interativamente no painel abaixo.
+
+<Canvas of={ExibitionGridStories.Default} />
+<Controls of={ExibitionGridStories.Default} />
+
+---
+
+{/* ─── Interativo ──────────────────────────────────────────────── */}
+
+## Uso Interativo
+
+O componente gerencia o estado do dropdown internamente. Passe `onChange` para reagir à seleção de uma nova opção.
+
+<Canvas of={ExibitionGridStories.Interactive} />
+
+---
+
+{/* ─── Variantes ───────────────────────────────────────────────── */}
+
+## Variantes
+
+### Total Grande
+
+<Canvas of={ExibitionGridStories.LargeTotal} />
+
+---
+
+{/* ─── Quando usar ─────────────────────────────────────────────── */}
+
+## Quando usar?
+
+- **Tabelas com paginação:** sempre que houver mais de uma página de resultados, para que o usuário saiba o tamanho total da lista.
+- **Filtros ativos:** fundamental para mostrar como o total de linhas diminuiu após a aplicação de filtros (ex: "Exibindo 5 de 100 linhas filtradas").
+
+## Quando não usar?
+
+- **Listas pequenas:** se a tabela tiver sempre menos de 10 itens e couber em uma única visualização, essa informação é redundante.
+- **Dashboards de resumo:** em widgets pequenos onde o espaço é limitado, prefira mostrar apenas o valor total em um título.
+- **Dados dinâmicos em tempo real:** se o número de linhas muda a cada segundo (como um log de servidor), um contador estático pode confundir o usuário.
+
+---
+
+{/* ─── Props ───────────────────────────────────────────────────── */}
+
+## Props
+
+<ArgTypes of={ExibitionGridStories} />
+
+---
+
+{/* ─── Acessibilidade ──────────────────────────────────────────── */}
+
+## Acessibilidade
+
+- O botão contador usa `aria-haspopup="listbox"` e `aria-expanded` para comunicar o estado do dropdown a leitores de tela.
+- O painel dropdown tem `role="listbox"` com `aria-label` descritivo.
+- Cada opção tem `role="option"` e `aria-selected` indicando o item atualmente selecionado.
+- O componente fecha com a tecla `Escape` e ao clicar fora da área.
+- O botão é focável via `Tab` e exibe anel de foco visível (`focus-visible:ring`).
+- Ícones de chevron possuem `aria-hidden="true"` pois são decorativos.

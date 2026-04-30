@@ -1,0 +1,46 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+<Meta title="Getting Started/1. Instalar Biblioteca" />
+
+# Configurar acesso ao registry da Gazin
+
+Crie (ou atualize) o arquivo `.npmrc` na raiz do projeto consumidor:
+
+```bash
+@gazin:registry=https://gitlab.gazintech.com.br/api/v4/packages/npm/
+//gitlab.gazintech.com.br/api/v4/packages/npm/:_authToken=${NPM_TOKEN}
+//gitlab.gazintech.com.br/api/v4/projects/771/packages/npm/:_authToken=${NPM_TOKEN}
+```
+
+**Observações:**
+
+- NPM_TOKEN é o token de acesso pessoal do GitLab (GITLAB PAT).
+- Não versione o arquivo `.npmrc` com o token, para evitar exposição acidental. Use variáveis de ambiente ou outras estratégias seguras para gerenciar tokens.
+
+# Instalar Biblioteca
+
+Instale a biblioteca e as peer dependencies no projeto consumidor.
+
+### npm
+
+```bash
+npm install @gazin/design-system react react-dom @tabler/icons-react
+```
+
+### pnpm
+
+```bash
+pnpm add @gazin/design-system react react-dom @tabler/icons-react
+```
+
+### yarn
+
+```bash
+yarn add @gazin/design-system react react-dom @tabler/icons-react
+```
+
+Depois da instalacao, importe o CSS global da biblioteca no entrypoint da aplicacao.
+
+```tsx
+import "@gazin/design-system/index.css"
+```

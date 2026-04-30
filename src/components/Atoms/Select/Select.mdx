@@ -1,0 +1,57 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks"
+import * as SelectStories from "./Select.stories"
+import { Tag } from "../Tag/Tag"
+
+<Meta of={SelectStories} />
+
+<div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "4px" }}>
+  <h1 style={{ margin: 0, fontSize: "28px", fontWeight: 700, color: "#202125" }}>Select</h1>
+  <Tag label="Atom" variant="soft" color="blue" size="small" />
+  <Tag label="Estável" variant="soft" color="green" size="small" />
+</div>
+
+<p
+  style={{
+    fontSize: "16px",
+    color: "#4B5060",
+    marginTop: "8px",
+    marginBottom: "32px",
+    lineHeight: "1.6",
+  }}
+>
+  O Single Select permite que os usuários escolham uma única opção de uma lista pré-definida. É a
+  solução ideal para formulários onde o espaço é limitado e a lista de opções é extensa.
+</p>
+
+---
+
+## Como usar?
+
+- **Seleção Única em Listas Longas:** Quando você tem entre 5 e 50 opções (ex: selecionar um Estado ou uma Categoria).
+- **Economia de Espaço:** Use quando um Radio Group ocuparia muito espaço vertical na tela.
+- **Filtros de Tabela:** Para filtrar dados por um critério específico (ex: Status: "Ativo", "Inativo").
+
+## Como não usar?
+
+- **Poucas Opções (< 4):** Se houver apenas 2 ou 3 opções, o Radio Group é mais eficiente.
+- **Múltiplas Escolhas:** Se o usuário pode selecionar mais de um item, use Multi-select.
+- **Seleção de Data:** Para datas, utilize um DatePicker dedicado.
+
+---
+
+## Playground
+
+<Canvas of={SelectStories.Default} />
+<Controls of={SelectStories.Default} />
+
+---
+
+## Exemplo
+
+<Canvas of={SelectStories.Example} />
+
+---
+
+## Props
+
+<ArgTypes of={SelectStories} />

@@ -1,0 +1,122 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks"
+import * as MultiSelectStories from "./MultiSelect.stories"
+import { Tag } from "../../Atoms/Tag/Tag"
+
+<Meta of={MultiSelectStories} />
+
+{/* ─── Header ─────────────────────────────────────────────────── */}
+
+<div className="ds-flex ds-items-center ds-gap-3 ds-mb-1">
+  <h1 className="ds-m-0 ds-text-28 ds-font-bold ds-text-neutral-900">MultiSelect</h1>
+  <Tag label="Molecule" variant="soft" color="purple" size="small" />
+  <Tag label="Estável" variant="soft" color="green" size="small" />
+</div>
+
+<div className="ds-text-16 ds-text-neutral-600 ds-mt-2 ds-mb-8 ds-leading-relaxed">
+  Campo de seleção múltipla. Exibe as opções em um menu com checkboxes e representa os itens
+  selecionados como tags removíveis diretamente no trigger.
+</div>
+
+---
+
+{/* ─── Playground ──────────────────────────────────────────────── */}
+
+## Playground
+
+<div>Explore todas as combinações de props interativamente no painel abaixo.</div>
+
+<Canvas of={MultiSelectStories.Default} />
+<Controls of={MultiSelectStories.Default} />
+
+---
+
+{/* ─── Estados ─────────────────────────────────────────────────── */}
+
+## Estados
+
+### Default
+
+Sem seleção. Exibe o `placeholder`.
+
+<Canvas of={MultiSelectStories.Default} />
+
+### Com seleção
+
+Itens selecionados aparecem como tags removíveis no trigger.
+
+<Canvas of={MultiSelectStories.WithSelection} />
+
+### Muitas seleções (+N)
+
+Quando o número de seleções ultrapassa `maxVisibleTags`, o excedente é agrupado em `+N`.
+
+<Canvas of={MultiSelectStories.ManySelected} />
+
+### Obrigatório
+
+Exibe asterisco (\*) ao lado do label. Usar junto com validação de formulário.
+
+<Canvas of={MultiSelectStories.Mandatory} />
+
+### Com texto de ajuda
+
+Texto auxiliar abaixo do campo para orientar o usuário.
+
+<Canvas of={MultiSelectStories.WithHelpText} />
+
+### Estado de erro
+
+Borda vermelha indicando falha de validação. Combinar com `helpText` descrevendo o erro.
+
+<Canvas of={MultiSelectStories.WithError} />
+
+### Desabilitado
+
+Bloqueia interações. As tags existentes são exibidas mas não podem ser removidas.
+
+<Canvas of={MultiSelectStories.Disabled} />
+
+---
+
+{/* ─── Exemplo de uso ───────────────────────────────────────────── */}
+
+## Exemplo de uso
+
+<Canvas of={MultiSelectStories.Example} />
+
+---
+
+{/* ─── Quando usar ──────────────────────────────────────────────── */}
+
+## Quando usar
+
+- **Filtros** — quando o usuário precisa selecionar múltiplos critérios de filtragem ao mesmo tempo (ex: categorias, regiões, status).
+- **Formulários de configuração** — quando um campo aceita mais de um valor (ex: permissões, tags, usuários responsáveis).
+- **Seleção em listas curtas** — quando o número de opções é entre 3 e ~20 itens.
+
+## Quando não usar
+
+- **Seleção única** — use o **Select** quando apenas um valor pode ser escolhido.
+- **Listas muito longas** — para centenas de opções, prefira um componente com busca/autocomplete.
+- **Confirmação de ação** — para confirmar ou negar uma única opção, use **Checkbox** ou **Switch**.
+
+---
+
+{/* ─── Props ───────────────────────────────────────────────────── */}
+
+## Props
+
+<ArgTypes of={MultiSelectStories} />
+
+---
+
+{/* ─── Acessibilidade ──────────────────────────────────────────── */}
+
+## Acessibilidade
+
+- ⌨️ O trigger é navegável por teclado via Tab; `Enter` e `Espaço` abrem/fecham o menu.
+- 🔊 `aria-expanded`, `aria-haspopup`, `aria-controls` e `aria-labelledby` são aplicados automaticamente no trigger.
+- 📍 `aria-current` não se aplica — use `aria-invalid={true}` via prop `error` para indicar erros ao AT.
+- 🚫 No estado `disabled`, `tabIndex={-1}` e `aria-disabled={true}` são aplicados.
+- ⭐ `mandatory={true}` aplica `aria-required={true}` no trigger e exibe asterisco com `aria-hidden={true}`.
+- 🎨 As combinações de cor atendem ao contraste mínimo WCAG AA.

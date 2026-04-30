@@ -1,0 +1,87 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks"
+import * as BarChartStories from "./BarChart.stories"
+import { Tag } from "../../../Atoms/Tag/Tag"
+
+<Meta of={BarChartStories} />
+
+{/* ─── Header ─────────────────────────────────────────────────── */}
+
+<div className="ds-flex ds-items-center ds-gap-3 ds-mb-1">
+  <h1 className="ds-m-0 ds-text-2xl ds-font-bold ds-text-neutral-900">BarChart</h1>
+  <Tag label="Molecule" variant="soft" color="purple" size="small" />
+  <Tag label="Estável" variant="soft" color="green" size="small" />
+</div>
+
+<p className="ds-mt-2 ds-mb-8 ds-text-base ds-text-neutral-700 ds-leading-relaxed">
+  Componente de gráfico de barras responsivo, construído com SVG nativo. Ideal para visualização de
+  dados categóricos ou temporais com suporte a múltiplas séries, legenda, tooltip e variantes de
+  tamanho. Todas as cores utilizam tokens do Design System.
+</p>
+
+---
+
+{/* ─── Playground ──────────────────────────────────────────────── */}
+
+## Playground
+
+Explore todas as combinações de props interativamente no painel abaixo.
+
+<Canvas of={BarChartStories.Padrao} />
+<Controls of={BarChartStories.Padrao} />
+
+---
+
+{/* ─── Variantes ───────────────────────────────────────────────── */}
+
+## Variantes
+
+### Barra simples
+
+<Canvas of={BarChartStories.Padrao} />
+
+### Múltiplas séries
+
+Use a prop `bars` com múltiplos objetos para exibir séries lado a lado. Ative `showLegend` para identificar cada série.
+
+<Canvas of={BarChartStories.MultipleBars} />
+
+<Canvas of={BarChartStories.FourSeries} />
+
+<Canvas of={BarChartStories.FiveSeries} />
+
+<Canvas of={BarChartStories.WithScroll} />
+
+### Sem grade
+
+<Canvas of={BarChartStories.WithoutGrid} />
+
+---
+
+{/* ─── Tamanhos ────────────────────────────────────────────────── */}
+
+## Tamanhos
+
+O componente possui três tamanhos pré-definidos via prop `size`. Use `height` para controle manual em pixels.
+
+<Canvas of={BarChartStories.Small} />
+<Canvas of={BarChartStories.Large} />
+<Canvas of={BarChartStories.CustomHeight} />
+
+---
+
+{/* ─── Props ───────────────────────────────────────────────────── */}
+
+## Props
+
+<ArgTypes of={BarChartStories} />
+
+---
+
+{/* ─── Acessibilidade ──────────────────────────────────────────── */}
+
+## Acessibilidade
+
+- O container do gráfico é um `<div>` neutro — adicione `aria-label` para descrever o conteúdo quando necessário (ex: `aria-label="Vendas mensais de 2024"`).
+- O tooltip gerado pelo SVG nativo é acessível via teclado na maioria dos navegadores modernos.
+- Para leitores de tela, considere complementar o gráfico com uma tabela de dados alternativa.
+- As cores dos tokens do DS têm relação de contraste mínima de 3:1 com o fundo branco.

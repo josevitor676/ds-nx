@@ -1,0 +1,116 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks"
+import * as LinkButtonStories from "./LinkButton.stories"
+import { Tag } from "../Tag/Tag"
+
+<Meta of={LinkButtonStories} />
+
+{/* ─── Header ─────────────────────────────────────────────────── */}
+
+<div className="ds-flex ds-items-center ds-gap-3 ds-mb-1">
+  <h1 className="ds-m-0 ds-text-32 ds-font-bold ds-text-neutral-900">LinkButton</h1>
+  <Tag label="Atom" variant="soft" color="blue" size="small" />
+  <Tag label="Estável" variant="soft" color="green" size="small" />
+</div>
+
+<div className="ds-text-16 ds-text-neutral-600 ds-mt-2 ds-mb-8 ds-leading-relaxed">
+  Utilizado para navegação e ações secundárias. Sua principal característica é a ausência de um
+  contêiner (botão), o que o torna ideal para contextos onde a densidade visual precisa ser baixa.
+</div>
+
+---
+
+{/* ─── Playground ──────────────────────────────────────────────── */}
+
+## Playground
+
+<div>Explore todas as combinações de props interativamente no painel abaixo.</div>
+
+<Canvas of={LinkButtonStories.Default} />
+<Controls of={LinkButtonStories.Default} />
+
+---
+
+{/* ─── Variantes de cor ─────────────────────────────────────────── */}
+
+## Variantes de cor
+
+### `colorVariant="primary"`
+
+Cor padrão. Exibe o link em `primary-500` com hover em `primary-700`.
+
+<Canvas of={LinkButtonStories.Default} />
+
+### `colorVariant="neutral"`
+
+Versão em cinza (`neutral-600`). Usar quando o link não deve competir com elementos primários da página.
+
+<Canvas of={LinkButtonStories.Neutral} />
+
+---
+
+{/* ─── Com ícones ───────────────────────────────────────────────── */}
+
+## Com ícones
+
+### Ícone à esquerda
+
+<Canvas of={LinkButtonStories.WithLeftIcon} />
+
+### Ícone à direita
+
+Padrão para links externos. Indica ao usuário que a ação abrirá em nova aba.
+
+<Canvas of={LinkButtonStories.WithRightIcon} />
+
+---
+
+{/* ─── Desabilitado ─────────────────────────────────────────────── */}
+
+## Desabilitado
+
+O `href` é removido, cliques são bloqueados e o elemento recebe `aria-disabled="true"`.
+
+<Canvas of={LinkButtonStories.Disabled} />
+
+---
+
+{/* ─── Exemplo de uso ───────────────────────────────────────────── */}
+
+## Exemplo de uso
+
+<Canvas of={LinkButtonStories.Example} />
+
+---
+
+{/* ─── Quando usar ──────────────────────────────────────────────── */}
+
+## Quando usar
+
+- **Links em texto** — dentro de parágrafos ou frases onde é necessário referenciar outra página sem quebrar a leitura.
+- **Ações de rodapé** — em tabelas ou modais, para ações como "Saiba mais" que devem ter menos peso que os botões.
+- **Navegação de suporte** — como o "Esqueci minha senha" em telas de login, onde o foco principal deve ser o botão de entrar.
+
+## Quando não usar
+
+- **Ação principal da página** — nunca use para a ação mais importante (ex: "Comprar agora", "Salvar"); use um **Button**.
+- **Navegação de breadcrumb** — para trilhas de navegação, utilize o componente **BreadcrumbItem**.
+
+---
+
+{/* ─── Props ───────────────────────────────────────────────────── */}
+
+## Props
+
+<ArgTypes of={LinkButtonStories} />
+
+---
+
+{/* ─── Acessibilidade ──────────────────────────────────────────── */}
+
+## Acessibilidade
+
+- ⌨️ Navegável por teclado — o elemento `<a>` recebe foco naturalmente via Tab.
+- 🔊 Usa elemento `<a>` nativo — leitores de tela anunciam o texto do link corretamente.
+- 🚫 No estado `disabled`, o `href` é removido, `tabIndex` passa a `-1` e `aria-disabled="true"` é aplicado.
+- 🖼️ Os ícones (`leftIcon` e `rightIcon`) são envolvidos com `aria-hidden={true}` para não gerar ruído em leitores de tela.
+- 🎨 As combinações de cor atendem ao contraste mínimo WCAG AA: `primary-500` e `neutral-600` sobre fundo branco.

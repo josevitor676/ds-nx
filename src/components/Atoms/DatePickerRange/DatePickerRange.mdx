@@ -1,0 +1,105 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks"
+import * as DatePickerRangeStories from "./DatePickerRange.stories"
+import { Tag } from "../Tag/Tag"
+
+<Meta of={DatePickerRangeStories} />
+
+{/* ─── Header ──────────────────────────────────────────────────────── */}
+
+<div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "4px" }}>
+  <h1 style={{ margin: 0, fontSize: "28px", fontWeight: 700, color: "#202125" }}>DatePickerRange</h1>
+  <Tag label="Atom" variant="soft" color="brand" size="small" />
+  <Tag label="Estável" variant="soft" color="success" size="small" />
+</div>
+
+<p style={{ fontSize: "16px", color: "#4B5060", marginTop: "8px", marginBottom: "32px", lineHeight: "1.6" }}>
+  Componente para seleção de um intervalo de datas. Exibe dois calendários lado a lado —
+  o direito sempre mostra o mês seguinte ao esquerdo — e permite ao usuário definir uma
+  data de início e uma data de fim com preview do range ao passar o mouse. Use quando o
+  fluxo exigir um período (filtros de relatório, reservas, agendamentos).
+</p>
+
+---
+
+{/* ─── Playground ──────────────────────────────────────────────────── */}
+
+## Playground
+
+Explore as props interativamente.
+
+<Canvas of={DatePickerRangeStories.Default} />
+<Controls of={DatePickerRangeStories.Default} />
+
+---
+
+{/* ─── Seleção de range ────────────────────────────────────────────── */}
+
+## Seleção de range
+
+O componente opera em dois cliques:
+
+1. **Primeiro clique** — define `startDate`; `endDate` fica `null`. O componente entra no modo de seleção de fim.
+2. **Segundo clique** — define `endDate`. Se a data clicada for anterior ao `startDate`, as datas são trocadas automaticamente.
+3. **Hover entre os cliques** — preview visual do range é exibido em tempo real.
+
+### Exemplo interativo
+
+<Canvas of={DatePickerRangeStories.Interactive} />
+
+---
+
+{/* ─── Estados visuais ─────────────────────────────────────────────── */}
+
+## Estados visuais dos dias
+
+| Estado | Aparência | Quando ocorre |
+|---|---|---|
+| `default` | Texto `neutral-500`, hover `primary-25` | Dias normais do mês |
+| `dim` | Texto `neutral-300` | Dias de meses adjacentes |
+| `in-range` | Fundo `primary-25`, texto `neutral-500` | Dias entre início e fim |
+| `start` | Fundo `primary-500`, texto branco, arredondado à esquerda | Data de início |
+| `end` | Fundo `primary-500`, texto branco, arredondado à direita | Data de fim |
+| `start-end` | Fundo `primary-500`, texto branco, totalmente arredondado | Quando início = fim |
+
+### Range dentro do mesmo mês
+
+<Canvas of={DatePickerRangeStories.WithPreselectedRange} />
+
+### Range entre meses
+
+O highlight `in-range` é contínuo entre os dois calendários.
+
+<Canvas of={DatePickerRangeStories.CrossMonthRange} />
+
+---
+
+{/* ─── Navegação ───────────────────────────────────────────────────── */}
+
+## Navegação
+
+O header expõe quatro controles de navegação:
+
+- **`◀◀` / `▶▶`** — avança ou recua 12 meses (ano)
+- **`◀` / `▶`** — avança ou recua 1 mês
+
+Cada lado também possui um botão dropdown que abre uma lista vertical com os 12 meses.
+Ao abrir o picker de um lado, o botão do lado oposto é desabilitado para evitar conflito.
+
+---
+
+{/* ─── Props ───────────────────────────────────────────────────────── */}
+
+## Props
+
+<ArgTypes of={DatePickerRangeStories} />
+
+---
+
+{/* ─── Acessibilidade ──────────────────────────────────────────────── */}
+
+## Acessibilidade
+
+- ⌨️ Todos os botões de navegação e seleção são elementos `<button>` nativos com `aria-label` descritivo.
+- ⌨️ Os botões de mês possuem `aria-expanded` que reflete o estado aberto/fechado do picker.
+- ⌨️ A grade de dias é navegável por Tab; o foco é visível via `focus-visible:ring`.
+- 🎨 As combinações de cor do estado `selected` (`primary-500` sobre branco) e `in-range` atendem ao contraste WCAG AA.

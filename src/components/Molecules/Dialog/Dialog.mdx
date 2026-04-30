@@ -1,0 +1,68 @@
+import { Meta, Canvas, Controls, ArgTypes } from '@storybook/addon-docs/blocks';
+import * as DialogStories from './Dialog.stories';
+import { Tag } from '../../Atoms/Tag/Tag';
+
+<Meta of={DialogStories} />
+
+<div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '4px' }}>
+  <h1 style={{ margin: 0, fontSize: '28px', fontWeight: 700, color: '#202125' }}>Dialog</h1>
+  <Tag label="Molecule" variant="soft" color="purple" size="small" />
+  <Tag label="Estável" variant="soft" color="green" size="small" />
+</div>
+
+<p style={{ fontSize: '16px', color: '#4B5060', marginTop: '8px', marginBottom: '32px', lineHeight: '1.6' }}>
+  Componente de janela flutuante utilizado para diálogos de confirmação, avisos do sistema ou tarefas rápidas que requerem atenção total do usuário sem sair do contexto atual.
+</p>
+
+---
+
+## Playground
+
+<Canvas of={DialogStories.Default} />
+<Controls of={DialogStories.Default} />
+
+---
+
+## Variantes
+
+### `type="web"`
+
+Largura mais ampla para telas desktop.
+
+<Canvas of={DialogStories.Web} />
+
+### `type="mobile"`
+
+Layout compacto para telas móveis.
+
+<Canvas of={DialogStories.Mobile} />
+
+---
+
+## Estados
+
+### `open`
+
+Controle de visibilidade do diálogo via prop `open`.
+
+<Canvas of={DialogStories.Default} />
+
+### Ação destrutiva
+
+Use para confirmações críticas e irreversíveis, como exclusão de dados ou encerramento de fluxos sem recuperação.
+
+<Canvas of={DialogStories.DestructiveAction} />
+
+---
+
+## Props
+
+<ArgTypes of={DialogStories} />
+
+---
+
+## Acessibilidade
+
+- ⌨️ Navegável por teclado; botão fechar é focalizável.
+- 🔊 Usa Radix Dialog para gerenciamento de foco e acessibilidade.
+- 🔒 O foco permanece preso dentro do diálogo enquanto ele estiver aberto.

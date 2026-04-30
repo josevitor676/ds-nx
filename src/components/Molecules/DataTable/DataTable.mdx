@@ -1,0 +1,117 @@
+import { ArgTypes, Canvas, Controls, Meta } from '@storybook/addon-docs/blocks';
+import * as DataTableStories from './DataTable.stories';
+import { Tag } from '../../Atoms/Tag/Tag';
+
+<Meta of={DataTableStories} />
+
+{/* ─── Header ─────────────────────────────────────────────────── */}
+
+<div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '4px' }}>
+  <h1 style={{ margin: 0, fontSize: '28px', fontWeight: 700, color: '#202125' }}>DataTable</h1>
+  <Tag label="Molecule" variant="soft" color="purple" size="small" />
+  <Tag label="Estável" variant="soft" color="green" size="small" />
+</div>
+
+<p style={{ fontSize: '16px', color: '#4B5060', marginTop: '8px', marginBottom: '32px', lineHeight: '1.6' }}>
+  Componente de tabela de dados para exibição de conjuntos de informações estruturadas em colunas e linhas. Suporta ordenação, filtragem, seleção de linhas, zebra striping e renderização customizada de células. Expõe também os sub-componentes <code>DataTableHeaderCell</code> e <code>DataTableCell</code> para uso composicional.
+</p>
+
+---
+
+{/* ─── Playground ──────────────────────────────────────────────── */}
+
+## Playground
+
+Explore as props interativamente no painel abaixo.
+
+<Canvas of={DataTableStories.Default} />
+<Controls of={DataTableStories.Default} />
+
+---
+
+{/* ─── Variantes ────────────────────────────────────────────────── */}
+
+## Variantes
+
+### Tabela simples
+
+Tabela básica com colunas de texto e ícone de ordenação.
+
+<Canvas of={DataTableStories.Default} />
+
+### Zebra striping (`striped`)
+
+Prop `striped` alterna o fundo das linhas ímpares para `neutral-25`, facilitando a leitura em tabelas largas.
+
+<Canvas of={DataTableStories.Striped} />
+
+### Ordenação (`sortable`)
+
+Colunas com `sortable: true` exibem o botão de ordenação no cabeçalho. Ao clicar, o ciclo é: crescente → decrescente → sem ordenação. No modo não-controlado, os dados são reordenados internamente. No modo controlado, passe `sortColumn`, `sortDirection` e `onSort`.
+
+<Canvas of={DataTableStories.Sortable} />
+
+### Filtragem (`filterable`)
+
+Colunas com `filterable: true` exibem o ícone de filtro no cabeçalho. O estado ativo (`filterActive`) é controlado externamente.
+
+<Canvas of={DataTableStories.Filterable} />
+
+### Seleção de linhas (`selectable`)
+
+Prop `selectable` adiciona uma coluna de checkboxes para seleção individual e em massa. O estado é controlado externamente via `selectedRows` e `onRowSelect`.
+
+<Canvas of={DataTableStories.Selectable} />
+
+---
+
+{/* ─── Células customizadas ─────────────────────────────────────── */}
+
+## Células customizadas
+
+Use a prop `render` na definição de coluna para renderizar qualquer conteúdo dentro da célula — Tags, ProgressBar, Switch, etc.
+
+<Canvas of={DataTableStories.WithCustomCells} />
+
+---
+
+{/* ─── Estado vazio ─────────────────────────────────────────────── */}
+
+## Estado vazio
+
+Quando `data` está vazio, a tabela exibe a prop `emptyState`. Se omitida, usa o texto padrão "Nenhum dado encontrado."
+
+<Canvas of={DataTableStories.Empty} />
+
+---
+
+{/* ─── Completo ─────────────────────────────────────────────────── */}
+
+## Uso completo
+
+Todas as funcionalidades combinadas: striping, seleção, células customizadas e aria-label.
+
+<Canvas of={DataTableStories.FullFeatured} />
+
+---
+
+{/* ─── Props ────────────────────────────────────────────────────── */}
+
+## Props
+
+<ArgTypes of={DataTableStories} />
+
+---
+
+{/* ─── Acessibilidade ───────────────────────────────────────────── */}
+
+## Acessibilidade
+
+- A tabela usa HTML semântico (`<table>`, `<thead>`, `<tbody>`, `<th scope="col">`, `<td>`) para garantir leitura correta por leitores de tela.
+- Passe `aria-label` no `DataTable` para identificar a tabela para tecnologias assistivas (ex: `aria-label="Tabela de colaboradores"`).
+- Os botões de ordenação possuem `aria-label` dinâmico indicando o estado atual: "Ordenação crescente", "Ordenação decrescente" ou "Ordenar coluna".
+- O botão de filtro possui `aria-label="Filtrar coluna"`.
+- O checkbox de seleção total no cabeçalho possui `aria-label="Selecionar todas as linhas"`.
+- O estado `indeterminate` no checkbox de "selecionar tudo" é ativado automaticamente quando apenas algumas linhas estão selecionadas.
+- Todos os controles interativos são focáveis via teclado e possuem anel de foco visível (`focus-visible:ring`).
+- Navegação por teclado em checkboxes: `Space` alterna o estado; formulários de tabela aceitam `Tab` para percorrer células.

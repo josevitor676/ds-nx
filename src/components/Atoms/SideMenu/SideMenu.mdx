@@ -1,0 +1,154 @@
+import { Meta, Canvas, Controls, ArgTypes } from '@storybook/addon-docs/blocks';
+import * as SideMenuStories from './SideMenu.stories';
+import { Tag } from '../Tag/Tag';
+
+<Meta of={SideMenuStories} />
+
+{/* ─── Header ─────────────────────────────────────────────────── */}
+
+<div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '4px' }}>
+  <h1 style={{ margin: 0, fontSize: '28px', fontWeight: 700, color: '#202125' }}>SideMenu</h1>
+  <Tag label="Atom" variant="soft" color="blue" size="small" />
+  <Tag label="Estável" variant="soft" color="green" size="small" />
+</div>
+
+<p style={{ fontSize: '16px', color: '#4B5060', marginTop: '8px', marginBottom: '32px', lineHeight: '1.6' }}>
+  Sidebar de navegação vertical composta por quatro sub-componentes: <code>SideMenu</code>, <code>SideMenuGroup</code>, <code>SideMenuItem</code> e <code>SideMenuSubItem</code>. Suporta agrupamento de itens com rótulo, sub-menus expansíveis, badges, modo colapsado (exibe apenas ícones) e estados <code>active</code> e <code>disabled</code>.
+</p>
+
+---
+
+{/* ─── Playground ──────────────────────────────────────────────── */}
+
+## Playground
+
+Explore todas as combinações de props interativamente no painel abaixo.
+
+<Canvas of={SideMenuStories.Default} />
+<Controls of={SideMenuStories.Default} />
+
+---
+
+{/* ─── Composição ──────────────────────────────────────────────── */}
+
+## Composição
+
+O SideMenu é composto por **quatro sub-componentes** que trabalham juntos:
+
+| Componente | Elemento | Papel |
+|---|---|---|
+| `SideMenu` | `<nav>` | Container principal. Define a largura e o estado `collapsed`. |
+| `SideMenuGroup` | `<div>` + `<ul>` | Agrupador de itens. Aceita `label` opcional exibido como rótulo de seção. |
+| `SideMenuItem` | `<li>` + `<button>` | Item de navegação. Suporta ícone, badge, `active`, `disabled` e sub-itens expansíveis. |
+| `SideMenuSubItem` | `<li>` + `<button>` | Sub-item de navegação, aninhado dentro de `SideMenuItem` via `children`. |
+
+```tsx
+<SideMenu>
+  <SideMenuGroup label="NAVEGAÇÃO">
+    <SideMenuItem icon={<HomeIcon />} label="Dashboard" active />
+    <SideMenuItem icon={<ChartIcon />} label="Relatórios">
+      <SideMenuSubItem label="Mensal" active />
+      <SideMenuSubItem label="Anual" />
+    </SideMenuItem>
+  </SideMenuGroup>
+</SideMenu>
+```
+
+---
+
+{/* ─── Estados ─────────────────────────────────────────────────── */}
+
+## Estados do item
+
+`SideMenuItem` tem três estados visuais: **default**, **active** e **disabled**.
+Use `active` para indicar a página atual e `disabled` para bloquear a interação.
+
+<Canvas of={SideMenuStories.ItemStates} />
+
+---
+
+{/* ─── Sub-itens ───────────────────────────────────────────────── */}
+
+## Sub-itens
+
+Passe `<SideMenuSubItem>` como `children` de um `SideMenuItem` para criar menus expansíveis.
+Use `defaultExpanded` para iniciar o item já aberto.
+
+<Canvas of={SideMenuStories.WithSubItems} />
+
+---
+
+{/* ─── Badge ───────────────────────────────────────────────────── */}
+
+## Badge
+
+A prop `badge` exibe um contador numérico ao lado do label do item.
+Aceita `string | number`. Útil para indicar notificações ou contagens pendentes.
+
+<Canvas of={SideMenuStories.WithBadge} />
+
+---
+
+{/* ─── Agrupamentos ────────────────────────────────────────────── */}
+
+## Agrupamentos com rótulo
+
+Passe `label` para `SideMenuGroup` para criar seções com título visível.
+No modo `collapsed`, o rótulo é ocultado automaticamente.
+
+<Canvas of={SideMenuStories.WithGroupLabel} />
+
+---
+
+{/* ─── Modo colapsado ──────────────────────────────────────────── */}
+
+## Modo colapsado
+
+Quando `collapsed={true}`, o menu exibe apenas ícones (sem labels e sem sub-itens).
+O atributo `title` é adicionado automaticamente ao item para exibir o label via tooltip nativo do navegador.
+
+<Canvas of={SideMenuStories.Collapsed} />
+
+---
+
+{/* ─── Sem ícones ──────────────────────────────────────────────── */}
+
+## Sem ícones
+
+A prop `icon` é opcional. Quando omitida, o layout se adapta exibindo apenas o label.
+
+<Canvas of={SideMenuStories.WithoutIcons} />
+
+---
+
+{/* ─── Props ───────────────────────────────────────────────────── */}
+
+## Props
+
+<ArgTypes of={SideMenuStories} />
+
+---
+
+{/* ─── Boas práticas ───────────────────────────────────────────────────────── */}
+
+## Boas práticas
+
+### ✅ Correto
+
+<Canvas of={SideMenuStories.BestPracticeCorrect} />
+
+### ❌ Evitar
+
+<Canvas of={SideMenuStories.BestPracticeAvoid} />
+
+---
+{/* ─── Acessibilidade ──────────────────────────────────────────── */}
+
+## Acessibilidade
+
+- ⌨️ Totalmente navegável por teclado (Tab para foco, Enter/Space para ativar ou expandir).
+- 🔊 Container usa `<nav aria-label="Side navigation">` para leitores de tela.
+- 🏷️ Itens usam `aria-current="page"` no item com `active` para sinalizar a página atual ao AT.
+- ▶️ Itens com sub-menus expõem `aria-expanded` para indicar estado aberto/fechado.
+- 🔒 Itens desabilitados recebem o atributo `disabled` nativo — comunicado ao AT automaticamente.
+- 📌 No modo `collapsed`, `title={label}` é adicionado ao botão para expor o nome via tooltip nativo.

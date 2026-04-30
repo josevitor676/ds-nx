@@ -1,0 +1,85 @@
+import { Meta, Canvas, Controls, ArgTypes } from '@storybook/addon-docs/blocks';
+import * as BreadcrumbItemStories from './BreadcrumbItem.stories';
+import { Tag } from '../Tag/Tag';
+
+<Meta of={BreadcrumbItemStories} />
+
+{/* ─── Header ─────────────────────────────────────────────────── */}
+
+<div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '4px' }}>
+  <h1 style={{ margin: 0, fontSize: '28px', fontWeight: 700, color: '#202125' }}>BreadcrumbItem</h1>
+  <Tag label="Atom" variant="soft" color="blue" size="small" />
+  <Tag label="Estável" variant="soft" color="green" size="small" />
+</div>
+
+<div style={{ fontSize: '16px', color: '#4B5060', marginTop: '8px', marginBottom: '32px', lineHeight: '1.6' }}>
+  Unidade atômica que compõe uma trilha de navegação (<em>breadcrumb</em>). Permite que o usuário identifique onde está na hierarquia do sistema e retorne a níveis anteriores. Use quando o sistema possui mais de dois níveis de profundidade ou quando é necessário oferecer um caminho de volta mais rápido do que o botão "voltar" do navegador.
+</div>
+
+---
+
+{/* ─── Playground ──────────────────────────────────────────────── */}
+
+## Playground
+
+<div>Explore todas as combinações de props interativamente no painel abaixo.</div>
+
+<Canvas of={BreadcrumbItemStories.Default} />
+<Controls of={BreadcrumbItemStories.Default} />
+
+---
+
+{/* ─── Estados ─────────────────────────────────────────────────── */}
+
+## Estados
+
+O BreadcrumbItem possui três estados visuais controlados automaticamente pelas props `href`, `active` e `disabled`.
+
+### `state="link"`
+
+Estado padrão. Exibe o item como um link navegável com cor neutra e cursor pointer.
+
+<Canvas of={BreadcrumbItemStories.Default} />
+
+### `state="active"`
+
+Indica o item atual na hierarquia de navegação. A cor muda para `primary-500` e o cursor passa a `default`. O atributo `aria-current="page"` é aplicado automaticamente.
+
+<Canvas of={BreadcrumbItemStories.Active} />
+
+### `state="disabled"`
+
+Bloqueia a interação e remove o chevron de separação. A cor muda para `neutral-600` e os eventos de ponteiro são desativados.
+
+<Canvas of={BreadcrumbItemStories.Disabled} />
+
+---
+
+{/* ─── Navegação interativa ─────────────────────────────────────── */}
+
+## Navegação interativa
+
+<div>Exemplo de uso composto com múltiplos itens e ícones personalizados.</div>
+
+<Canvas of={BreadcrumbItemStories.Navigation} />
+
+---
+
+{/* ─── Props ───────────────────────────────────────────────────── */}
+
+## Props
+
+<ArgTypes of={BreadcrumbItemStories} />
+
+---
+
+{/* ─── Acessibilidade ──────────────────────────────────────────── */}
+
+## Acessibilidade
+
+- ⌨️ Navegável por teclado — o elemento `<a>` recebe foco naturalmente via Tab.
+- 🔊 Usa elemento `<a>` nativo — leitores de tela anunciam o texto do link corretamente.
+- 📍 O atributo `aria-current="page"` é aplicado automaticamente ao item ativo, informando ao AT (Assistive Technology) qual é a página atual.
+- 🚫 No estado `disabled`, `pointer-events: none` impede cliques, mas o elemento ainda pode receber foco. Para audiências que dependem de leitores de tela, o estado desabilitado é comunicado visualmente pela cor `neutral-600`.
+- 🖼️ Os ícones (`iconLeft` e o chevron) são marcados com `aria-hidden={true}` para não gerar ruído em leitores de tela.
+- 🎨 As combinações de cor atendem ao contraste mínimo WCAG AA: `primary-500` sobre fundo branco e `neutral-600` sobre fundo branco.

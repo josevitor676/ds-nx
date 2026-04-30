@@ -1,0 +1,98 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks"
+import * as DrawerStories from "./Drawer.stories"
+import { Tag } from "../../Atoms/Tag/Tag"
+
+<Meta of={DrawerStories} />
+
+<div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "4px" }}>
+  <h1
+    style={{ margin: 0, fontSize: "28px", fontWeight: 700, color: "var(--ds-color-neutral-900)" }}
+  >
+    Drawer
+  </h1>
+  <Tag label="Molecule" variant="soft" color="purple" size="small" />
+  <Tag label="Estável" variant="soft" color="green" size="small" />
+</div>
+
+<p
+  style={{
+    fontSize: "16px",
+    color: "var(--ds-color-neutral-700)",
+    marginTop: "8px",
+    marginBottom: "32px",
+    lineHeight: "1.6",
+  }}
+>
+  Painel lateral utilizado para tarefas que exigem mais espaço vertical do que um Dropdown comum,
+  permitindo que o usuário interaja com configurações ou filtros sem perder totalmente o contexto da
+  página principal.
+</p>
+
+---
+
+## Playground
+
+<Canvas of={DrawerStories.Default} />
+<Controls of={DrawerStories.Default} />
+
+---
+
+## Variantes
+
+### Lado direito (padrão)
+
+O Drawer abre deslizando a partir da borda direita da tela.
+
+<Canvas of={DrawerStories.Default} />
+
+### Lado esquerdo
+
+Use `side="left"` para abrir o Drawer a partir da borda esquerda.
+
+<Canvas of={DrawerStories.LeftSide} />
+
+---
+
+## Com Conteúdo
+
+Exemplo de uso com filtros avançados dentro do Drawer.
+
+<Canvas of={DrawerStories.WithContent} />
+
+---
+
+## Estados
+
+### Sem rodapé
+
+Use `showFooter={false}` quando o componente não precisa de ações de confirmação — por exemplo, em drawers de exibição de informações.
+
+<Canvas of={DrawerStories.WithoutFooter} />
+
+---
+
+## Props
+
+<ArgTypes of={DrawerStories} />
+
+---
+
+## Acessibilidade
+
+- ⌨️ Totalmente navegável por teclado: Tab circula pelo conteúdo interno, ESC fecha o Drawer.
+- 🔊 Utiliza Radix Dialog internamente — o foco é capturado automaticamente ao abrir e devolvido ao elemento de origem ao fechar.
+- 🔒 O foco permanece preso dentro do Drawer enquanto ele estiver aberto (focus trap).
+- 👁️ O overlay semitransparente desabilita interações com o conteúdo ao fundo.
+- 🔖 O título é um `DialogTitle` do Radix, anunciado por leitores de tela ao abrir o painel.
+- 🔘 O botão fechar possui `aria-label="Fechar drawer"` para contexto completo em leitores de tela.
+
+**Quando usar:**
+
+- Filtros avançados com múltiplas opções
+- Configurações contextuais de um item da página
+
+**Quando não usar:**
+
+- Escolhas simples entre poucas opções (preferir Select ou RadioGroup)
+- Mensagens de erro ou confirmação curtas (usar Dialog)
+- Conteúdo que precisa estar sempre visível durante a tarefa principal

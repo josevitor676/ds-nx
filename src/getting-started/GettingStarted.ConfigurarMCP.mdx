@@ -1,0 +1,24 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+<Meta title="Getting Started/3. Configurar MCP" />
+
+# Configurar MCP
+
+Este repositorio usa MCP para conectar o Copilot a ferramentas de design e do proprio DS.
+
+## Arquivo mcp.json
+
+Crie ou atualize o arquivo mcp.json:
+
+```json
+{
+  "servers": {
+    "storybook": {
+      "type": "http",
+      "url": "https://design-system.gazin.com.br/mcp"
+    }
+  }
+}
+```
+
+No VS Code, abra o Copilot Chat em modo Agent e confirme se as tools MCP foram carregadas.

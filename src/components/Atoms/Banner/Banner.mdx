@@ -1,0 +1,115 @@
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks"
+import * as BannerStories from "./Banner.stories"
+import { Tag } from "../Tag/Tag"
+
+<Meta of={BannerStories} />
+
+{/* ─── Header ─────────────────────────────────────────────────── */}
+
+<div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "4px" }}>
+  <h1 style={{ margin: 0, fontSize: "28px", fontWeight: 700, color: "#202125" }}>Banner</h1>
+  <Tag label="Atom" variant="soft" color="brand" size="small" />
+  <Tag label="Estável" variant="soft" color="success" size="small" />
+</div>
+
+<p
+  style={{
+    fontSize: "16px",
+    color: "#4B5060",
+    marginTop: "8px",
+    marginBottom: "32px",
+    lineHeight: "1.6",
+  }}
+>
+  Componente utilizado para exibir mensagens informativas ao usuário dentro da interface. Os banners
+  comunicam estados, feedbacks ou orientações, variando seu nível de importância por meio de cores e
+  ícones. Use quando precisar informar algo pertinente sem interromper o fluxo — para ações
+  críticas, prefira o Modal.
+</p>
+
+---
+
+{/* ─── Playground ──────────────────────────────────────────────── */}
+
+## Playground
+
+Explore todas as combinações de props interativamente no painel abaixo.
+
+<Canvas of={BannerStories.Default} />
+<Controls of={BannerStories.Default} />
+
+---
+
+{/* ─── Variantes ───────────────────────────────────────────────── */}
+
+## Variantes
+
+O Banner possui cinco tipos semânticos que determinam a paleta de cores utilizada.
+
+### type="neutral"
+
+<Canvas of={BannerStories.Neutral} />
+
+### type="warning"
+
+<Canvas of={BannerStories.Warning} />
+
+### type="success"
+
+<Canvas of={BannerStories.Success} />
+
+### type="error"
+
+<Canvas of={BannerStories.Error} />
+
+### type="info"
+
+<Canvas of={BannerStories.Info} />
+
+---
+
+{/* ─── Todos os tipos ──────────────────────────────────────────── */}
+
+## Todos os tipos
+
+Visão consolidada de todas as variações disponíveis.
+
+<Canvas of={BannerStories.TodosTipos} />
+
+---
+
+{/* ─── Estados ─────────────────────────────────────────────────── */}
+
+## Estados
+
+### Sem ícone
+
+Use `showIcon={false}` para ocultar o badge de ícone quando o contexto já deixa o tipo claro.
+
+<Canvas of={BannerStories.SemIcone} />
+
+### Sem botões
+
+Omita `actionLabel` e `onClose` para renderizar somente a mensagem.
+
+<Canvas of={BannerStories.SemBotoes} />
+
+---
+
+{/* ─── Props ───────────────────────────────────────────────────── */}
+
+## Props
+
+<ArgTypes of={BannerStories} />
+
+---
+
+{/* ─── Acessibilidade ──────────────────────────────────────────── */}
+
+## Acessibilidade
+
+- 🔊 O elemento raiz possui `role="alert"`, garantindo que leitores de tela anunciem a mensagem quando ela aparecer na tela.
+- ⌨️ O botão de fechar é um `<button>` nativo com `aria-label="Fechar banner"`, totalmente acessível por teclado (Tab + Enter/Space).
+- ⌨️ O botão de ação herda toda a acessibilidade do componente `Button` — navegável por Tab e ativável por Enter/Space.
+- 🎨 As combinações de cor de texto e fundo de cada tipo atendem ao contraste mínimo WCAG AA (4.5:1).
+- 💡 Caso o Banner apareça de forma dinâmica (ex: após validação), o `role="alert"` garantirá o anúncio automático pelos AT. Para notificações menos urgentes, você pode sobrescrever com `aria-live="polite"` via prop.

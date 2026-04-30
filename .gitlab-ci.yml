@@ -1,0 +1,116 @@
+image: docker:27
+
+include:
+  - project: "gazin/tech/internal-tools/ci-cd-templates"
+    ref: main
+    file: "/jobs/code-review.yml"
+    rules:
+      - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+  - project: "gazin/tech/internal-tools/ci-cd-templates"
+    ref: main
+    file: "/jobs/notify-teams/notify-teams.yml"
+  - project: "gazin/tech/internal-tools/ci-cd-templates"
+    ref: main
+    file: "/jobs/semantic-release/semantic-release.yml"
+  - project: "gazin/tech/internal-tools/ci-cd-templates"
+    ref: main
+    file: "/jobs/validate-mr-title.yml"
+
+stages:
+  - validations
+  - codereview
+  - build
+  - release
+  - notify
+  - deploy
+
+variables:
+  SEMANTIC_RELEASE_NPM_PUBLISH: "true"
+  SEMANTIC_RELEASE_CHANGELOG: "true"
+  SEMANTIC_RELEASE_IGNORE_PATTERNS: "ops,devops,ci,docs,style"
+
+validate_mr_title:
+  stage: validations
+
+default:
+  tags:
+    - runner-instance
+
+.docker_login: &docker_login
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+.node_job_defaults:
+  image: node:22.22.1-alpine
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - .npm/
+
+build_validate:
+  extends:
+    - .node_job_defaults
+  stage: validations
+  script:
+    - npm ci --cache .npm --prefer-offline
+    - npm run lint
+    - npm run build
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - when: never
+
+test_validate:
+  extends:
+    - .node_job_defaults
+  stage: validations
+  script:
+    - npm ci --cache .npm --prefer-offline
+    - npm run test:run
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - when: never
+
+docker_image_publish:
+  stage: build
+  script:
+    - echo Branch Atual - $CI_COMMIT_BRANCH
+    - echo Commit Ref Name - $CI_COMMIT_REF_NAME
+    - *docker_login
+    - docker build --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+  rules:
+    - if: "$CI_COMMIT_REF_NAME == $TAG_BRANCH_PROD"
+
+.deploy:
+  stage: deploy
+  image:
+    name: ${CI_EXECUTOR}
+    entrypoint: ["/entrypoint.sh"]
+  script:
+    - kubectl create namespace ${NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -
+    - kubectl label namespace ${NAMESPACE} --overwrite registry=common tls=gazin
+    - |
+      helm upgrade ${RELEASE_NAME} --install --namespace ${NAMESPACE} .devops/helm/ \
+      --set fullnameOverride=${RELEASE_NAME} \
+      --set image.repository=$CI_REGISTRY_IMAGE \
+      --set image.tag=$CI_COMMIT_SHORT_SHA \
+      --set ingressNginx.hosts[0].host=${HOSTNAME} \
+      --set ingressNginx.hosts[0].paths[0].path=/ \
+      --set ingressNginx.tls[0].hosts[0]=${HOSTNAME} \
+      --set ingressNginx.tls[0].secretName=${SECRET_NAME} \
+      --set ingressNginx.enabled=true \
+      --set replicaCount=1
+
+deploy_prod:
+  extends:
+    - .deploy
+  environment:
+    name: shared-prod-v3
+  variables:
+    TLS: gazin
+  dependencies:
+    - docker_image_publish
+  rules:
+    - if: "$CI_COMMIT_REF_NAME == $TAG_BRANCH_PROD"
+    - when: never

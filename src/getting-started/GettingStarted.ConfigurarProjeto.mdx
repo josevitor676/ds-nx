@@ -1,0 +1,43 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+<Meta title="Getting Started/2. Configurar Projeto" />
+
+# Configurar Projeto
+
+Envolva a aplicacao com o ThemeProvider para aplicar os tokens CSS do Design System.
+
+```tsx
+import React from "react"
+import ReactDOM from "react-dom/client"
+import { ThemeProvider } from "@gazin/design-system"
+import "@gazin/design-system/index.css"
+import { App } from "./App"
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <ThemeProvider initialTheme="default">
+      <App />
+    </ThemeProvider>
+  </React.StrictMode>
+)
+```
+
+Se quiser trocar tema dinamicamente dentro da app, use o hook useTheme.
+
+```tsx
+import { useTheme } from "@gazin/design-system"
+
+export function ThemeSwitcher() {
+  const { theme, setTheme, availableThemes } = useTheme()
+
+  return (
+    <select value={theme} onChange={(e) => setTheme(e.target.value as typeof theme)}>
+      {availableThemes.map((item) => (
+        <option key={item.name} value={item.name}>
+          {item.label}
+        </option>
+      ))}
+    </select>
+  )
+}
+```

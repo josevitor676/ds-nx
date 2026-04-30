@@ -1,0 +1,193 @@
+/* ═══════════════════════════════════════════════════════════
+   Tailwind CSS v3 — prefix ds-
+   All utility classes are generated as ds-<utility>
+   e.g. ds-flex, ds-text-primary-500, ds-bg-surface-base
+   The prefix and theme mapping are defined in tailwind.config.js
+   ═══════════════════════════════════════════════════════════ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════════════════
+   DEFAULT THEME  (:root)
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  /* Typography */
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Primary */
+  --ds-color-primary-25:  #F5F6FE;
+  --ds-color-primary-50:  #E8EBFF;
+  --ds-color-primary-100: #D1D6FF;
+  --ds-color-primary-200: #9BA8FF;
+  --ds-color-primary-300: #6B7AFF;
+  --ds-color-primary-400: #4952C3;
+  --ds-color-primary-500: #0B109F;
+  --ds-color-primary-600: #090D7F;
+  --ds-color-primary-700: #070A5F;
+  --ds-color-primary-800: #050740;
+  --ds-color-primary-900: #020320;
+
+  /* Neutral */
+  --ds-color-neutral-25:  #F9F9F9;
+  --ds-color-neutral-50:  #F4F4F7;
+  --ds-color-neutral-100: #DCDDE3;
+  --ds-color-neutral-200: #C6C8D1;
+  --ds-color-neutral-300: #B0B3C0;
+  --ds-color-neutral-400: #A0A4B3;
+  --ds-color-neutral-500: #7C8096;
+  --ds-color-neutral-600: #646981;
+  --ds-color-neutral-700: #4D5163;
+  --ds-color-neutral-800: #363843;
+  --ds-color-neutral-900: #202125;
+
+  /* Success */
+  --ds-color-success-50:  #E5ECDB;
+  --ds-color-success-100: #D5EFB3;
+  --ds-color-success-200: #BBE585;
+  --ds-color-success-300: #B5DB85;
+  --ds-color-success-400: #87CE2C;
+  --ds-color-success-500: #6BB70B;
+  --ds-color-success-600: #508908;
+  --ds-color-success-700: #476E17;
+  --ds-color-success-800: #375412;
+  --ds-color-success-900: #273B0D;
+
+  /* Warning */
+  --ds-color-warning-50:  #FFF3E6;
+  --ds-color-warning-100: #FFEAD1;
+  --ds-color-warning-200: #FFD6A8;
+  --ds-color-warning-300: #FFC380;
+  --ds-color-warning-400: #FFB057;
+  --ds-color-warning-500: #FF9D2E;
+  --ds-color-warning-600: #FA8500;
+  --ds-color-warning-700: #C76A00;
+  --ds-color-warning-800: #944F00;
+  --ds-color-warning-900: #613400;
+
+  /* Error */
+  --ds-color-error-50:  #FDEDED;
+  --ds-color-error-100: #FBDBDB;
+  --ds-color-error-200: #F7B6B6;
+  --ds-color-error-300: #EF8B8B;
+  --ds-color-error-400: #EB4343;
+  --ds-color-error-500: #DE1818;
+  --ds-color-error-600: #B91414;
+  --ds-color-error-700: #941010;
+  --ds-color-error-800: #700C0C;
+  --ds-color-error-900: #4B0808;
+
+  /* Background */
+  --ds-color-bg-base:     #FFFFFF;
+  --ds-color-bg-subtle:   #F5F6FE;
+  --ds-color-bg-emphasis: #E8EBFF;
+
+  /* Surface */
+  --ds-color-surface-base:    #FFFFFF;
+  --ds-color-surface-raised:  #F5F5F5;
+  --ds-color-surface-overlay: rgba(0, 0, 0, 0.5);
+
+  /* Border radius */
+  --ds-radius-none: 0px;
+  --ds-radius-xs:   2px;
+  --ds-radius-sm:   4px;
+  --ds-radius-md:   8px;
+  --ds-radius-lg:   16px;
+  --ds-radius-full: 9999px;
+
+  /* Shadows */
+  --ds-shadow-sm: 0px 1px 3px 0px rgba(0,0,0,0.10);
+  --ds-shadow-md: 0px 4px 6px -1px rgba(0,0,0,0.10);
+  --ds-shadow-lg: 0px 10px 15px -3px rgba(0,0,0,0.10);
+
+  /* Typography */
+  --ds-font-family: 'Inter', sans-serif;
+  --ds-font-size-10: 10px;
+  --ds-font-size-12: 12px;
+  --ds-font-size-14: 14px;
+  --ds-font-size-16: 16px;
+  --ds-font-size-18: 18px;
+  --ds-font-size-20: 20px;
+  --ds-font-size-24: 24px;
+  --ds-font-size-32: 32px;
+  --ds-font-size-40: 40px;
+  --ds-font-size-56: 56px;
+  --ds-font-weight-regular:   400;
+  --ds-font-weight-medium:    500;
+  --ds-font-weight-semibold:  600;
+  --ds-font-weight-bold:      700;
+  --ds-font-weight-extrabold: 800;
+  --ds-line-height-16: 16px;
+  --ds-line-height-18: 18px;
+  --ds-line-height-20: 20px;
+  --ds-line-height-26: 26px;
+  --ds-line-height-32: 32px;
+  --ds-line-height-42: 42px;
+  --ds-line-height-52: 52px;
+  --ds-line-height-68: 68px;
+
+  /* Spacing */
+  --ds-spacing-0:   0px;
+  --ds-spacing-1:   1px;
+  --ds-spacing-2:   2px;
+  --ds-spacing-4:   4px;
+  --ds-spacing-6:   6px;
+  --ds-spacing-8:   8px;
+  --ds-spacing-10:  10px;
+  --ds-spacing-12:  12px;
+  --ds-spacing-16:  16px;
+  --ds-spacing-24:  24px;
+  --ds-spacing-32:  32px;
+  --ds-spacing-40:  40px;
+  --ds-spacing-48:  48px;
+  --ds-spacing-54:  54px;
+  --ds-spacing-60:  60px;
+  --ds-spacing-68:  68px;
+  --ds-spacing-72:  72px;
+  --ds-spacing-80:  80px;
+  --ds-spacing-88:  88px;
+  --ds-spacing-120: 120px;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   Base reset
+   ═══════════════════════════════════════════════════════════ */
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--ds-color-bg-base);
+  color: var(--ds-color-neutral-700);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Drawer animations
+   ═══════════════════════════════════════════════════════════ */
+@keyframes drawer-slide-in-right {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+@keyframes drawer-slide-out-right {
+  from { transform: translateX(0); }
+  to   { transform: translateX(100%); }
+}
+@keyframes drawer-slide-in-left {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0); }
+}
+@keyframes drawer-slide-out-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+
+[data-drawer-side="right"][data-state="open"]   { animation: drawer-slide-in-right  0.3s ease-in-out; }
+[data-drawer-side="right"][data-state="closed"] { animation: drawer-slide-out-right 0.3s ease-in-out; }
+[data-drawer-side="left"][data-state="open"]    { animation: drawer-slide-in-left   0.3s ease-in-out; }
+[data-drawer-side="left"][data-state="closed"]  { animation: drawer-slide-out-left  0.3s ease-in-out; }
