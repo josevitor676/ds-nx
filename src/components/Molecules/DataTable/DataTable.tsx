@@ -235,6 +235,11 @@ export interface DataTableProps {
   onSort?: (columnKey: string, direction: SortDirection) => void
   /** Content to render when `data` is empty */
   emptyState?: React.ReactNode
+  /**
+   * Render each row as a card on mobile screens (below the `md` breakpoint).
+   * Defaults to `true`.
+   */
+  mobileCards?: boolean
   /** Accessible label for the table element */
   "aria-label"?: string
   className?: string
@@ -253,6 +258,7 @@ export const DataTable = React.forwardRef<HTMLTableElement, DataTableProps>(
       sortDirection: sortDirectionProp,
       onSort,
       emptyState,
+      mobileCards = true,
       "aria-label": ariaLabel,
       className,
     },
@@ -314,129 +320,206 @@ export const DataTable = React.forwardRef<HTMLTableElement, DataTableProps>(
     const totalCols = columns.length + (selectable ? 1 : 0)
 
     return (
-      <div className="ds-w-full ds-overflow-x-auto">
-        <table
-          ref={ref}
-          className={cn("ds-border-separate ds-border-spacing-0 ds-w-full", className)}
-          aria-label={ariaLabel}
-        >
-          {/* Column widths */}
-          <colgroup>
-            {selectable && <col style={{ width: "40px" }} />}
-            {columns.map((col) => (
-              <col key={col.key} style={col.width ? { width: col.width } : undefined} />
-            ))}
-          </colgroup>
-
-          {/* Header */}
-          <thead>
-            <tr>
-              {selectable && (
-                <DataTableHeaderCell
-                  type="enter"
-                  showCheckbox
-                  checkboxValue={allSelected ? "check" : someSelected ? "indeterminate" : "uncheck"}
-                  onCheckboxChange={handleSelectAll}
-                  aria-label="Selecionar todas as linhas"
-                  // When there are no data columns after checkbox, round tr too
-                  className={totalCols === 1 ? "ds-rounded-tr-sm" : undefined}
-                />
-              )}
-
-              {columns.map((col, colIdx) => {
-                const displayIdx = selectable ? colIdx + 1 : colIdx
-                const headerType = getHeaderType(displayIdx, totalCols)
-                const colSortDir = activeSortCol === col.key ? activeSortDir : null
-
-                // Only one column total → both rounded corners
-                const extraClass =
-                  totalCols === 1 && displayIdx === 0 ? "ds-rounded-tr-sm" : undefined
-
-                return (
-                  <DataTableHeaderCell
-                    key={col.key}
-                    type={headerType}
-                    label={col.header}
-                    sortable={col.sortable}
-                    sortDirection={colSortDir}
-                    onSort={() => handleSort(col.key)}
-                    filterable={col.filterable}
-                    filterActive={col.filterActive}
-                    onFilter={col.onFilter}
-                    className={extraClass}
-                  />
-                )
-              })}
-            </tr>
-          </thead>
-
-          {/* Body */}
-          <tbody>
+      <>
+        {/* ── Mobile card layout ────────────────────────────────────────────── */}
+        {mobileCards && (
+          <div className="ds-flex ds-flex-col ds-gap-3 md:ds-hidden">
             {sortedData.length === 0 ? (
-              <tr>
-                <td
-                  colSpan={totalCols}
-                  className={cn(
-                    "ds-border-l ds-border-r ds-border-b ds-border-neutral-100 ds-border-solid",
-                    "ds-text-center ds-text-sm ds-leading-20 ds-text-neutral-400",
-                    "ds-px-4 ds-py-6 ds-bg-surface-base ds-rounded-b-sm"
-                  )}
-                >
-                  {emptyState ?? "Nenhum dado encontrado."}
-                </td>
-              </tr>
+              <div
+                className={cn(
+                  "ds-rounded-md ds-border ds-border-neutral-100 ds-border-solid",
+                  "ds-px-4 ds-py-6 ds-text-center ds-text-sm ds-text-neutral-400 ds-bg-surface-base"
+                )}
+              >
+                {emptyState ?? "Nenhum dado encontrado."}
+              </div>
             ) : (
               sortedData.map((row, rowIdx) => {
-                const isLastRow = rowIdx === sortedData.length - 1
                 const isSelected = selectedRows.includes(rowIdx)
-                const rowColor: "white" | "gray" | "hover" = isSelected
-                  ? "hover"
-                  : striped && rowIdx % 2 === 1
-                    ? "gray"
-                    : "white"
 
                 return (
-                  <tr key={rowIdx} className="ds-group">
-                    {/* Selection checkbox */}
+                  <div
+                    key={rowIdx}
+                    className={cn(
+                      "ds-rounded-md ds-border ds-border-solid ds-border-neutral-100 ds-overflow-hidden",
+                      isSelected
+                        ? "ds-bg-primary-50"
+                        : striped && rowIdx % 2 === 1
+                          ? "ds-bg-neutral-25"
+                          : "ds-bg-surface-base"
+                    )}
+                  >
                     {selectable && (
-                      <DataTableCell
-                        type={getBodyCellType(0, totalCols, isLastRow)}
-                        color={rowColor}
-                        innerClassName="ds-justify-center ds-px-0"
-                      >
+                      <div className="ds-flex ds-items-center ds-gap-2 ds-px-4 ds-py-2 ds-border-b ds-border-neutral-100 ds-border-solid">
                         <Checkbox
                           value={isSelected ? "check" : "uncheck"}
                           onChange={(value) => handleRowSelect(rowIdx, value)}
                           size="sm"
-                          className="ds-shrink-0"
                         />
-                      </DataTableCell>
+                        <span className="ds-text-xs ds-font-medium ds-text-neutral-400">
+                          Selecionar
+                        </span>
+                      </div>
                     )}
 
-                    {columns.map((col, colIdx) => {
-                      const displayIdx = selectable ? colIdx + 1 : colIdx
-                      const cellType = getBodyCellType(displayIdx, totalCols, isLastRow)
-                      const cellValue = row[col.key]
-
-                      return (
-                        <DataTableCell key={col.key} type={cellType} color={rowColor}>
-                          {col.render ? (
-                            col.render(cellValue, row, rowIdx)
-                          ) : (
-                            <span className="ds-truncate ds-text-sm ds-font-regular ds-text-neutral-600 ds-leading-20">
-                              {cellValue != null ? String(cellValue) : ""}
+                    <div className="ds-divide-y ds-divide-neutral-100">
+                      {columns.map((col) => {
+                        const cellValue = row[col.key]
+                        return (
+                          <div
+                            key={col.key}
+                            className="ds-flex ds-items-center ds-justify-between ds-gap-4 ds-px-4 ds-min-h-9 ds-py-2"
+                          >
+                            <span className="ds-text-sm ds-font-medium ds-text-neutral-500 ds-shrink-0">
+                              {col.header}
                             </span>
-                          )}
-                        </DataTableCell>
-                      )
-                    })}
-                  </tr>
+                            <div className="ds-flex ds-items-center ds-justify-end ds-min-w-0">
+                              {col.render ? (
+                                col.render(cellValue, row, rowIdx)
+                              ) : (
+                                <span className="ds-text-sm ds-font-regular ds-text-neutral-600 ds-truncate">
+                                  {cellValue != null ? String(cellValue) : ""}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </div>
                 )
               })
             )}
-          </tbody>
-        </table>
-      </div>
+          </div>
+        )}
+
+        {/* ── Desktop table layout ──────────────────────────────────────────── */}
+        <div className={cn("ds-w-full ds-overflow-x-auto", mobileCards && "ds-hidden md:ds-block")}>
+          <table
+            ref={ref}
+            className={cn("ds-border-separate ds-border-spacing-0 ds-w-full", className)}
+            aria-label={ariaLabel}
+          >
+            {/* Column widths */}
+            <colgroup>
+              {selectable && <col style={{ width: "40px" }} />}
+              {columns.map((col) => (
+                <col key={col.key} style={col.width ? { width: col.width } : undefined} />
+              ))}
+            </colgroup>
+
+            {/* Header */}
+            <thead>
+              <tr>
+                {selectable && (
+                  <DataTableHeaderCell
+                    type="enter"
+                    showCheckbox
+                    checkboxValue={
+                      allSelected ? "check" : someSelected ? "indeterminate" : "uncheck"
+                    }
+                    onCheckboxChange={handleSelectAll}
+                    aria-label="Selecionar todas as linhas"
+                    // When there are no data columns after checkbox, round tr too
+                    className={totalCols === 1 ? "ds-rounded-tr-sm" : undefined}
+                  />
+                )}
+
+                {columns.map((col, colIdx) => {
+                  const displayIdx = selectable ? colIdx + 1 : colIdx
+                  const headerType = getHeaderType(displayIdx, totalCols)
+                  const colSortDir = activeSortCol === col.key ? activeSortDir : null
+
+                  // Only one column total → both rounded corners
+                  const extraClass =
+                    totalCols === 1 && displayIdx === 0 ? "ds-rounded-tr-sm" : undefined
+
+                  return (
+                    <DataTableHeaderCell
+                      key={col.key}
+                      type={headerType}
+                      label={col.header}
+                      sortable={col.sortable}
+                      sortDirection={colSortDir}
+                      onSort={() => handleSort(col.key)}
+                      filterable={col.filterable}
+                      filterActive={col.filterActive}
+                      onFilter={col.onFilter}
+                      className={extraClass}
+                    />
+                  )
+                })}
+              </tr>
+            </thead>
+
+            {/* Body */}
+            <tbody>
+              {sortedData.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan={totalCols}
+                    className={cn(
+                      "ds-border-l ds-border-r ds-border-b ds-border-neutral-100 ds-border-solid",
+                      "ds-text-center ds-text-sm ds-leading-20 ds-text-neutral-400",
+                      "ds-px-4 ds-py-6 ds-bg-surface-base ds-rounded-b-sm"
+                    )}
+                  >
+                    {emptyState ?? "Nenhum dado encontrado."}
+                  </td>
+                </tr>
+              ) : (
+                sortedData.map((row, rowIdx) => {
+                  const isLastRow = rowIdx === sortedData.length - 1
+                  const isSelected = selectedRows.includes(rowIdx)
+                  const rowColor: "white" | "gray" | "hover" = isSelected
+                    ? "hover"
+                    : striped && rowIdx % 2 === 1
+                      ? "gray"
+                      : "white"
+
+                  return (
+                    <tr key={rowIdx} className="ds-group">
+                      {/* Selection checkbox */}
+                      {selectable && (
+                        <DataTableCell
+                          type={getBodyCellType(0, totalCols, isLastRow)}
+                          color={rowColor}
+                          innerClassName="ds-justify-center ds-px-0"
+                        >
+                          <Checkbox
+                            value={isSelected ? "check" : "uncheck"}
+                            onChange={(value) => handleRowSelect(rowIdx, value)}
+                            size="sm"
+                            className="ds-shrink-0"
+                          />
+                        </DataTableCell>
+                      )}
+
+                      {columns.map((col, colIdx) => {
+                        const displayIdx = selectable ? colIdx + 1 : colIdx
+                        const cellType = getBodyCellType(displayIdx, totalCols, isLastRow)
+                        const cellValue = row[col.key]
+
+                        return (
+                          <DataTableCell key={col.key} type={cellType} color={rowColor}>
+                            {col.render ? (
+                              col.render(cellValue, row, rowIdx)
+                            ) : (
+                              <span className="ds-truncate ds-text-sm ds-font-regular ds-text-neutral-600 ds-leading-20">
+                                {cellValue != null ? String(cellValue) : ""}
+                              </span>
+                            )}
+                          </DataTableCell>
+                        )
+                      })}
+                    </tr>
+                  )
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
+      </>
     )
   }
 )

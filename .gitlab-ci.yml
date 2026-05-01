@@ -1,18 +1,18 @@
 image: docker:27
 
 include:
-  - project: "gazin/tech/internal-tools/ci-cd-templates"
+  - project: "nexusshield/tech/internal-tools/ci-cd-templates"
     ref: main
     file: "/jobs/code-review.yml"
     rules:
       - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-  - project: "gazin/tech/internal-tools/ci-cd-templates"
+  - project: "nexusshield/tech/internal-tools/ci-cd-templates"
     ref: main
     file: "/jobs/notify-teams/notify-teams.yml"
-  - project: "gazin/tech/internal-tools/ci-cd-templates"
+  - project: "nexusshield/tech/internal-tools/ci-cd-templates"
     ref: main
     file: "/jobs/semantic-release/semantic-release.yml"
-  - project: "gazin/tech/internal-tools/ci-cd-templates"
+  - project: "nexusshield/tech/internal-tools/ci-cd-templates"
     ref: main
     file: "/jobs/validate-mr-title.yml"
 
@@ -89,7 +89,7 @@ docker_image_publish:
     entrypoint: ["/entrypoint.sh"]
   script:
     - kubectl create namespace ${NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -
-    - kubectl label namespace ${NAMESPACE} --overwrite registry=common tls=gazin
+    - kubectl label namespace ${NAMESPACE} --overwrite registry=common tls=nexusshield
     - |
       helm upgrade ${RELEASE_NAME} --install --namespace ${NAMESPACE} .devops/helm/ \
       --set fullnameOverride=${RELEASE_NAME} \
@@ -108,7 +108,7 @@ deploy_prod:
   environment:
     name: shared-prod-v3
   variables:
-    TLS: gazin
+    TLS: nexusshield
   dependencies:
     - docker_image_publish
   rules:

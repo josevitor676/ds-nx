@@ -74,20 +74,20 @@ const AcoesCompletas = ({ menuItems, onProfileClick, onLogout }: AcoesCompletasP
 export const Padrao: Story = {
   name: "Padrão",
   args: {
-    appName: "Gazin Design System",
+    appName: "Nexus Shield Design System",
   },
 }
 
 export const ComAcoes: Story = {
   name: "Com ações",
-  render: () => <Header appName="Gazin Design System" actions={<AcoesCompletas />} />,
+  render: () => <Header appName="Nexus Shield Design System" actions={<AcoesCompletas />} />,
 }
 
 export const SomentePerfil: Story = {
   name: "Somente perfil",
   render: () => (
     <Header
-      appName="Gazin Design System"
+      appName="Nexus Shield Design System"
       actions={
         <HeaderProfile
           userName="Tiago Sanches"
@@ -104,7 +104,7 @@ export const ComItensDeMenuPerfil: Story = {
   name: "Com itens de menu no perfil",
   render: () => (
     <Header
-      appName="Gazin Design System"
+      appName="Nexus Shield Design System"
       actions={
         <>
           <IconButton
@@ -134,7 +134,7 @@ export const ComItensDeMenuPerfil: Story = {
 export const ComBuscaPreenchida: Story = {
   name: "Com busca preenchida",
   args: {
-    appName: "Gazin Design System",
+    appName: "Nexus Shield Design System",
     searchValue: "componente Button",
   },
 }
@@ -142,7 +142,7 @@ export const ComBuscaPreenchida: Story = {
 export const ComLogoPersonalizado: Story = {
   name: "Com logo personalizado",
   args: {
-    appName: "Gazin Design System",
+    appName: "Nexus Shield Design System",
     logoSrc: "https://www.figma.com/api/mcp/asset/866841f9-ba83-44c9-9fe9-77c386086985",
   },
 }
@@ -154,7 +154,7 @@ const InteractiveHeader = () => {
   return (
     <div>
       <Header
-        appName="Gazin Design System"
+        appName="Nexus Shield Design System"
         searchValue={search}
         onSearchChange={setSearch}
         onSidebarToggle={() => setSidebarOpen((v) => !v)}
@@ -250,7 +250,7 @@ const HeaderWithSideMenu = () => {
   return (
     <div className="ds-flex ds-flex-col ds-h-screen ds-bg-neutral-25">
       <Header
-        appName="Gazin Design System"
+        appName="Nexus Shield Design System"
         searchValue={search}
         onSearchChange={setSearch}
         onSidebarToggle={() => {
@@ -314,9 +314,9 @@ export const ComMenuLateral: Story = {
 import { IconBell, IconChartBar, IconHome, IconSettings, IconUsers } from "@tabler/icons-react"
 import { useRef, useState } from "react"
 import { cn } from "@/lib/utils"
-import { Icon, SideMenu, SideMenuGroup, SideMenuItem, SideMenuSubItem } from "@gazin/design-system"
-import { Header, HeaderProfile } from "@gazin/design-system"
-import { IconButton } from "@gazin/design-system"
+import { Icon, SideMenu, SideMenuGroup, SideMenuItem, SideMenuSubItem } from "@nexusshield/design-system"
+import { Header, HeaderProfile } from "@nexusshield/design-system"
+import { IconButton } from "@nexusshield/design-system"
 
 export default function App() {
   const [search, setSearch] = useState("")

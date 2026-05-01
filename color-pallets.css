@@ -1,0 +1,188 @@
+/**
+ * ============================================================
+ *  NEXTSHIELD COMPLIANCE — COLOR PALETTE
+ *  Fonte: src/styles/globals.css
+ *  Gerado em: 2026-04-30
+ * ============================================================
+ *
+ *  Como usar em outro projeto:
+ *  1. Copie este arquivo para o novo projeto.
+ *  2. Importe no CSS principal: @import "./color-palette.css";
+ *  3. Use as variáveis normalmente, ex: color: var(--primary);
+ * ============================================================
+ */
+
+
+/* ============================================================
+ *  1. CORES PRINCIPAIS (Brand)
+ * ============================================================ */
+:root {
+  /* Azul marinho escuro — cor dominante, fundos de sidebar e botões primários */
+  --primary:            #1e3a5f;
+  --primary-foreground: #ffffff;
+
+  /* Teal / Turquesa — destaque, hover, anéis de foco e charts */
+  --secondary:            #2dd4bf;
+  --secondary-foreground: #1e3a5f;
+
+  /* Igual ao secondary — usado explicitamente como accent em badges e ícones */
+  --accent:            #2dd4bf;
+  --accent-foreground: #1e3a5f;
+}
+
+
+/* ============================================================
+ *  2. SUPERFÍCIES E NEUTROS
+ * ============================================================ */
+:root {
+  /* Página / fundo geral */
+  --background:   #f8f9fb;
+  --foreground:   #1a1d29;
+
+  /* Cards e popovers */
+  --card:            #ffffff;
+  --card-foreground: #1a1d29;
+  --popover:            #ffffff;
+  --popover-foreground: #1a1d29;
+
+  /* Elementos desabilitados / texto secundário */
+  --muted:            #e5e7eb;
+  --muted-foreground: #6b7280;
+
+  /* Inputs */
+  --input:            transparent;
+  --input-background: #f3f4f6;
+  --switch-background: #cbd5e1;
+
+  /* Bordas */
+  --border: rgba(0, 0, 0, 0.10);
+
+  /* Anel de foco */
+  --ring: #2dd4bf;
+}
+
+
+/* ============================================================
+ *  3. COR DESTRUTIVA (erros, alertas críticos)
+ * ============================================================ */
+:root {
+  --destructive:            #ef4444;  /* red-500 */
+  --destructive-foreground: #ffffff;
+}
+
+
+/* ============================================================
+ *  4. SIDEBAR
+ * ============================================================ */
+:root {
+  --sidebar:                    #1e3a5f;   /* mesmo que --primary */
+  --sidebar-foreground:         #ffffff;
+  --sidebar-primary:            #2dd4bf;   /* mesmo que --secondary */
+  --sidebar-primary-foreground: #1e3a5f;
+  --sidebar-accent:             #2a4a6f;   /* azul médio, hover de item */
+  --sidebar-accent-foreground:  #ffffff;
+  --sidebar-border:             #2a4a6f;
+  --sidebar-ring:               #2dd4bf;
+}
+
+
+/* ============================================================
+ *  5. GRÁFICOS / CHARTS
+ * ============================================================ */
+:root {
+  --chart-1: #2dd4bf;   /* Teal        — série principal */
+  --chart-2: #1e3a5f;   /* Navy        — série secundária */
+  --chart-3: #a3e635;   /* Lime green  — série 3 */
+  --chart-4: #f59e0b;   /* Amber       — série 4 */
+  --chart-5: #ef4444;   /* Red         — série 5 / alerta */
+}
+
+
+/* ============================================================
+ *  6. MODO ESCURO
+ * ============================================================ */
+.dark {
+  /* Superfícies */
+  --background:            #0f1419;
+  --foreground:            #f8f9fb;
+  --card:                  #1a1d29;
+  --card-foreground:       #f8f9fb;
+  --popover:               #1a1d29;
+  --popover-foreground:    #f8f9fb;
+
+  /* Brand (invertidas no dark) */
+  --primary:               #2dd4bf;
+  --primary-foreground:    #1e3a5f;
+  --secondary:             #2a4a6f;
+  --secondary-foreground:  #f8f9fb;
+
+  /* Accent mantém o teal */
+  --accent:                #2dd4bf;
+  --accent-foreground:     #1e3a5f;
+
+  /* Neutros */
+  --muted:                 #2a4a6f;
+  --muted-foreground:      #9ca3af;
+
+  /* Inputs e bordas */
+  --input:                 #2a4a6f;
+  --border:                rgba(255, 255, 255, 0.10);
+  --ring:                  #2dd4bf;
+
+  /* Destrutiva (igual ao light) */
+  --destructive:           #ef4444;
+  --destructive-foreground:#f8f9fb;
+
+  /* Sidebar (igual ao light) */
+  --sidebar:               #1e3a5f;
+  --sidebar-foreground:    #ffffff;
+  --sidebar-primary:       #2dd4bf;
+  --sidebar-primary-foreground: #1e3a5f;
+  --sidebar-accent:        #2a4a6f;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border:        #2a4a6f;
+  --sidebar-ring:          #2dd4bf;
+
+  /* Charts (iguais ao light) */
+  --chart-1: #2dd4bf;
+  --chart-2: #1e3a5f;
+  --chart-3: #a3e635;
+  --chart-4: #f59e0b;
+  --chart-5: #ef4444;
+}
+
+
+/* ============================================================
+ *  7. CORES AVULSAS USADAS DIRETAMENTE NO CÓDIGO (hardcoded)
+ *     Presentes em: src/features/reports/components/ReportsView.tsx
+ * ============================================================ */
+
+/*
+  #111827   — gray-900  (fundo de cards na tela de reports)
+  #0f172a   — slate-950 (fundo com 50% opacity em report items)
+  slate-800 — Tailwind  (borda de cards na tela de reports) ≈ #1e293b
+*/
+
+
+/* ============================================================
+ *  8. RESUMO RÁPIDO — HEX DE REFERÊNCIA
+ * ============================================================
+ *
+ *  Cor                  | Hex       | Papel
+ *  ---------------------|-----------|----------------------------
+ *  Navy (primary)       | #1e3a5f   | Fundo sidebar, btn primary
+ *  Navy médio (accent)  | #2a4a6f   | Hover sidebar, muted dark
+ *  Navy escuro (dark bg)| #1a1d29   | Card background (dark)
+ *  Navy mais escuro     | #0f1419   | Page background (dark)
+ *  Teal (secondary)     | #2dd4bf   | Destaque, ícones, ring
+ *  Branco suave         | #f8f9fb   | Page background (light)
+ *  Cinza claro          | #e5e7eb   | Muted (light)
+ *  Cinza médio          | #6b7280   | Muted foreground (light)
+ *  Cinza input          | #f3f4f6   | Input background
+ *  Slate switch         | #cbd5e1   | Toggle/switch background
+ *  Red (destructive)    | #ef4444   | Erros, alertas críticos
+ *  Amber (chart)        | #f59e0b   | Gráfico série 4
+ *  Lime (chart)         | #a3e635   | Gráfico série 3
+ *  Gray-900             | #111827   | Cards em reports (hardcoded)
+ *  Slate-950            | #0f172a   | Items em reports (hardcoded)
+ * ============================================================ */

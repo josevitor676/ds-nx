@@ -87,14 +87,14 @@ Os arquivos de teste ficam co-localizados com os componentes, seguindo o padrão
 
 ## Consumindo a biblioteca em outro projeto
 
-### 1) Configurar acesso ao registry da Gazin
+### 1) Configurar acesso ao registry da Nexus Shield
 
 Crie (ou atualize) o arquivo `.npmrc` na raiz do projeto consumidor:
 
 ```bash
-@gazin:registry=https://gitlab.gazintech.com.br/api/v4/packages/npm/
-//gitlab.gazintech.com.br/api/v4/packages/npm/:_authToken=${NPM_TOKEN}
-//gitlab.gazintech.com.br/api/v4/projects/771/packages/npm/:_authToken=${NPM_TOKEN}
+@nexusshield:registry=https://gitlab.nexusshieldtech.com.br/api/v4/packages/npm/
+//gitlab.nexusshieldtech.com.br/api/v4/packages/npm/:_authToken=${NPM_TOKEN}
+//gitlab.nexusshieldtech.com.br/api/v4/projects/771/packages/npm/:_authToken=${NPM_TOKEN}
 ```
 
 Recomendado: usar variável de ambiente para o token (`NPM_TOKEN`) e evitar token em texto puro no repositório.
@@ -102,20 +102,20 @@ Recomendado: usar variável de ambiente para o token (`NPM_TOKEN`) e evitar toke
 ### 2) Instalar a dependência
 
 ```bash
-npm install @gazin/design-system
+npm install @nexusshield/design-system
 ```
 
 ### 3) Importar estilos e configurar o ThemeProvider
 
 No ponto de entrada da aplicação (ex.: `src/main.tsx`):
 
-> O import `@gazin/design-system/index.css` já carrega o CSS compilado da biblioteca (tokens, variáveis e estilos base dos componentes). Não é necessário configurar Tailwind apenas para usar os componentes do Design System.
+> O import `@nexusshield/design-system/index.css` já carrega o CSS compilado da biblioteca (tokens, variáveis e estilos base dos componentes). Não é necessário configurar Tailwind apenas para usar os componentes do Design System.
 
 ```tsx
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
-import { ThemeProvider } from "@gazin/design-system"
-import "@gazin/design-system/index.css"
+import { ThemeProvider } from "@nexusshield/design-system"
+import "@nexusshield/design-system/index.css"
 import App from "./App"
 
 createRoot(document.getElementById("root")!).render(
@@ -132,7 +132,7 @@ createRoot(document.getElementById("root")!).render(
 Exemplo básico:
 
 ```tsx
-import { Button, Input } from "@gazin/design-system"
+import { Button, Input } from "@nexusshield/design-system"
 
 export function Example() {
   return (
@@ -180,7 +180,7 @@ Para consumir o MCP da biblioteca publicada do storybook, use este modelo de `mc
 {
   "servers": {
     "storybook-prod": {
-      "url": "https://design-system.gazin.com.br/mcp",
+      "url": "https://design-system.nexusshield.com.br/mcp",
       "type": "http"
     }
   },

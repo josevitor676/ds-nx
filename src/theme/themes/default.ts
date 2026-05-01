@@ -1,5 +1,5 @@
-import { themeShadows, themeRadii } from "../tokens-adapter";
-import type { ThemeEntry } from "./types";
+import { themeRadii, themeShadows } from "../tokens-adapter"
+import type { ThemeEntry } from "./types"
 
 export const defaultTheme: ThemeEntry = {
   name: "default",
@@ -7,30 +7,43 @@ export const defaultTheme: ThemeEntry = {
   tokens: {
     colors: {
       primary: {
-        25: "#F5F6FE",
-        50: "#E8EBFF",
-        100: "#D1D6FF",
-        200: "#9BA8FF",
-        300: "#6B7AFF",
-        400: "#4952C3",
-        500: "#0B109F",
-        600: "#090D7F",
-        700: "#070A5F",
-        800: "#050740",
-        900: "#020320",
+        25: "#0A2E2B",
+        50: "#0D3B35",
+        100: "#134E45",
+        200: "#0F766E",
+        300: "#0D9488",
+        400: "#14B8A6",
+        500: "#2DD4BF",
+        600: "#5EEADD",
+        700: "#99F5EC",
+        800: "#CCFAF6",
+        900: "#F0FDFC",
+      },
+      secondary: {
+        25: "#040A10",
+        50: "#081422",
+        100: "#0F2035",
+        200: "#162D4A",
+        300: "#1E3A5F",
+        400: "#2A4A6F",
+        500: "#4D80A8",
+        600: "#7DA4C3",
+        700: "#B3C8DC",
+        800: "#D9E4EE",
+        900: "#F0F4F8",
       },
       neutral: {
-        25: "#F9F9F9",
-        50: "#F4F4F7",
-        100: "#DCDDE3",
-        200: "#C6C8D1",
-        300: "#B0B3C0",
+        25: "#202125",
+        50: "#363843",
+        100: "#4D5163",
+        200: "#646981",
+        300: "#7C8096",
         400: "#A0A4B3",
-        500: "#7C8096",
-        600: "#646981",
-        700: "#4D5163",
-        800: "#363843",
-        900: "#202125",
+        500: "#B0B3C0",
+        600: "#C6C8D1",
+        700: "#DCDDE3",
+        800: "#F4F4F7",
+        900: "#F9F9F9",
       },
       success: {
         50: "#E5ECDB",
@@ -69,14 +82,31 @@ export const defaultTheme: ThemeEntry = {
         900: "#4B0808",
       },
       background: {
-        base: "#FFFFFF",
-        subtle: "#F5F6FE",
-        emphasis: "#E8EBFF",
+        base: "#0F1419",
+        subtle: "#1A1D29",
+        emphasis: "#2A4A6F",
       },
       surface: {
-        base: "#FFFFFF",
-        raised: "#F5F5F5",
-        overlay: "rgba(0, 0, 0, 0.5)",
+        base: "#1A1D29",
+        raised: "#2A4A6F",
+        overlay: "rgba(0, 0, 0, 0.6)",
+      },
+      sidebar: {
+        base: "#1E3A5F",
+        foreground: "#FFFFFF",
+        primary: "#2DD4BF",
+        primaryForeground: "#1E3A5F",
+        accent: "#2A4A6F",
+        accentForeground: "#FFFFFF",
+        border: "#2A4A6F",
+        ring: "#2DD4BF",
+      },
+      chart: {
+        1: "#2DD4BF",
+        2: "#1E3A5F",
+        3: "#A3E635",
+        4: "#F59E0B",
+        5: "#EF4444",
       },
     },
     borderRadius: {
@@ -92,4 +122,4 @@ export const defaultTheme: ThemeEntry = {
       lg: "0px 10px 15px -3px rgba(0,0,0,0.10)",
     },
   },
-};
+}

@@ -32,17 +32,17 @@ export const buttonVariants = cva(
       {
         variant: "filled",
         color: "primary",
-        class: "ds-bg-primary-500 ds-text-white hover:ds-bg-primary-700",
+        class: "ds-bg-primary-500 ds-text-white hover:ds-bg-primary-400",
       },
       {
         variant: "filled",
         color: "error",
-        class: "ds-bg-error-500 ds-text-white hover:ds-bg-error-700",
+        class: "ds-bg-error-500 ds-text-white hover:ds-bg-error-600",
       },
       {
         variant: "filled",
         color: "neutral",
-        class: "ds-bg-neutral-700 ds-text-white hover:ds-bg-neutral-800",
+        class: "ds-bg-neutral-200 ds-text-white hover:ds-bg-neutral-300",
       },
       // outlined
       {

@@ -1,7 +1,7 @@
 /**
  * mcp-agent.mjs
  *
- * MCP (Model Context Protocol) server for the Gazin Tech Design System.
+ * MCP (Model Context Protocol) server for the Nexus Shield Design System.
  * Exposes tools that help AI assistants understand and use DS components,
  * tokens, and Figma mappings without needing to read source files manually.
  *
@@ -13,10 +13,10 @@
  *   }
  */
 
-import { readFileSync, existsSync, readdirSync, statSync } from 'fs';
-import { resolve, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { existsSync, readdirSync, readFileSync, statSync } from 'fs';
+import { dirname, resolve } from 'path';
 import { createInterface } from 'readline';
+import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -268,7 +268,7 @@ function handleRequest(req) {
         sendResult(id, {
           protocolVersion: '2024-11-05',
           capabilities: { tools: {} },
-          serverInfo: { name: 'gazin-design-system', version: '0.0.0' },
+          serverInfo: { name: 'nexusshield-design-system', version: '0.0.0' },
         });
         break;
 

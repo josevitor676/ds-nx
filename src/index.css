@@ -21,31 +21,44 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* Primary */
-  --ds-color-primary-25:  #F5F6FE;
-  --ds-color-primary-50:  #E8EBFF;
-  --ds-color-primary-100: #D1D6FF;
-  --ds-color-primary-200: #9BA8FF;
-  --ds-color-primary-300: #6B7AFF;
-  --ds-color-primary-400: #4952C3;
-  --ds-color-primary-500: #0B109F;
-  --ds-color-primary-600: #090D7F;
-  --ds-color-primary-700: #070A5F;
-  --ds-color-primary-800: #050740;
-  --ds-color-primary-900: #020320;
+  /* Primary — teal (dark default) */
+  --ds-color-primary-25:  #0A2E2B;
+  --ds-color-primary-50:  #0D3B35;
+  --ds-color-primary-100: #134E45;
+  --ds-color-primary-200: #0F766E;
+  --ds-color-primary-300: #0D9488;
+  --ds-color-primary-400: #14B8A6;
+  --ds-color-primary-500: #2DD4BF;
+  --ds-color-primary-600: #5EEADD;
+  --ds-color-primary-700: #99F5EC;
+  --ds-color-primary-800: #CCFAF6;
+  --ds-color-primary-900: #F0FDFC;
 
-  /* Neutral */
-  --ds-color-neutral-25:  #F9F9F9;
-  --ds-color-neutral-50:  #F4F4F7;
-  --ds-color-neutral-100: #DCDDE3;
-  --ds-color-neutral-200: #C6C8D1;
-  --ds-color-neutral-300: #B0B3C0;
+  /* Secondary — navy (dark default) */
+  --ds-color-secondary-25:  #040A10;
+  --ds-color-secondary-50:  #081422;
+  --ds-color-secondary-100: #0F2035;
+  --ds-color-secondary-200: #162D4A;
+  --ds-color-secondary-300: #1E3A5F;
+  --ds-color-secondary-400: #2A4A6F;
+  --ds-color-secondary-500: #4D80A8;
+  --ds-color-secondary-600: #7DA4C3;
+  --ds-color-secondary-700: #B3C8DC;
+  --ds-color-secondary-800: #D9E4EE;
+  --ds-color-secondary-900: #F0F4F8;
+
+  /* Neutral — inverted for dark bg */
+  --ds-color-neutral-25:  #202125;
+  --ds-color-neutral-50:  #363843;
+  --ds-color-neutral-100: #4D5163;
+  --ds-color-neutral-200: #646981;
+  --ds-color-neutral-300: #7C8096;
   --ds-color-neutral-400: #A0A4B3;
-  --ds-color-neutral-500: #7C8096;
-  --ds-color-neutral-600: #646981;
-  --ds-color-neutral-700: #4D5163;
-  --ds-color-neutral-800: #363843;
-  --ds-color-neutral-900: #202125;
+  --ds-color-neutral-500: #B0B3C0;
+  --ds-color-neutral-600: #C6C8D1;
+  --ds-color-neutral-700: #DCDDE3;
+  --ds-color-neutral-800: #F4F4F7;
+  --ds-color-neutral-900: #F9F9F9;
 
   /* Success */
   --ds-color-success-50:  #E5ECDB;
@@ -83,15 +96,32 @@
   --ds-color-error-800: #700C0C;
   --ds-color-error-900: #4B0808;
 
-  /* Background */
-  --ds-color-bg-base:     #FFFFFF;
-  --ds-color-bg-subtle:   #F5F6FE;
-  --ds-color-bg-emphasis: #E8EBFF;
+  /* Background — dark default */
+  --ds-color-bg-base:     #0F1419;
+  --ds-color-bg-subtle:   #1A1D29;
+  --ds-color-bg-emphasis: #2A4A6F;
 
-  /* Surface */
-  --ds-color-surface-base:    #FFFFFF;
-  --ds-color-surface-raised:  #F5F5F5;
-  --ds-color-surface-overlay: rgba(0, 0, 0, 0.5);
+  /* Surface — dark default */
+  --ds-color-surface-base:    #1A1D29;
+  --ds-color-surface-raised:  #2A4A6F;
+  --ds-color-surface-overlay: rgba(0, 0, 0, 0.6);
+
+  /* Sidebar */
+  --ds-color-sidebar-base:               #1E3A5F;
+  --ds-color-sidebar-foreground:         #FFFFFF;
+  --ds-color-sidebar-primary:            #2DD4BF;
+  --ds-color-sidebar-primary-foreground: #1E3A5F;
+  --ds-color-sidebar-accent:             #2A4A6F;
+  --ds-color-sidebar-accent-foreground:  #FFFFFF;
+  --ds-color-sidebar-border:             #2A4A6F;
+  --ds-color-sidebar-ring:               #2DD4BF;
+
+  /* Charts */
+  --ds-color-chart-1: #2DD4BF;
+  --ds-color-chart-2: #1E3A5F;
+  --ds-color-chart-3: #A3E635;
+  --ds-color-chart-4: #F59E0B;
+  --ds-color-chart-5: #EF4444;
 
   /* Border radius */
   --ds-radius-none: 0px;
@@ -191,3 +221,57 @@ body {
 [data-drawer-side="right"][data-state="closed"] { animation: drawer-slide-out-right 0.3s ease-in-out; }
 [data-drawer-side="left"][data-state="open"]    { animation: drawer-slide-in-left   0.3s ease-in-out; }
 [data-drawer-side="left"][data-state="closed"]  { animation: drawer-slide-out-left  0.3s ease-in-out; }
+
+/* ═══════════════════════════════════════════════════════════
+   LIGHT MODE (override)
+   ═══════════════════════════════════════════════════════════ */
+.light {
+  /* Primary — navy */
+  --ds-color-primary-25:  #F0F4F8;
+  --ds-color-primary-50:  #D9E4EE;
+  --ds-color-primary-100: #B3C8DC;
+  --ds-color-primary-200: #7DA4C3;
+  --ds-color-primary-300: #4D80A8;
+  --ds-color-primary-400: #2A4A6F;
+  --ds-color-primary-500: #1E3A5F;
+  --ds-color-primary-600: #162D4A;
+  --ds-color-primary-700: #0F2035;
+  --ds-color-primary-800: #081422;
+  --ds-color-primary-900: #040A10;
+
+  /* Secondary — teal */
+  --ds-color-secondary-25:  #F0FDFC;
+  --ds-color-secondary-50:  #CCFAF6;
+  --ds-color-secondary-100: #99F5EC;
+  --ds-color-secondary-200: #5EEADD;
+  --ds-color-secondary-300: #2DD4BF;
+  --ds-color-secondary-400: #14B8A6;
+  --ds-color-secondary-500: #0D9488;
+  --ds-color-secondary-600: #0F766E;
+  --ds-color-secondary-700: #115E56;
+  --ds-color-secondary-800: #134E45;
+  --ds-color-secondary-900: #0D3B35;
+
+  /* Neutral */
+  --ds-color-neutral-25:  #F9F9F9;
+  --ds-color-neutral-50:  #F4F4F7;
+  --ds-color-neutral-100: #DCDDE3;
+  --ds-color-neutral-200: #C6C8D1;
+  --ds-color-neutral-300: #B0B3C0;
+  --ds-color-neutral-400: #A0A4B3;
+  --ds-color-neutral-500: #7C8096;
+  --ds-color-neutral-600: #646981;
+  --ds-color-neutral-700: #4D5163;
+  --ds-color-neutral-800: #363843;
+  --ds-color-neutral-900: #202125;
+
+  /* Background */
+  --ds-color-bg-base:     #F8F9FB;
+  --ds-color-bg-subtle:   #F3F4F6;
+  --ds-color-bg-emphasis: #E5E7EB;
+
+  /* Surface */
+  --ds-color-surface-base:    #FFFFFF;
+  --ds-color-surface-raised:  #F3F4F6;
+  --ds-color-surface-overlay: rgba(0, 0, 0, 0.5);
+}

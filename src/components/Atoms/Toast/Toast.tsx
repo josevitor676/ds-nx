@@ -10,7 +10,12 @@ import React from "react"
 import { cn } from "../../../lib/utils"
 import { Icon } from "../Icon/Icon"
 import type { ToastPosition, ToastType } from "./toast.types"
-import { toastIconVariants, toastTitleVariants, toastVariants } from "./toast.variants"
+import {
+  toastIconVariants,
+  toastSubtitleVariants,
+  toastTitleVariants,
+  toastVariants,
+} from "./toast.variants"
 
 export type { ToastPosition, ToastType }
 
@@ -50,12 +55,8 @@ export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
 
       {/* Conteúdo */}
       <div className="ds-flex ds-flex-col ds-gap-[2px] ds-flex-1 ds-min-w-0">
-        <p className={toastTitleVariants()}>{title}</p>
-        {subTitle && (
-          <p className="ds-text-[14px] ds-font-normal ds-text-neutral-600 ds-leading-[1.4]">
-            {subTitle}
-          </p>
-        )}
+        <p className={toastTitleVariants({ type })}>{title}</p>
+        {subTitle && <p className={toastSubtitleVariants({ type })}>{subTitle}</p>}
       </div>
 
       {/* Botão fechar */}

@@ -146,7 +146,7 @@ export const InterativoDocs: StoryObj = {
   parameters: {
     docs: {
       source: {
-        code: `import { ToastProvider, useToast } from '@gazin/design-system';
+        code: `import { ToastProvider, useToast } from '@nexusshield/design-system';
 
 function Demo() {
   const { toast } = useToast();

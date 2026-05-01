@@ -1,7 +1,7 @@
 import * as RadixPopover from "@radix-ui/react-popover"
 import { IconMenu2, IconSearch } from "@tabler/icons-react"
 import React from "react"
-import GazinLogo from "../../../assets/logo-gazin.svg"
+import NexusShieldLogo from "../../../assets/icon.png"
 import { cn } from "../../../lib/utils"
 import { Icon } from "../../Atoms/Icon/Icon"
 import { IconButton } from "../../Atoms/IconButton/IconButton"
@@ -13,12 +13,12 @@ import {
 } from "./header.variants"
 export type { ProfileMenuItem }
 
-// ── Gazin logo (remote + local fallback) ───────────────────────────────────
-const GazinFigmaRemote =
-  (import.meta as ImportMeta & { env?: { VITE_GAZIN_LOGO_URL?: string } }).env
-    ?.VITE_GAZIN_LOGO_URL ??
+// ── NexusShield logo (remote + local fallback) ───────────────────────────────────
+const NexusShieldFigmaRemote =
+  (import.meta as ImportMeta & { env?: { VITE_NEXUSSHIELD_LOGO_URL?: string } }).env
+    ?.VITE_NEXUSSHIELD_LOGO_URL ??
   "https://www.figma.com/api/mcp/asset/866841f9-ba83-44c9-9fe9-77c386086985"
-const GazinFigmaLogo = GazinLogo
+const NexusShieldFigmaLogo = NexusShieldLogo
 
 // ── HeaderProfile ─────────────────────────────────────────────────────────────
 
@@ -99,7 +99,7 @@ const TOGGLE_ANIMATION_MS = 300
 export interface HeaderProps extends React.HTMLAttributes<HTMLElement> {
   /** Nome da aplicação exibido ao lado do logo */
   appName?: string
-  /** URL da imagem do logo. Se ausente, exibe o logo padrão da Gazin */
+  /** URL da imagem do logo. Se ausente, exibe o logo padrão da Nexus Shield */
   logoSrc?: string
   /** Chamado ao clicar no botão de recolher/expandir o menu lateral */
   onSidebarToggle?: () => void
@@ -142,7 +142,7 @@ export interface HeaderProps extends React.HTMLAttributes<HTMLElement> {
 export const Header = React.forwardRef<HTMLElement, HeaderProps>(
   (
     {
-      appName = "Gazin Design System",
+      appName = "Nexus Shield Design System",
       logoSrc,
       onSidebarToggle,
       onSidebarMouseEnter,
@@ -157,11 +157,11 @@ export const Header = React.forwardRef<HTMLElement, HeaderProps>(
     ref
   ) => {
     const [currentLogo, setCurrentLogo] = React.useState<string>(
-      logoSrc ?? GazinFigmaRemote ?? GazinFigmaLogo
+      logoSrc ?? NexusShieldFigmaRemote ?? NexusShieldFigmaLogo
     )
 
     React.useEffect(() => {
-      setCurrentLogo(logoSrc ?? GazinFigmaRemote ?? GazinFigmaLogo)
+      setCurrentLogo(logoSrc ?? NexusShieldFigmaRemote ?? NexusShieldFigmaLogo)
     }, [logoSrc])
 
     const [isToggling, setIsToggling] = React.useState(false)
@@ -183,7 +183,7 @@ export const Header = React.forwardRef<HTMLElement, HeaderProps>(
             colorVariant="primary"
             aria-label="Alternar menu lateral"
             className={cn(
-              "ds-rounded-sm ds-text-white hover:ds-bg-primary-700",
+              "ds-rounded-sm ds-text-white hover:ds-bg-primary-700 hover:ds-text-primary-25",
               isToggling && "ds-scale-95 ds-bg-primary-600 ds-transition-transform ds-duration-300"
             )}
             onClick={() => {
@@ -202,7 +202,7 @@ export const Header = React.forwardRef<HTMLElement, HeaderProps>(
               alt={`${appName} logo`}
               className="ds-h-5 ds-w-7 ds-object-contain"
               onError={() => {
-                if (currentLogo !== GazinFigmaLogo) setCurrentLogo(GazinFigmaLogo)
+                if (currentLogo !== NexusShieldFigmaLogo) setCurrentLogo(NexusShieldFigmaLogo)
               }}
             />
             <span className="ds-hidden sm:ds-inline ds-text-base ds-font-semibold ds-text-white ds-whitespace-nowrap ds-capitalize ds-leading-5 ds-tracking-normal">

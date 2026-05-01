@@ -1,10 +1,10 @@
-import { cva } from "class-variance-authority";
+import { cva } from "class-variance-authority"
 
 // ─── Header Cell (TopCell) ────────────────────────────────────────────────────
 
 export const dataTableHeaderCellVariants = cva(
   [
-    "ds-bg-white ds-border-neutral-100 ds-border-solid",
+    "ds-bg-surface-base ds-border-neutral-100 ds-border-solid",
     "ds-h-9 ds-min-h-9 ds-max-h-9",
     "ds-p-0 ds-align-middle",
     "ds-overflow-hidden",
@@ -24,8 +24,8 @@ export const dataTableHeaderCellVariants = cva(
       },
     },
     defaultVariants: { type: "mid" },
-  },
-);
+  }
+)
 
 // ─── Body Cell (InnerCell) ────────────────────────────────────────────────────
 
@@ -56,14 +56,14 @@ export const dataTableCellVariants = cva(
       },
       /** Background color of the cell (white / striped / selected-hover) */
       color: {
-        white: "ds-bg-white group-hover:ds-bg-primary-50",
+        white: "ds-bg-surface-base group-hover:ds-bg-primary-50",
         gray: "ds-bg-neutral-25 group-hover:ds-bg-primary-50",
         hover: "ds-bg-primary-25 group-hover:ds-bg-primary-50",
       },
     },
     defaultVariants: { type: "mid", color: "white" },
-  },
-);
+  }
+)
 
 // ─── Sort Button ─────────────────────────────────────────────────────────────
 
@@ -84,8 +84,8 @@ export const dataTableSortButtonVariants = cva(
       },
     },
     defaultVariants: { active: false },
-  },
-);
+  }
+)
 
 // ─── Filter Button ────────────────────────────────────────────────────────────
 
@@ -106,5 +106,5 @@ export const dataTableFilterButtonVariants = cva(
       },
     },
     defaultVariants: { active: false },
-  },
-);
+  }
+)

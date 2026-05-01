@@ -1,5 +1,5 @@
 {
-  "name": "@gazin/design-system",
+  "name": "@nexusshield/design-system",
   "version": "0.7.0",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",

@@ -1,36 +1,33 @@
-import * as RadixPopover from "@radix-ui/react-popover";
-import { IconChevronDown } from "@tabler/icons-react";
-import React from "react";
-import { cn } from "../../../lib/utils";
-import { Checkbox } from "../../Atoms/Checkbox/Checkbox";
-import { Icon } from "../../Atoms/Icon/Icon";
-import { Tag } from "../../Atoms/Tag/Tag";
+import * as RadixPopover from "@radix-ui/react-popover"
+import { IconChevronDown } from "@tabler/icons-react"
+import React from "react"
+import { cn } from "../../../lib/utils"
+import { Checkbox } from "../../Atoms/Checkbox/Checkbox"
+import { Icon } from "../../Atoms/Icon/Icon"
+import { Tag } from "../../Atoms/Tag/Tag"
 import {
   multiSelectItemVariants,
   multiSelectListVariants,
   multiSelectTriggerVariants,
-} from "./multiSelect.variants";
+} from "./multiSelect.variants"
 
 export interface Option {
-  value: string;
-  label: string;
+  value: string
+  label: string
 }
 
-export interface MultiSelectProps extends Omit<
-  React.HTMLAttributes<HTMLDivElement>,
-  "onChange"
-> {
-  options: Option[];
-  value?: string[];
-  onChange?: (values: string[]) => void;
-  placeholder?: string;
-  disabled?: boolean;
-  error?: boolean;
-  label?: string;
-  maxVisibleTags?: number;
-  mandatory?: boolean;
-  helpText?: string;
-  className?: string;
+export interface MultiSelectProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
+  options: Option[]
+  value?: string[]
+  onChange?: (values: string[]) => void
+  placeholder?: string
+  disabled?: boolean
+  error?: boolean
+  label?: string
+  maxVisibleTags?: number
+  mandatory?: boolean
+  helpText?: string
+  className?: string
 }
 
 export const MultiSelect = React.forwardRef<HTMLDivElement, MultiSelectProps>(
@@ -49,41 +46,30 @@ export const MultiSelect = React.forwardRef<HTMLDivElement, MultiSelectProps>(
       className,
       ...props
     },
-    ref,
+    ref
   ) => {
-    const [open, setOpen] = React.useState(false);
-    const labelId = React.useId();
-    const helpTextId = React.useId();
-    const popupId = React.useId();
+    const [open, setOpen] = React.useState(false)
+    const labelId = React.useId()
+    const helpTextId = React.useId()
+    const popupId = React.useId()
 
-    const isSelected = (val: string) => value.includes(val);
+    const isSelected = (val: string) => value.includes(val)
 
     const toggle = (val: string) => {
-      if (disabled) return;
-      const next = isSelected(val)
-        ? value.filter((v) => v !== val)
-        : [...value, val];
-      onChange?.(next);
-    };
+      if (disabled) return
+      const next = isSelected(val) ? value.filter((v) => v !== val) : [...value, val]
+      onChange?.(next)
+    }
 
-    const visibleTags = value.slice(0, maxVisibleTags);
-    const hiddenCount = Math.max(0, value.length - visibleTags.length);
+    const visibleTags = value.slice(0, maxVisibleTags)
+    const hiddenCount = Math.max(0, value.length - visibleTags.length)
 
-    const triggerState = disabled
-      ? "disabled"
-      : error
-        ? "error"
-        : open
-          ? "open"
-          : "default";
+    const triggerState = disabled ? "disabled" : error ? "error" : open ? "open" : "default"
 
     return (
       <div className="ds-flex ds-flex-col ds-gap-1 ds-w-full">
         {label && (
-          <span
-            id={labelId}
-            className="ds-text-sm ds-font-medium ds-text-neutral-700"
-          >
+          <span id={labelId} className="ds-text-sm ds-font-medium ds-text-neutral-700">
             {label}
             {mandatory && (
               <span aria-hidden={true} className="ds-text-error-500">
@@ -94,10 +80,7 @@ export const MultiSelect = React.forwardRef<HTMLDivElement, MultiSelectProps>(
           </span>
         )}
 
-        <RadixPopover.Root
-          open={open}
-          onOpenChange={(next) => !disabled && setOpen(next)}
-        >
+        <RadixPopover.Root open={open} onOpenChange={(next) => !disabled && setOpen(next)}>
           <RadixPopover.Trigger asChild>
             <div
               ref={ref}
@@ -113,27 +96,22 @@ export const MultiSelect = React.forwardRef<HTMLDivElement, MultiSelectProps>(
               aria-invalid={error || undefined}
               tabIndex={disabled ? -1 : 0}
               onKeyDown={(event) => {
-                if (disabled) return;
+                if (disabled) return
                 if (event.key === "Enter" || event.key === " ") {
-                  event.preventDefault();
-                  setOpen((prev) => !prev);
+                  event.preventDefault()
+                  setOpen((prev) => !prev)
                 }
                 if (event.key === "ArrowDown") {
-                  event.preventDefault();
-                  setOpen(true);
+                  event.preventDefault()
+                  setOpen(true)
                 }
               }}
-              className={cn(
-                multiSelectTriggerVariants({ state: triggerState }),
-                className,
-              )}
+              className={cn(multiSelectTriggerVariants({ state: triggerState }), className)}
               {...props}
             >
               <div className="ds-flex ds-items-center ds-gap-2 ds-flex-wrap ds-flex-1 ds-min-w-0">
                 {value.length === 0 ? (
-                  <span className="ds-text-sm ds-text-neutral-400">
-                    {placeholder}
-                  </span>
+                  <span className="ds-text-sm ds-text-neutral-400">{placeholder}</span>
                 ) : (
                   <>
                     {visibleTags.map((v) => (
@@ -146,9 +124,7 @@ export const MultiSelect = React.forwardRef<HTMLDivElement, MultiSelectProps>(
                       />
                     ))}
                     {hiddenCount > 0 && (
-                      <span className="ds-text-sm ds-text-neutral-600">
-                        +{hiddenCount}
-                      </span>
+                      <span className="ds-text-sm ds-text-neutral-600">+{hiddenCount}</span>
                     )}
                   </>
                 )}
@@ -157,7 +133,7 @@ export const MultiSelect = React.forwardRef<HTMLDivElement, MultiSelectProps>(
               <div
                 className={cn(
                   "ds-flex ds-items-center ds-shrink-0 ds-ml-2 ds-text-neutral-500 ds-transition-transform ds-duration-200",
-                  open && "ds-rotate-180",
+                  open && "ds-rotate-180"
                 )}
               >
                 <Icon icon={IconChevronDown} size="md" />
@@ -171,7 +147,7 @@ export const MultiSelect = React.forwardRef<HTMLDivElement, MultiSelectProps>(
               sideOffset={4}
               align="start"
               style={{ width: "var(--radix-popover-trigger-width)" }}
-              className="ds-z-50 ds-bg-white ds-rounded ds-shadow-md ds-border ds-border-solid ds-border-neutral-100 ds-p-1"
+              className="ds-z-50 ds-bg-surface-base ds-rounded ds-shadow-md ds-border ds-border-solid ds-border-neutral-100 ds-p-1"
             >
               <div
                 role="group"
@@ -187,10 +163,10 @@ export const MultiSelect = React.forwardRef<HTMLDivElement, MultiSelectProps>(
                         event.target instanceof HTMLElement &&
                         event.target.closest("[data-checkbox-root='true']")
                       ) {
-                        return;
+                        return
                       }
 
-                      toggle(opt.value);
+                      toggle(opt.value)
                     }}
                   >
                     <div data-checkbox-root="true">
@@ -214,10 +190,10 @@ export const MultiSelect = React.forwardRef<HTMLDivElement, MultiSelectProps>(
           </span>
         )}
       </div>
-    );
-  },
-);
+    )
+  }
+)
 
-MultiSelect.displayName = "MultiSelect";
+MultiSelect.displayName = "MultiSelect"
 
-export default MultiSelect;
+export default MultiSelect

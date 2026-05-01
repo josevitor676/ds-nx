@@ -2,14 +2,14 @@ import { Meta } from "@storybook/addon-docs/blocks"
 
 <Meta title="Getting Started/1. Instalar Biblioteca" />
 
-# Configurar acesso ao registry da Gazin
+# Configurar acesso ao registry da Nexus Shield
 
 Crie (ou atualize) o arquivo `.npmrc` na raiz do projeto consumidor:
 
 ```bash
-@gazin:registry=https://gitlab.gazintech.com.br/api/v4/packages/npm/
-//gitlab.gazintech.com.br/api/v4/packages/npm/:_authToken=${NPM_TOKEN}
-//gitlab.gazintech.com.br/api/v4/projects/771/packages/npm/:_authToken=${NPM_TOKEN}
+@nexusshield:registry=https://gitlab.nexusshieldtech.com.br/api/v4/packages/npm/
+//gitlab.nexusshieldtech.com.br/api/v4/packages/npm/:_authToken=${NPM_TOKEN}
+//gitlab.nexusshieldtech.com.br/api/v4/projects/771/packages/npm/:_authToken=${NPM_TOKEN}
 ```
 
 **Observações:**
@@ -24,23 +24,23 @@ Instale a biblioteca e as peer dependencies no projeto consumidor.
 ### npm
 
 ```bash
-npm install @gazin/design-system react react-dom @tabler/icons-react
+npm install @nexusshield/design-system react react-dom @tabler/icons-react
 ```
 
 ### pnpm
 
 ```bash
-pnpm add @gazin/design-system react react-dom @tabler/icons-react
+pnpm add @nexusshield/design-system react react-dom @tabler/icons-react
 ```
 
 ### yarn
 
 ```bash
-yarn add @gazin/design-system react react-dom @tabler/icons-react
+yarn add @nexusshield/design-system react react-dom @tabler/icons-react
 ```
 
 Depois da instalacao, importe o CSS global da biblioteca no entrypoint da aplicacao.
 
 ```tsx
-import "@gazin/design-system/index.css"
+import "@nexusshield/design-system/index.css"
 ```

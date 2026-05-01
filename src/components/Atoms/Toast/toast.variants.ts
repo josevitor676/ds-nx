@@ -12,7 +12,7 @@ export const toastVariants = cva(
     variants: {
       type: {
         success: "ds-bg-success-50     ds-border-success-200",
-        information: "ds-bg-primary-50     ds-border-primary-200",
+        information: "ds-bg-primary-50 ds-border-primary-200",
         warning: "ds-bg-warning-50     ds-border-warning-200",
         error: "ds-bg-error-50       ds-border-error-200",
       },
@@ -40,9 +40,29 @@ export const toastIconVariants = cva(
   }
 )
 
-export const toastTitleVariants = cva(
-  "ds-text-[16px] ds-font-medium ds-leading-[1.4] ds-text-neutral-900"
-)
+export const toastTitleVariants = cva("ds-text-[16px] ds-font-medium ds-leading-[1.4]", {
+  variants: {
+    type: {
+      success: "ds-text-neutral-25",
+      information: "ds-text-neutral-800",
+      warning: "ds-text-neutral-25",
+      error: "ds-text-neutral-25",
+    },
+  },
+  defaultVariants: { type: "information" },
+})
+
+export const toastSubtitleVariants = cva("ds-text-[14px] ds-font-normal ds-leading-[1.4]", {
+  variants: {
+    type: {
+      success: "ds-text-neutral-100",
+      information: "ds-text-neutral-700",
+      warning: "ds-text-neutral-100",
+      error: "ds-text-neutral-100",
+    },
+  },
+  defaultVariants: { type: "information" },
+})
 
 export const positionClasses: Record<string, string> = {
   "top-right": "ds-top-4 ds-right-4 ds-items-end",

@@ -1,16 +1,51 @@
-import { Meta, Canvas, Controls, ArgTypes } from '@storybook/addon-docs/blocks';
-import * as ToastStories from './Toast.stories';
+import { Meta, Canvas, Controls, ArgTypes } from "@storybook/addon-docs/blocks"
+import * as ToastStories from "./Toast.stories"
 
 <Meta of={ToastStories} />
 
-<div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '4px' }}>
-  <h1 style={{ margin: 0, fontSize: '28px', fontWeight: 700, color: 'var(--ds-color-neutral-900)' }}>Toast</h1>
-  <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--ds-color-primary-500)', backgroundColor: 'var(--ds-color-primary-50)', padding: '2px 10px', borderRadius: '20px' }}>Atom</span>
-  <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--ds-color-success-600)', backgroundColor: 'var(--ds-color-success-50)', padding: '2px 10px', borderRadius: '20px' }}>Estável</span>
+<div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "4px" }}>
+  <h1
+    style={{ margin: 0, fontSize: "28px", fontWeight: 700, color: "var(--ds-color-neutral-900)" }}
+  >
+    Toast
+  </h1>
+  <span
+    style={{
+      fontSize: "12px",
+      fontWeight: 600,
+      color: "var(--ds-color-primary-500)",
+      backgroundColor: "var(--ds-color-primary-50)",
+      padding: "2px 10px",
+      borderRadius: "20px",
+    }}
+  >
+    Atom
+  </span>
+  <span
+    style={{
+      fontSize: "12px",
+      fontWeight: 600,
+      color: "var(--ds-color-success-600)",
+      backgroundColor: "var(--ds-color-success-50)",
+      padding: "2px 10px",
+      borderRadius: "20px",
+    }}
+  >
+    Estável
+  </span>
 </div>
 
-<p style={{ fontSize: '16px', color: 'var(--ds-color-neutral-600)', marginTop: '8px', marginBottom: '32px', lineHeight: '1.6' }}>
-  Notificação temporária para feedback ao usuário. Suporta 4 variantes semânticas, ícones Tabler por tipo, botão de fechar opcional e posicionamento configurável via <code>ToastProvider</code>.
+<p
+  style={{
+    fontSize: "16px",
+    color: "var(--ds-color-neutral-600)",
+    marginTop: "8px",
+    marginBottom: "32px",
+    lineHeight: "1.6",
+  }}
+>
+  Notificação temporária para feedback ao usuário. Suporta 4 variantes semânticas, ícones Tabler por
+  tipo, botão de fechar opcional e posicionamento configurável via <code>ToastProvider</code>.
 </p>
 
 ---
@@ -26,12 +61,12 @@ import * as ToastStories from './Toast.stories';
 
 Cada `type` aplica cor, ícone e background de forma consistente.
 
-| type | Ícone | Cor |
-|------|-------|-----|
-| `success` | `IconCircleCheck` | success-600 |
-| `information` | `IconInfoCircle` | primary-500 |
-| `warning` | `IconAlertCircle` | warning-600 |
-| `error` | `IconCircleX` | error-500 |
+| type          | Ícone             | Cor         |
+| ------------- | ----------------- | ----------- |
+| `success`     | `IconCircleCheck` | success-600 |
+| `information` | `IconInfoCircle`  | primary-500 |
+| `warning`     | `IconAlertCircle` | warning-600 |
+| `error`       | `IconCircleX`     | error-500   |
 
 <Canvas of={ToastStories.Types} />
 
@@ -53,33 +88,37 @@ O Toast é disparado via hook `useToast`, que deve estar dentro de um `ToastProv
 
 ```tsx
 // 1. Envolva sua aplicação com o provider
-import { ToastProvider } from '@gazin/design-system';
+import { ToastProvider } from "@nexusshield/design-system"
 
 function App() {
   return (
     <ToastProvider defaultPosition="top-right" defaultDuration={3000}>
       <MinhaApp />
     </ToastProvider>
-  );
+  )
 }
 ```
 
 ```tsx
 // 2. Use o hook para disparar toasts
-import { useToast } from '@gazin/design-system';
+import { useToast } from "@nexusshield/design-system"
 
 function MinhaApp() {
-  const { toast } = useToast();
+  const { toast } = useToast()
 
   return (
-    <button onClick={() => toast({
-      title: 'Salvo!',
-      subTitle: 'Os dados foram salvos com sucesso.',
-      type: 'success',
-    })}>
+    <button
+      onClick={() =>
+        toast({
+          title: "Salvo!",
+          subTitle: "Os dados foram salvos com sucesso.",
+          type: "success",
+        })
+      }
+    >
       Salvar
     </button>
-  );
+  )
 }
 ```
 
@@ -94,8 +133,8 @@ function MinhaApp() {
 - Use `duration: 0` para manter o toast até o usuário fechar manualmente
 
 ```tsx
-toast({ title: 'Ação necessária', type: 'warning', duration: 0 });
-toast({ title: 'Info', type: 'information', duration: 5000 });
+toast({ title: "Ação necessária", type: "warning", duration: 0 })
+toast({ title: "Info", type: "information", duration: 5000 })
 ```
 
 ---
@@ -104,14 +143,14 @@ toast({ title: 'Info', type: 'information', duration: 5000 });
 
 Defina a posição padrão no `ToastProvider` ou por toast individual via `position`.
 
-| Valor | Descrição |
-|-------|-----------|
-| `top-right` | Canto superior direito (padrão) |
-| `top-left` | Canto superior esquerdo |
-| `top-center` | Centro superior |
-| `bottom-right` | Canto inferior direito |
-| `bottom-left` | Canto inferior esquerdo |
-| `bottom-center` | Centro inferior |
+| Valor           | Descrição                       |
+| --------------- | ------------------------------- |
+| `top-right`     | Canto superior direito (padrão) |
+| `top-left`      | Canto superior esquerdo         |
+| `top-center`    | Centro superior                 |
+| `bottom-right`  | Canto inferior direito          |
+| `bottom-left`   | Canto inferior esquerdo         |
+| `bottom-center` | Centro inferior                 |
 
 <Canvas of={ToastStories.PosicaoCustomizada} />
 

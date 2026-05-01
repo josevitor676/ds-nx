@@ -1,8 +1,8 @@
-# Gazin Tech Design System — Agent Guidelines
+# Nexus Shield Design System — Agent Guidelines
 
 ## Visão Geral
 
-Biblioteca de componentes React interna da Gazin Tech, com arquitetura Atomic Design (Atoms → Molecules), TypeScript strict, Tailwind CSS com prefixo `ds-`, CVA para variantes e Storybook 10 para documentação.
+Biblioteca de componentes React interna da Nexus Shield, com arquitetura Atomic Design (Atoms → Molecules), TypeScript strict, Tailwind CSS com prefixo `ds-`, CVA para variantes e Storybook 10 para documentação.
 
 ## Idioma
 
@@ -84,11 +84,11 @@ Instruções específicas são aplicadas automaticamente conforme o tipo de arqu
 
 ## MCP Servers
 
-| Servidor             | Endpoint                                 | Uso                                       |
-| -------------------- | ---------------------------------------- | ----------------------------------------- |
-| Storybook (local)    | `http://localhost:6006/mcp`              | Consultar componentes e tokens em dev     |
-| Storybook (produção) | `https://design-system.gazin.com.br/mcp` | Documentação compartilhada                |
-| Figma MCP            | Via extensão                             | Ler designs, extrair tokens e screenshots |
+| Servidor             | Endpoint                                       | Uso                                       |
+| -------------------- | ---------------------------------------------- | ----------------------------------------- |
+| Storybook (local)    | `http://localhost:6006/mcp`                    | Consultar componentes e tokens em dev     |
+| Storybook (produção) | `https://design-system.nexusshield.com.br/mcp` | Documentação compartilhada                |
+| Figma MCP            | Via extensão                                   | Ler designs, extrair tokens e screenshots |
 
 Tools úteis: `list_components`, `get_component_source`, `get_component_variants`, `list_tokens`, `get_figma_components`, `get_theme`
 
