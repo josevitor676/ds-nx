@@ -2,24 +2,11 @@ import { Meta } from "@storybook/addon-docs/blocks"
 
 <Meta title="Getting Started/1. Instalar Biblioteca" />
 
-# Configurar acesso ao registry da Nexus Shield
-
-Crie (ou atualize) o arquivo `.npmrc` na raiz do projeto consumidor:
-
-```bash
-@nexusshield:registry=https://gitlab.nexusshieldtech.com.br/api/v4/packages/npm/
-//gitlab.nexusshieldtech.com.br/api/v4/packages/npm/:_authToken=${NPM_TOKEN}
-//gitlab.nexusshieldtech.com.br/api/v4/projects/771/packages/npm/:_authToken=${NPM_TOKEN}
-```
-
-**Observações:**
-
-- NPM_TOKEN é o token de acesso pessoal do GitLab (GITLAB PAT).
-- Não versione o arquivo `.npmrc` com o token, para evitar exposição acidental. Use variáveis de ambiente ou outras estratégias seguras para gerenciar tokens.
-
 # Instalar Biblioteca
 
-Instale a biblioteca e as peer dependencies no projeto consumidor.
+A biblioteca está publicada no **npmjs.com** — nenhuma configuração de registry adicional é necessária.
+
+Instale a biblioteca e as peer dependencies no projeto consumidor:
 
 ### npm
 
@@ -39,8 +26,51 @@ pnpm add @nexusshield/design-system react react-dom @tabler/icons-react
 yarn add @nexusshield/design-system react react-dom @tabler/icons-react
 ```
 
-Depois da instalacao, importe o CSS global da biblioteca no entrypoint da aplicacao.
+Depois da instalação, importe o CSS global da biblioteca no entrypoint da aplicação:
 
 ```tsx
 import "@nexusshield/design-system/index.css"
 ```
+
+# Configurar ThemeProvider
+
+Envolva o entrypoint da aplicação com o `ThemeProvider`:
+
+```tsx
+import { StrictMode } from "react"
+import { createRoot } from "react-dom/client"
+import { ThemeProvider } from "@nexusshield/design-system"
+import "@nexusshield/design-system/index.css"
+import App from "./App"
+
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <ThemeProvider initialTheme="default">
+      <App />
+    </ThemeProvider>
+  </StrictMode>
+)
+```
+
+# Usar componentes
+
+```tsx
+import { Button, Input } from "@nexusshield/design-system"
+
+export function Example() {
+  return (
+    <div style={{ display: "grid", gap: 12, maxWidth: 320 }}>
+      <Input label="Nome" placeholder="Digite seu nome" />
+      <Button>Salvar</Button>
+    </div>
+  )
+}
+```
+
+# Compatibilidade
+
+| Peer dependency       | Versão |
+| --------------------- | ------ |
+| `react`               | `^19`  |
+| `react-dom`           | `^19`  |
+| `@tabler/icons-react` | `^3`   |
