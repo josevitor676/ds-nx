@@ -4,16 +4,18 @@ import { Meta } from "@storybook/addon-docs/blocks"
 
 # Configurar MCP
 
-Este repositorio usa MCP para conectar o Copilot a ferramentas de design e do proprio DS.
+O Design System suporta o **Model Context Protocol (MCP)**, permitindo que o GitHub Copilot e outros assistentes de IA acessem componentes, tokens e variantes diretamente no editor.
 
-## Arquivo mcp.json
+Crie ou atualize o arquivo `.vscode/mcp.json` no seu projeto com uma das opções abaixo.
 
-Crie ou atualize o arquivo mcp.json:
+## Opção 1 — HTTP (Storybook em produção)
+
+Conecta diretamente ao Storybook publicado. Sem instalação local.
 
 ```json
 {
   "servers": {
-    "storybook": {
+    "nexusshield-ds": {
       "type": "http",
       "url": "https://design-system.nexusshield.com.br/mcp"
     }
@@ -21,4 +23,30 @@ Crie ou atualize o arquivo mcp.json:
 }
 ```
 
-No VS Code, abra o Copilot Chat em modo Agent e confirme se as tools MCP foram carregadas.
+## Opção 2 — stdio (local, via npx)
+
+Usa o servidor MCP embutido no pacote publicado. Funciona offline e não depende do Storybook em produção.
+
+Requer que `@nexusshield/design-system` esteja instalado no projeto.
+
+```json
+{
+  "servers": {
+    "nexusshield-ds": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["ds-mcp"]
+    }
+  }
+}
+```
+
+## Confirmar que o MCP foi carregado
+
+No VS Code, abra o Copilot Chat em modo **Agent**, clique em **"Select tools..."** e verifique se as ferramentas aparecem na lista:
+
+- `list_components`
+- `get_component_source`
+- `get_component_variants`
+- `list_tokens`
+- `get_theme`

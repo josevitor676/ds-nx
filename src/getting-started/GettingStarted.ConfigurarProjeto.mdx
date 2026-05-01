@@ -4,25 +4,54 @@ import { Meta } from "@storybook/addon-docs/blocks"
 
 # Configurar Projeto
 
-Envolva a aplicacao com o ThemeProvider para aplicar os tokens CSS do Design System.
+A biblioteca está publicada no **npmjs.com** — nenhuma configuração de registry adicional é necessária.
+
+## 1. Instalar dependências
+
+```bash
+npm install @nexusshield/design-system react react-dom @tabler/icons-react
+```
+
+## 2. Configurar o ThemeProvider
+
+Envolva o entrypoint da aplicação com o `ThemeProvider`:
 
 ```tsx
-import React from "react"
-import ReactDOM from "react-dom/client"
+import { StrictMode } from "react"
+import { createRoot } from "react-dom/client"
 import { ThemeProvider } from "@nexusshield/design-system"
 import "@nexusshield/design-system/index.css"
-import { App } from "./App"
+import App from "./App"
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
     <ThemeProvider initialTheme="default">
       <App />
     </ThemeProvider>
-  </React.StrictMode>
+  </StrictMode>
 )
 ```
 
-Se quiser trocar tema dinamicamente dentro da app, use o hook useTheme.
+> O import `@nexusshield/design-system/index.css` já carrega o CSS compilado da biblioteca (tokens, variáveis e estilos base dos componentes). Não é necessário configurar Tailwind no projeto consumidor.
+
+## 3. Usar componentes
+
+```tsx
+import { Button, Input } from "@nexusshield/design-system"
+
+export function Example() {
+  return (
+    <div style={{ display: "grid", gap: 12, maxWidth: 320 }}>
+      <Input label="Nome" placeholder="Digite seu nome" />
+      <Button>Salvar</Button>
+    </div>
+  )
+}
+```
+
+## Trocar tema dinamicamente
+
+Para alternar temas em runtime, use o hook `useTheme`:
 
 ```tsx
 import { useTheme } from "@nexusshield/design-system"
@@ -41,3 +70,11 @@ export function ThemeSwitcher() {
   )
 }
 ```
+
+## Compatibilidade
+
+| Peer dependency       | Versão |
+| --------------------- | ------ |
+| `react`               | `^19`  |
+| `react-dom`           | `^19`  |
+| `@tabler/icons-react` | `^3`   |

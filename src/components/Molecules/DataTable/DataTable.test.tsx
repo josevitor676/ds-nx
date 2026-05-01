@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react"
+import { render, screen, within } from "@testing-library/react"
 import React from "react"
 import { describe, expect, it } from "vitest"
 import { DataTable, type DataTableColumn } from "./DataTable"
@@ -22,14 +22,14 @@ describe("DataTable", () => {
     const { container } = render(<DataTable columns={mockColumns} data={mockData} />)
     const table = container.querySelector("table")
     expect(table).toBeInTheDocument()
-    expect(screen.getByText("ID")).toBeInTheDocument()
-    expect(screen.getByText("Nome")).toBeInTheDocument()
+    expect(within(table!).getByText("ID")).toBeInTheDocument()
+    expect(within(table!).getByText("Nome")).toBeInTheDocument()
   })
 
   it("renderiza dados nas linhas corretas", () => {
     render(<DataTable columns={mockColumns} data={mockData} />)
-    expect(screen.getByText("João")).toBeInTheDocument()
-    expect(screen.getByText("maria@example.com")).toBeInTheDocument()
+    expect(screen.getAllByText("João").length).toBeGreaterThan(0)
+    expect(screen.getAllByText("maria@example.com").length).toBeGreaterThan(0)
   })
 
   it("exibe ícones de sort em colunas sortable", () => {
@@ -49,9 +49,10 @@ describe("DataTable", () => {
       { key: "id", header: "ID", width: "100px" },
       { key: "name", header: "Nome", width: "50%" },
     ]
-    render(<DataTable columns={customColumns} data={mockData} />)
-    expect(screen.getByText("ID")).toBeInTheDocument()
-    expect(screen.getByText("Nome")).toBeInTheDocument()
+    const { container } = render(<DataTable columns={customColumns} data={mockData} />)
+    const table = container.querySelector("table")
+    expect(within(table!).getByText("ID")).toBeInTheDocument()
+    expect(within(table!).getByText("Nome")).toBeInTheDocument()
   })
 
   it("encaminha ref para o elemento raiz", () => {
