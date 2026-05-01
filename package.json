@@ -13,15 +13,25 @@
     "./index.css": "./dist/index.css"
   },
   "files": [
-    "dist"
+    "dist",
+    "bin",
+    "README.md"
   ],
+  "bin": {
+    "ds-mcp": "./bin/ds-mcp.mjs"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
   "sideEffects": [
     "**/*.css"
   ],
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && node scripts/generate-metadata.mjs",
+    "prepublishOnly": "npm run build",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
     "test": "vitest",
@@ -44,7 +54,8 @@
     "@radix-ui/react-tooltip": "^1.2.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "tailwind-merge": "^3.5.0"
+    "tailwind-merge": "^3.5.0",
+    "@storybook/mcp": "^0.4.1"
   },
   "peerDependencies": {
     "@tabler/icons-react": "^3.0.0",
@@ -82,6 +93,9 @@
     "tailwindcss": "^3.4.19",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.48.0",
+    "semantic-release": "^24.0.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
     "vite": "^6.4.1",
     "vite-plugin-dts": "^4.5.4",
     "vitest": "^4.1.4"

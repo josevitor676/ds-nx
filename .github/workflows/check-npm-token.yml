@@ -1,0 +1,64 @@
+name: Check NPM Token
+
+on:
+  schedule:
+    # Roda todo dia 1 de cada mês às 09:00 UTC
+    - cron: '0 9 1 * *'
+  workflow_dispatch: # Permite rodar manualmente para testar
+
+jobs:
+  check-token:
+    name: Verificar validade do NPM_TOKEN
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Testar autenticação npm
+        id: npm-auth
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          npm whoami
+        continue-on-error: true
+
+      - name: Abrir issue se o token expirou
+        if: steps.npm-auth.outcome == 'failure'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'npm-token-expired',
+            });
+
+            // Não abre issue duplicada se já existe uma aberta
+            if (issues.length > 0) {
+              console.log('Issue já existe:', issues[0].html_url);
+              return;
+            }
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '⚠️ NPM_TOKEN expirado — renovar para releases funcionarem',
+              body: [
+                '## NPM_TOKEN inválido ou expirado',
+                '',
+                'O workflow de verificação mensal detectou que o `NPM_TOKEN` está expirado ou inválido.',
+                'Enquanto não for renovado, o workflow de release **não conseguirá publicar no npm**.',
+                '',
+                '## Como renovar',
+                '',
+                '1. Acesse [npmjs.com → Access Tokens](https://www.npmjs.com/settings/~/tokens/granular-access-tokens/new)',
+                '2. Crie um novo token com **Packages and scopes → Read and write** e **Expiration: 90 days**',
+                '3. Vá em **[Settings → Secrets → Actions](../../settings/secrets/actions)** deste repositório',
+                '4. Delete o secret `NPM_TOKEN` existente e crie um novo com o token gerado',
+                '5. Feche esta issue',
+              ].join('\n'),
+              labels: ['npm-token-expired'],
+            });

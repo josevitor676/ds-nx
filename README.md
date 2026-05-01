@@ -87,25 +87,13 @@ Os arquivos de teste ficam co-localizados com os componentes, seguindo o padrão
 
 ## Consumindo a biblioteca em outro projeto
 
-### 1) Configurar acesso ao registry da Nexus Shield
-
-Crie (ou atualize) o arquivo `.npmrc` na raiz do projeto consumidor:
-
-```bash
-@nexusshield:registry=https://gitlab.nexusshieldtech.com.br/api/v4/packages/npm/
-//gitlab.nexusshieldtech.com.br/api/v4/packages/npm/:_authToken=${NPM_TOKEN}
-//gitlab.nexusshieldtech.com.br/api/v4/projects/771/packages/npm/:_authToken=${NPM_TOKEN}
-```
-
-Recomendado: usar variável de ambiente para o token (`NPM_TOKEN`) e evitar token em texto puro no repositório.
-
-### 2) Instalar a dependência
+### 1) Instalar a dependência
 
 ```bash
 npm install @nexusshield/design-system
 ```
 
-### 3) Importar estilos e configurar o ThemeProvider
+### 2) Importar estilos e configurar o ThemeProvider
 
 No ponto de entrada da aplicação (ex.: `src/main.tsx`):
 
@@ -127,7 +115,7 @@ createRoot(document.getElementById("root")!).render(
 )
 ```
 
-### 4) Usar componentes
+### 3) Usar componentes
 
 Exemplo básico:
 
@@ -144,7 +132,7 @@ export function Example() {
 }
 ```
 
-### 5) Compatibilidade
+### 4) Compatibilidade
 
 - `react` e `react-dom`: `^19`
 - `@tabler/icons-react`: `^3` (peer dependency)
@@ -155,7 +143,7 @@ Se necessário:
 npm install @tabler/icons-react
 ```
 
-### 6) Tailwind no projeto consumidor (opcional)
+### 5) Tailwind no projeto consumidor (opcional)
 
 Se o projeto consumidor também usar Tailwind para estilização própria, isso é totalmente compatível com a biblioteca.
 
@@ -164,26 +152,77 @@ Se o projeto consumidor também usar Tailwind para estilização própria, isso 
 
 ## MCP (Model Context Protocol)
 
-### Configuração interna do design-system (com Figma)
+### MCP local — via pacote npm
+
+Após instalar `@nexusshield/design-system`, o CLI `ds-mcp` fica disponível e permite que assistentes de IA (GitHub Copilot, Claude) entendam os componentes, tokens e variantes do design system.
+
+**VS Code (`settings.json`):**
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "nexusshield-ds": {
+        "type": "stdio",
+        "command": "npx",
+        "args": ["ds-mcp"]
+      }
+    }
+  }
+}
+```
+
+**Claude Desktop (`claude_desktop_config.json`):**
+
+```json
+{
+  "mcpServers": {
+    "nexusshield-ds": {
+      "command": "npx",
+      "args": ["ds-mcp"]
+    }
+  }
+}
+```
+
+Ferramentas disponíveis: `list_components`, `get_component_source`, `get_component_variants`, `list_tokens`, `get_theme`.
+
+### MCP remoto — via Storybook hospedado
+
+Para usar o MCP sem instalar o pacote, aponte diretamente para o Storybook hospedado na Vercel:
+
+**VS Code (`settings.json`):**
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "nexusshield-ds": {
+        "type": "http",
+        "url": "https://ds-nx.vercel.app/mcp"
+      }
+    }
+  }
+}
+```
+
+**Claude Desktop (`claude_desktop_config.json`):**
+
+```json
+{
+  "mcpServers": {
+    "nexusshield-ds": {
+      "type": "http",
+      "url": "https://ds-nx.vercel.app/mcp"
+    }
+  }
+}
+```
+
+### MCP para desenvolvimento interno (com Figma)
 
 Para desenvolvimento interno do repositório design-system, use a configuração MCP com o servidor do Figma:
 
 ```bash
 npx figma-developer-mcp --figma-api-key=token_figma
-```
-
-### MCP da lib publicada
-
-Para consumir o MCP da biblioteca publicada do storybook, use este modelo de `mcp.json`:
-
-```json
-{
-  "servers": {
-    "storybook-prod": {
-      "url": "https://design-system.nexusshield.com.br/mcp",
-      "type": "http"
-    }
-  },
-  "inputs": []
-}
 ```
