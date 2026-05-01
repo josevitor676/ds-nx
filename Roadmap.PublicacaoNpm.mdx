@@ -1,0 +1,245 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+<Meta title="Getting Started/Roadmap — Publicação npm + MCP" />
+
+# Roadmap: Publicação npm + MCP + GitHub Actions
+
+## Contexto
+
+| Item              | Decisão                                                              |
+| ----------------- | -------------------------------------------------------------------- |
+| Pacote            | `@nexusshield/design-system`                                         |
+| npm registry      | **npmjs.com público**                                                |
+| Storybook hosting | **Vercel** (via integração nativa GitHub)                            |
+| CI/CD             | **GitHub Actions** (novo — pipeline criada do zero)                  |
+| MCP remoto        | **Vercel API Route** (`api/mcp.js`) — manifests via URL pública      |
+| MCP local         | CLI `bin/ds-mcp.mjs` incluída no pacote npm (a criar)                |
+| Versionamento     | **semantic-release** (commit-based, automático)                      |
+| Docker/Nginx      | **Não necessário** — substituído pela Vercel                         |
+
+---
+
+## Phase 1 — Configurar `package.json` para publicação npm
+
+Ajustes no `package.json` raiz para que o `npm publish` envie apenas os artefatos corretos.
+
+| #   | Tarefa                                                                                         | Arquivo        |
+| --- | ---------------------------------------------------------------------------------------------- | -------------- |
+| 1   | Adicionar `"files": ["dist", "bin", "README.md"]`                                              | `package.json` |
+| 2   | Adicionar `"publishConfig": { "registry": "https://registry.npmjs.org/", "access": "public" }` | `package.json` |
+| 3   | Adicionar `"prepublishOnly": "npm run build"` nos scripts                                      | `package.json` |
+
+> **Por quê**: sem o campo `files`, o `npm publish` envia todo o repositório (source, stories, scripts, etc.), aumentando o tamanho do pacote desnecessariamente.
+
+---
+
+## Phase 2 — Gerar `dist/metadata.json` no build
+
+Criar um gerador que serializa os dados do design system em um JSON incluído no `dist/`.
+Este arquivo é consumido pelo CLI MCP local na Phase 3.
+
+| #   | Tarefa                                            | Arquivo                                |
+| --- | ------------------------------------------------- | -------------------------------------- |
+| 4   | Criar `scripts/generate-metadata.mjs`             | `scripts/generate-metadata.mjs` (novo) |
+| 5   | Atualizar script `"build"` para incluir o gerador | `package.json`                         |
+
+**Conteúdo do `metadata.json`:**
+
+- Lista de componentes por categoria (Atoms / Molecules)
+- Variantes CVA de cada componente
+- Tokens CSS (extraídos de `dist/index.css`)
+- Tema default completo
+
+```bash
+# Script build atualizado
+tsc -b && vite build && node scripts/generate-metadata.mjs
+```
+
+> **Reutiliza** a lógica já existente em `scripts/mcp-agent.mjs`.
+
+---
+
+## Phase 3 — CLI MCP local (`bin/ds-mcp.mjs`)
+
+Servidor **stdio MCP (JSON-RPC 2.0)** distribuído junto ao pacote npm.
+Qualquer projeto que instale `@nexusshield/design-system` pode usar via `npx ds-mcp`.
+
+| #   | Tarefa                                                                | Arquivo                 |
+| --- | --------------------------------------------------------------------- | ----------------------- |
+| 6   | Criar `bin/ds-mcp.mjs` (servidor stdio, lê `dist/metadata.json`)      | `bin/ds-mcp.mjs` (novo) |
+| 7   | Adicionar `"bin": { "ds-mcp": "./bin/ds-mcp.mjs" }` no `package.json` | `package.json`          |
+
+**Ferramentas expostas pelo MCP local:**
+
+| Tool                     | Descrição                                             |
+| ------------------------ | ----------------------------------------------------- |
+| `list_components`        | Lista todos os componentes por categoria              |
+| `get_component_source`   | Retorna source + variantes + stories de um componente |
+| `get_component_variants` | Retorna definições CVA de um componente               |
+| `list_tokens`            | Lista todos os tokens de design CSS                   |
+| `get_theme`              | Retorna o tema default completo                       |
+
+**Configuração para consumidores no VS Code (`settings.json`):**
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "nexusshield-ds": {
+        "type": "stdio",
+        "command": "npx",
+        "args": ["ds-mcp"]
+      }
+    }
+  }
+}
+```
+
+**Configuração para Claude Desktop (`claude_desktop_config.json`):**
+
+```json
+{
+  "mcpServers": {
+    "nexusshield-ds": {
+      "command": "npx",
+      "args": ["ds-mcp"]
+    }
+  }
+}
+```
+
+---
+
+## Phase 4 — GitHub Actions: CI/CD pipeline (nova)
+
+Dois workflows criados do zero — o projeto não possui pipeline no GitHub hoje.
+
+| #   | Tarefa                                                 | Arquivo                                |
+| --- | ------------------------------------------------------ | -------------------------------------- |
+| 8   | Criar workflow de validação em PRs                     | `.github/workflows/ci.yml` (novo)      |
+| 9   | Criar workflow de release automático                   | `.github/workflows/release.yml` (novo) |
+| 10  | Criar configuração do semantic-release                 | `release.config.js` (novo)             |
+| 11  | Criar `.npmrc` com auth token via variável de ambiente | `.npmrc` (novo)                        |
+| 12  | Configurar GitHub Secrets                              | Feito no GitHub (manual)               |
+
+### Workflow `ci.yml` — validação em Pull Requests
+
+```
+pull_request → main
+  └── lint → test → build
+```
+
+### Workflow `release.yml` — release automático ao fazer merge na `main`
+
+```
+push → main
+  └── release (semantic-release → npm publish)
+        └── docker (se houve nova versão → build + push Docker Hub)
+```
+
+**Job do `release.yml`:**
+
+- `release`: roda semantic-release, analisa commits, gera CHANGELOG, incrementa versão semântica e publica no npmjs.com
+
+> O deploy do Storybook na Vercel **não precisa de job no GitHub Actions** — a integração nativa Vercel + GitHub dispara automaticamente a cada push na `main`.
+
+**GitHub Secrets necessários:**
+
+| Secret      | Descrição                       | Onde obter                |
+| ----------- | ------------------------------- | ------------------------- |
+| `NPM_TOKEN` | Token de automação do npmjs.com | npmjs.com → Access Tokens |
+
+> `GITHUB_TOKEN` é provisionado automaticamente pelo GitHub Actions — não precisa ser criado.
+
+---
+
+## Phase 5 — Remote MCP via Vercel API Route
+
+Com a Vercel hospedando o Storybook, os manifests ficam acessíveis como arquivos estáticos via URL pública.
+O `mcp-server/server.mjs` (que lia do filesystem) é substituído por uma **Vercel API Route** que busca os manifests pela URL do próprio Storybook.
+
+> **Por que muda**: o Docker/Nginx lia os manifests do disco local (`/usr/share/nginx/html/manifests`). Na Vercel isso não existe — mas os mesmos arquivos ficam públicos em `https://your-project.vercel.app/manifests/...`, então o `manifestProvider` passa a fazer `fetch` ao invés de `readFile`.
+
+| #   | Tarefa                                                                                         | Arquivo               |
+| --- | ---------------------------------------------------------------------------------------------- | --------------------- |
+| 13  | Criar `api/mcp.js` — Vercel API Route com `manifestProvider` via `fetch`                       | `api/mcp.js` (novo)   |
+| 14  | Criar `vercel.json` — configura output dir do Storybook e rota `/mcp`                          | `vercel.json` (novo)  |
+| 15  | Mover `@storybook/mcp` de `mcp-server/package.json` para `package.json` raiz                  | `package.json`        |
+| 16  | Conectar repositório à Vercel via GitHub App (feito uma única vez no dashboard da Vercel)      | Manual (dashboard)    |
+| 17  | Configurar variável de ambiente `STORYBOOK_URL` na Vercel com a URL do projeto                 | Dashboard Vercel      |
+
+**`vercel.json`:**
+
+```json
+{
+  "buildCommand": "npm run build-storybook",
+  "outputDirectory": "storybook-static",
+  "framework": null,
+  "rewrites": [
+    { "source": "/mcp", "destination": "/api/mcp" }
+  ]
+}
+```
+
+**`api/mcp.js`:**
+
+```javascript
+import { createStorybookMcpHandler } from '@storybook/mcp';
+
+const STORYBOOK_URL = process.env.STORYBOOK_URL ?? 'https://your-project.vercel.app';
+
+const handler = await createStorybookMcpHandler({
+  manifestProvider: async (_request, path) => {
+    const response = await fetch(`${STORYBOOK_URL}${path}`);
+    if (!response.ok) throw new Error(`Manifest not found: ${path}`);
+    return response.text();
+  },
+});
+
+export default handler;
+```
+
+**Endpoint final para consumers:**
+
+```
+https://design-system.nexusshield.com.br/mcp
+```
+
+**Configuração MCP remoto no VS Code:**
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "nexusshield-ds-remote": {
+        "type": "http",
+        "url": "https://design-system.nexusshield.com.br/mcp"
+      }
+    }
+  }
+}
+```
+
+> O `Dockerfile`, `docker-compose.yml` e `mcp-server/` **podem ser mantidos** para uso local/dev ou removidos, pois não são mais necessários para o deploy em produção.
+
+---
+
+## Phase 6 — Documentação consumer
+
+| #   | Tarefa                                                  | Arquivo     |
+| --- | ------------------------------------------------------- | ----------- |
+| 18  | Atualizar README com instalação, MCP local e MCP remoto | `README.md` |
+
+---
+
+## Checklist de verificação
+
+Ao concluir todas as fases, verificar:
+
+1. `npm pack --dry-run` → apenas `dist/`, `bin/`, `README.md` devem aparecer
+2. `node bin/ds-mcp.mjs` → deve iniciar e responder `list_components` via stdin
+3. Adicionar `npx ds-mcp` no MCP do VS Code → ferramentas devem aparecer no Copilot
+4. Abrir PR no GitHub → workflow `ci.yml` deve disparar automaticamente
+5. Merge na `main` → `release.yml` publica no npmjs.com + build/push no Docker Hub
+6. Verificar pacote em `https://www.npmjs.com/package/@nexusshield/design-system`
+7. Verificar imagem em Docker Hub após release
