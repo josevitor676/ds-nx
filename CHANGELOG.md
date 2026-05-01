@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/josevitor676/ds-nx/compare/v1.0.1...v1.0.2) (2026-05-01)
+
+
+### Bug Fixes
+
+* reconstruct absolute URL for @storybook/mcp handler on Vercel ([7efb2b2](https://github.com/josevitor676/ds-nx/commit/7efb2b2f0c6a56212382c2526196264decc1d053))
+
 ## [1.0.1](https://github.com/josevitor676/ds-nx/compare/v1.0.0...v1.0.1) (2026-05-01)
 
 
