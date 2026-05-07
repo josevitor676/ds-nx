@@ -136,6 +136,8 @@ export interface HeaderProps extends React.HTMLAttributes<HTMLElement> {
   searchValue?: string
   /** Chamado quando o valor do campo de busca muda */
   onSearchChange?: (value: string) => void
+  /** Controla a exibição do campo de busca */
+  showSearch?: boolean
   className?: string
 }
 
@@ -151,6 +153,7 @@ export const Header = React.forwardRef<HTMLElement, HeaderProps>(
       searchPlaceholder = "Pesquisar no sistema",
       searchValue,
       onSearchChange,
+      showSearch = true,
       className,
       ...props
     },
@@ -205,24 +208,26 @@ export const Header = React.forwardRef<HTMLElement, HeaderProps>(
                 if (currentLogo !== NexusShieldFigmaLogo) setCurrentLogo(NexusShieldFigmaLogo)
               }}
             />
-            <span className="ds-hidden sm:ds-inline ds-text-base ds-font-semibold ds-text-white ds-whitespace-nowrap ds-capitalize ds-leading-5 ds-tracking-normal">
+            <span className="ds-hidden sm:ds-inline ds-text-lg ds-font-semibold ds-text-white ds-whitespace-nowrap ds-capitalize ds-leading-5 ds-tracking-normal">
               {appName}
             </span>
           </div>
         </div>
 
         {/* Center: Search bar */}
-        <div className={headerSearchVariants()}>
-          <Icon icon={IconSearch} size="md" className="ds-text-neutral-300 ds-flex-shrink-0" />
-          <input
-            type="search"
-            placeholder={searchPlaceholder}
-            value={searchValue ?? ""}
-            onChange={(e) => onSearchChange?.(e.target.value)}
-            className="ds-flex-1 ds-bg-transparent ds-outline-none ds-border-none ds-text-xs ds-font-medium ds-text-white ds-leading-normal ds-tracking-normal placeholder:ds-text-neutral-300"
-            aria-label={searchPlaceholder}
-          />
-        </div>
+        {showSearch && (
+          <div className={headerSearchVariants()}>
+            <Icon icon={IconSearch} size="md" className="ds-text-neutral-300 ds-flex-shrink-0" />
+            <input
+              type="search"
+              placeholder={searchPlaceholder}
+              value={searchValue ?? ""}
+              onChange={(e) => onSearchChange?.(e.target.value)}
+              className="ds-flex-1 ds-bg-transparent ds-outline-none ds-border-none ds-text-xs ds-font-medium ds-text-white ds-leading-normal ds-tracking-normal placeholder:ds-text-neutral-300"
+              aria-label={searchPlaceholder}
+            />
+          </div>
+        )}
 
         {/* Right: actions slot */}
         <div className="ds-flex ds-items-center ds-gap-2 ds-flex-shrink-0">{actions}</div>

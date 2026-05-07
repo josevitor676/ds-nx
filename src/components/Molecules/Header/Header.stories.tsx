@@ -370,3 +370,21 @@ export default function App() {
     },
   },
 }
+
+export const SemBusca: Story = {
+  name: "Sem busca",
+  render: () => (
+    <Header
+      appName="Nexus Shield Design System"
+      showSearch={false}
+      actions={
+        <HeaderProfile
+          userName="Tiago Sanches"
+          userRole="Desenvolvedor"
+          userAvatar="https://i.pravatar.cc/150?img=12"
+          onLogout={() => alert("Sair")}
+        />
+      }
+    />
+  ),
+}

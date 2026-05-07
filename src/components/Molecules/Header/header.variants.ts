@@ -2,7 +2,7 @@ import { cva } from "class-variance-authority"
 
 export const headerVariants = cva([
   "ds-flex ds-items-center ds-gap-4 ds-w-full ds-justify-between",
-  "ds-bg-surface-base ds-px-4 ds-py-1",
+  "ds-bg-surface-base ds-px-4 ds-py-4",
 ])
 
 export const headerSearchVariants = cva(

@@ -133,6 +133,14 @@ Exemplo funcional com toggle do menu lateral e campo de busca controlado.
 
 ---
 
+{/* ─── Sem Busca ──────────────────────────────────────────────── */}
+
+Exemplo funcional de um Header sem o input de Busca
+
+<Canvas of={HeaderStories.SemBusca} />
+
+---
+
 {/* ─── Com SideMenu ────────────────────────────────────────────── */}
 
 ## Header + SideMenu
@@ -163,3 +171,20 @@ alternar a página ativa.
 - 👤 O `HeaderProfile` usa `aria-label="Perfil do usuário"` e o dropdown é gerenciado pelo `@radix-ui/react-popover` (inclui `aria-expanded`, `aria-haspopup` e fechamento via `Escape`).
 - ♿ Botões passados via `actions` devem ter `aria-label` descritivo — responsabilidade do consumidor.
 - 📱 Em viewports menores que `sm` (640 px), o nome da aplicação é ocultado para economizar espaço.
+
+### Exemplo: Header sem campo de busca
+
+```tsx
+<Header
+  appName="Nexus Shield Design System"
+  showSearch={false}
+  actions={
+    <HeaderProfile
+      userName="Tiago Sanches"
+      userRole="Desenvolvedor"
+      userAvatar="https://i.pravatar.cc/150?img=12"
+      onLogout={() => alert("Sair")}
+    />
+  }
+/>
+```
