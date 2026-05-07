@@ -37,7 +37,11 @@ const sideMenuItemBase = [
 // ─── Item ─────────────────────────────────────────────────────────────────────
 
 export const sideMenuItemVariants = cva(
-  ["ds-relative ds-flex ds-items-center ds-gap-2", "ds-w-full ds-h-8 ds-px-2", ...sideMenuItemBase],
+  [
+    "ds-relative ds-flex ds-items-center ds-gap-2",
+    "ds-w-full ds-h-10 ds-px-2",
+    ...sideMenuItemBase,
+  ],
   {
     variants: {
       active: {

@@ -275,3 +275,16 @@ body {
   --ds-color-surface-raised:  #F3F4F6;
   --ds-color-surface-overlay: rgba(0, 0, 0, 0.5);
 }
+
+/* Remove a estilização padrão do navegador para campos preenchidos automaticamente */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+  box-shadow: 0 0 0px 1000px transparent inset;
+  -webkit-text-fill-color: inherit;
+  transition: background-color 5000s ease-in-out 0s;
+}
