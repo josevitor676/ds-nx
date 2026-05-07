@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/josevitor676/ds-nx/compare/v1.0.2...v1.0.3) (2026-05-07)
+
+
+### Bug Fixes
+
+* remove browser autofill styling from input fields ([ef657ea](https://github.com/josevitor676/ds-nx/commit/ef657eae3cc53dfaa085be5ac3ded814353e4c9e))
+
 ## [1.0.2](https://github.com/josevitor676/ds-nx/compare/v1.0.1...v1.0.2) (2026-05-01)
 
 
